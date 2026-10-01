@@ -820,7 +820,10 @@ footer{
 
       <input
         type="search"
-        id="searchInput"
+        id="searchInput"<div id="searchResults" style="
+  max-width:850px;
+  margin:25px auto 0;
+"></div>
         placeholder="জেলা বা প্রতিষ্ঠানের নাম লিখুন..."
       >
 
@@ -953,6 +956,390 @@ let demoReports = 0;
 
 document.getElementById("reportCount").textContent =
   demoReports;
+
+</script><script>
+...
+</script><script>
+
+// ===============================
+// SUPABASE CONNECTION
+// ===============================
+
+const SUPABASE_URL =
+  "https://dzsgcrgcotwxruhqrder.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+// ===============================
+// REPORT FORM
+// ===============================
+
+const form =
+  document.getElementById("reportForm");
+
+form.addEventListener("submit", async function(event){
+
+  event.preventDefault();
+
+  const district =
+    document.getElementById("district").value;
+
+  const office =
+    document.getElementById("office").value.trim();
+
+  const amount =
+    document.getElementById("amount").value;
+
+  const date =
+    document.getElementById("date").value;
+
+  const details =
+    document.getElementById("details").value.trim();
+
+  if(!district || !office || !details){
+
+    alert("অনুগ্রহ করে প্রয়োজনীয় তথ্য পূরণ করুন।");
+    return;
+
+  }
+
+
+  // Submit button
+  const submitButton =
+    form.querySelector(".submit-btn");
+
+  const oldText =
+    submitButton.textContent;
+
+  submitButton.disabled = true;
+
+  submitButton.textContent =
+    "⏳ রিপোর্ট জমা হচ্ছে...";
+
+
+  try{
+
+    const { error } =
+      await supabaseClient
+        .from("reports")
+        .insert([
+          {
+            district: district,
+            office: office,
+            amount:
+              amount ? Number(amount) : null,
+            incident_date:
+              date || null,
+            details: details,
+            status: "pending"
+          }
+        ]);
+
+
+    if(error){
+
+      console.error(error);
+
+      alert(
+        "❌ রিপোর্ট জমা দেওয়া যায়নি।\n\n" +
+        "অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন।"
+      );
+
+      return;
+    }
+
+
+    alert(
+      "✅ রিপোর্ট সফলভাবে জমা হয়েছে।\n\n" +
+      "আপনার রিপোর্ট বর্তমানে যাচাইয়ের অপেক্ষায় আছে।\n" +
+      "যাচাই ছাড়া এটি প্রকাশ করা হবে না।"
+    );
+
+
+    form.reset();
+
+
+    // Update statistics
+    loadReportCount();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "❌ একটি সমস্যা হয়েছে।\n\n" +
+      "আবার চেষ্টা করুন।"
+    );
+
+  }finally{
+
+    submitButton.disabled = false;
+
+    submitButton.textContent =
+      oldText;
+
+  }
+
+});
+
+
+// ===============================
+// SEARCH REPORTS
+// ===============================
+
+async function searchReport(){
+
+  const value =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim();
+
+  const results =
+    document.getElementById("searchResults");
+
+
+  if(!value){
+
+    alert(
+      "অনুগ্রহ করে জেলা বা প্রতিষ্ঠানের নাম লিখুন।"
+    );
+
+    return;
+  }
+
+
+  results.innerHTML = `
+    <div style="
+      padding:20px;
+      text-align:center;
+      background:#f5f8f7;
+      border-radius:14px;
+    ">
+      🔎 রিপোর্ট খোঁজা হচ্ছে...
+    </div>
+  `;
+
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+        .from("reports")
+        .select(
+          "id,district,office,amount,incident_date,details,created_at"
+        )
+        .eq("status", "approved")
+        .or(
+          `district.ilike.%${value}%,office.ilike.%${value}%`
+        )
+        .order(
+          "created_at",
+          { ascending:false }
+        );
+
+
+    if(error){
+
+      console.error(error);
+
+      results.innerHTML = `
+        <div style="
+          padding:20px;
+          background:#fff0f0;
+          border:1px solid #f0caca;
+          border-radius:14px;
+          color:#8a2222;
+        ">
+          ❌ রিপোর্ট খুঁজতে সমস্যা হয়েছে।
+        </div>
+      `;
+
+      return;
+    }
+
+
+    if(!data || data.length === 0){
+
+      results.innerHTML = `
+        <div style="
+          padding:25px;
+          text-align:center;
+          background:#f5f8f7;
+          border-radius:14px;
+          color:#66756e;
+        ">
+          🔎 এই নামে কোনো প্রকাশযোগ্য রিপোর্ট পাওয়া যায়নি।
+        </div>
+      `;
+
+      return;
+    }
+
+
+    results.innerHTML = data.map(report => {
+
+      const amount =
+        report.amount
+          ? Number(report.amount).toLocaleString("bn-BD")
+          : "উল্লেখ নেই";
+
+      const date =
+        report.incident_date || "উল্লেখ নেই";
+
+
+      return `
+        <div style="
+          background:white;
+          border:1px solid #d9e5df;
+          border-radius:16px;
+          padding:22px;
+          margin-bottom:15px;
+          box-shadow:0 8px 25px rgba(20,55,40,.06);
+        ">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-bottom:12px;
+          ">
+
+            <strong style="
+              color:#073b2b;
+              font-size:18px;
+            ">
+              ${escapeHTML(report.office)}
+            </strong>
+
+            <span style="
+              background:#eaf7f0;
+              color:#08764d;
+              padding:5px 10px;
+              border-radius:20px;
+              font-size:12px;
+              font-weight:bold;
+            ">
+              যাচাইকৃত/প্রকাশিত
+            </span>
+
+          </div>
+
+
+          <div style="
+            color:#53645c;
+            font-size:14px;
+            margin-bottom:12px;
+          ">
+            📍 ${escapeHTML(report.district)}
+            &nbsp; • &nbsp;
+            💰 ${amount} টাকা
+            &nbsp; • &nbsp;
+            📅 ${escapeHTML(date)}
+          </div>
+
+
+          <p style="
+            color:#26372f;
+            line-height:1.8;
+            font-size:14px;
+          ">
+            ${escapeHTML(report.details)}
+          </p>
+
+
+          <div style="
+            margin-top:12px;
+            font-size:11px;
+            color:#8a9891;
+          ">
+            রিপোর্ট ID: ${escapeHTML(report.id)}
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+
+  }catch(error){
+
+    console.error(error);
+
+    results.innerHTML = `
+      <div style="
+        padding:20px;
+        background:#fff0f0;
+        border-radius:14px;
+      ">
+        ❌ Search system-এ সমস্যা হয়েছে।
+      </div>
+    `;
+
+  }
+
+}
+
+
+// ===============================
+// SECURITY — HTML ESCAPE
+// ===============================
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+// ===============================
+// REPORT COUNT
+// ===============================
+
+async function loadReportCount(){
+
+  const { count, error } =
+    await supabaseClient
+      .from("reports")
+      .select(
+        "*",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq("status", "approved");
+
+
+  if(!error){
+
+    document.getElementById(
+      "reportCount"
+    ).textContent =
+      count || 0;
+
+  }
+
+}
+
+
+// Load count when page opens
+loadReportCount();
 
 </script>
 
