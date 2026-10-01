@@ -1,285 +1,709 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>GushKhor — ঘুষের বিরুদ্ধে তথ্য</title>
+<title>GushKhor — ঘুষ ও অনিয়ম রিপোর্টিং প্ল্যাটফর্ম</title>
+<meta name="description" content="GushKhor একটি তথ্যভিত্তিক জনসচেতনতা ও রিপোর্টিং প্ল্যাটফর্ম।">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body {
-      font-family: Arial, "Noto Sans Bengali", sans-serif;
-      background: #f5f8f6;
-      color: #17251e;
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    header {
-      background: #0b6b45;
-      color: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+body{
+  font-family:"Noto Sans Bengali","Segoe UI",Arial,sans-serif;
+  background:#f5f8f7;
+  color:#17251e;
+  line-height:1.6;
+}
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-    }
+:root{
+  --green:#08764d;
+  --dark:#073b2b;
+  --light:#eaf7f0;
+  --border:#d9e5df;
+  --white:#fff;
+  --muted:#66756e;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 15px;
-    }
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(7,59,43,.96);
+  backdrop-filter:blur(12px);
+  color:white;
+  padding:16px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 3px 20px rgba(0,0,0,.12);
+}
 
-    .hero {
-      padding: 80px 7%;
-      text-align: center;
-      background: linear-gradient(135deg, #e5f7ed, #ffffff);
-    }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:25px;
+  font-weight:800;
+}
 
-    .hero h1 {
-      font-size: 50px;
-      margin-bottom: 18px;
-      color: #075d3d;
-    }
+.logo-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:#ffffff18;
+  border:1px solid #ffffff30;
+}
 
-    .hero p {
-      max-width: 700px;
-      margin: auto;
-      font-size: 18px;
-      line-height: 1.8;
-      color: #53645b;
-    }
+nav{
+  display:flex;
+  gap:25px;
+}
 
-    .buttons {
-      margin-top: 30px;
-    }
+nav a{
+  color:#e8f6ef;
+  text-decoration:none;
+  font-size:15px;
+  transition:.2s;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 13px 24px;
-      margin: 5px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+nav a:hover{
+  color:#8ff0c0;
+}
 
-    .primary {
-      background: #08764d;
-      color: white;
-    }
+/* HERO */
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:95px 6% 90px;
+  background:
+    radial-gradient(circle at 10% 20%,#bcebd3 0,transparent 28%),
+    radial-gradient(circle at 90% 10%,#d4f5e4 0,transparent 25%),
+    linear-gradient(135deg,#e7f8ef,#fff);
+}
 
-    .secondary {
-      background: white;
-      color: #08764d;
-      border: 1px solid #08764d;
-    }
+.hero-content{
+  max-width:1150px;
+  margin:auto;
+  text-align:center;
+}
 
-    section {
-      padding: 60px 7%;
-    }
+.badge{
+  display:inline-block;
+  padding:7px 15px;
+  border-radius:50px;
+  background:#ffffffb8;
+  border:1px solid #cde5d8;
+  color:var(--green);
+  font-weight:700;
+  font-size:13px;
+  margin-bottom:20px;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-    }
+.hero h1{
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.1;
+  color:var(--dark);
+  margin-bottom:22px;
+  letter-spacing:-1.5px;
+}
 
-    h2 {
-      text-align: center;
-      font-size: 32px;
-      margin-bottom: 35px;
-    }
+.hero h1 span{
+  color:var(--green);
+}
 
-    .form-box {
-      max-width: 750px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 18px;
-      box-shadow: 0 10px 35px rgba(0,0,0,.08);
-    }
+.hero p{
+  max-width:760px;
+  margin:auto;
+  color:#53645c;
+  font-size:18px;
+}
 
-    label {
-      display: block;
-      margin-top: 18px;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
+.hero-buttons{
+  margin-top:32px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ccd8d1;
-      border-radius: 9px;
-      font-size: 15px;
-    }
+.btn{
+  border:none;
+  text-decoration:none;
+  padding:14px 25px;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.25s;
+  display:inline-block;
+}
 
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
+.btn-primary{
+  background:var(--green);
+  color:white;
+  box-shadow:0 8px 20px #08764d35;
+}
 
-    button {
-      margin-top: 22px;
-      width: 100%;
-      padding: 14px;
-      background: #08764d;
-      border: none;
-      color: white;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.btn-primary:hover{
+  transform:translateY(-2px);
+  background:#075d3d;
+}
 
-    .warning {
-      margin-top: 20px;
-      padding: 15px;
-      background: #fff8e5;
-      border-left: 4px solid #e2ad31;
-      font-size: 13px;
-      line-height: 1.7;
-    }
+.btn-secondary{
+  background:white;
+  color:var(--green);
+  border:1px solid #bcd9ca;
+}
 
-    .about {
-      background: #eaf3ee;
-    }
+.btn-secondary:hover{
+  background:#f0faf4;
+}
 
-    footer {
-      background: #10251c;
-      color: #c9d6cf;
-      padding: 30px 7%;
-      text-align: center;
-    }
+/* STATS */
+.stats{
+  max-width:1050px;
+  margin:-35px auto 0;
+  position:relative;
+  z-index:5;
+  padding:0 20px;
+}
 
-    @media (max-width: 700px) {
-      header {
-        flex-direction: column;
-        gap: 12px;
-      }
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  background:white;
+  border-radius:20px;
+  box-shadow:0 15px 45px rgba(20,55,40,.10);
+  border:1px solid var(--border);
+  overflow:hidden;
+}
 
-      nav a {
-        margin: 0 7px;
-      }
+.stat{
+  padding:27px 15px;
+  text-align:center;
+  border-right:1px solid var(--border);
+}
 
-      .hero h1 {
-        font-size: 38px;
-      }
+.stat:last-child{
+  border-right:none;
+}
 
-      .hero p {
-        font-size: 16px;
-      }
-    }
-  </style>
+.stat strong{
+  display:block;
+  font-size:30px;
+  color:var(--green);
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* GENERAL */
+section{
+  padding:80px 6%;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.section-title h2{
+  font-size:36px;
+  color:var(--dark);
+}
+
+.section-title p{
+  color:var(--muted);
+  margin-top:8px;
+}
+
+/* REPORT */
+.report-section{
+  background:#fff;
+}
+
+.form-box{
+  max-width:850px;
+  margin:auto;
+  padding:35px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:0 15px 45px rgba(20,55,40,.08);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.form-group{
+  margin-bottom:5px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:8px;
+  color:#26372f;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:14px 15px;
+  border:1px solid #ccd9d3;
+  border-radius:11px;
+  background:#fbfdfc;
+  font:inherit;
+  outline:none;
+  transition:.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px #08764d15;
+  background:white;
+}
+
+textarea{
+  min-height:170px;
+  resize:vertical;
+}
+
+.help{
+  font-size:12px;
+  color:#77857e;
+  margin-top:5px;
+}
+
+.privacy{
+  margin-top:20px;
+  padding:17px;
+  border-radius:13px;
+  background:#fff8e5;
+  border:1px solid #f0dfad;
+  color:#675326;
+  font-size:13px;
+}
+
+.submit-btn{
+  width:100%;
+  margin-top:20px;
+  padding:15px;
+  border:0;
+  border-radius:12px;
+  background:var(--green);
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.submit-btn:hover{
+  background:#075d3d;
+}
+
+/* FEATURES */
+.features{
+  background:#f3f8f5;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.feature{
+  background:white;
+  padding:28px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  transition:.25s;
+}
+
+.feature:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.07);
+}
+
+.feature-icon{
+  width:48px;
+  height:48px;
+  border-radius:13px;
+  background:var(--light);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  margin-bottom:17px;
+}
+
+.feature h3{
+  margin-bottom:8px;
+  color:var(--dark);
+}
+
+.feature p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* SEARCH */
+.search-section{
+  background:white;
+}
+
+.search-box{
+  max-width:850px;
+  margin:auto;
+  display:flex;
+  gap:10px;
+}
+
+.search-box input{
+  flex:1;
+}
+
+.search-box button{
+  border:0;
+  padding:0 24px;
+  border-radius:11px;
+  background:var(--green);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* ABOUT */
+.about{
+  background:#eaf4ef;
+}
+
+.about-card{
+  max-width:850px;
+  margin:auto;
+  text-align:center;
+}
+
+.about-card p{
+  color:#52635b;
+  line-height:1.9;
+}
+
+/* FOOTER */
+footer{
+  background:#062c20;
+  color:#bcd0c6;
+  padding:45px 6% 25px;
+}
+
+.footer-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.footer-logo{
+  color:white;
+  font-size:22px;
+  font-weight:800;
+}
+
+.footer-note{
+  max-width:500px;
+  font-size:13px;
+}
+
+.copyright{
+  text-align:center;
+  border-top:1px solid #ffffff18;
+  margin-top:30px;
+  padding-top:20px;
+  font-size:12px;
+}
+
+/* MOBILE */
+@media(max-width:750px){
+
+  header{
+    padding:13px 5%;
+  }
+
+  nav{
+    gap:12px;
+  }
+
+  nav a{
+    font-size:12px;
+  }
+
+  .hero{
+    padding:70px 5% 75px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .stat{
+    border-right:none;
+    border-bottom:1px solid var(--border);
+  }
+
+  .stat:last-child{
+    border-bottom:none;
+  }
+
+  section{
+    padding:60px 5%;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .form-box{
+    padding:22px;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .search-box{
+    flex-direction:column;
+  }
+
+  .search-box button{
+    padding:14px;
+  }
+
+  .section-title h2{
+    font-size:29px;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">🛡️ GushKhor</div>
+  <div class="logo">
+    <div class="logo-icon">🛡️</div>
+    GushKhor
+  </div>
 
   <nav>
     <a href="#home">হোম</a>
     <a href="#report">রিপোর্ট</a>
-    <a href="#about">আমাদের সম্পর্কে</a>
+    <a href="#search">খুঁজুন</a>
+    <a href="#about">সম্পর্কে</a>
   </nav>
 </header>
 
-<section class="hero" id="home">
-  <div class="container">
 
-    <h1>ঘুষের বিরুদ্ধে তথ্যের শক্তি</h1>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+
+    <div class="badge">🛡️ তথ্য • সচেতনতা • স্বচ্ছতা</div>
+
+    <h1>
+      ঘুষ ও অনিয়মের বিরুদ্ধে<br>
+      <span>তথ্যের শক্তি</span>
+    </h1>
 
     <p>
-      আপনি যদি কোনো সরকারি বা বেসরকারি সেবা নিতে গিয়ে
-      ঘুষ চাওয়ার অভিজ্ঞতার সম্মুখীন হন,
-      তাহলে তথ্যভিত্তিকভাবে ঘটনাটি রিপোর্ট করতে পারেন।
+      সেবা গ্রহণের সময় ঘুষ চাওয়া বা অনিয়মের অভিজ্ঞতা হলে
+      তথ্যভিত্তিকভাবে ঘটনাটি রিপোর্ট করুন। আপনার রিপোর্ট
+      যাচাই ও moderation-এর মাধ্যমে দায়িত্বশীলভাবে পরিচালনার
+      উদ্দেশ্যে এই প্ল্যাটফর্ম তৈরি করা হয়েছে।
     </p>
 
-    <div class="buttons">
-      <a href="#report" class="btn primary">
-        রিপোর্ট করুন
+    <div class="hero-buttons">
+      <a href="#report" class="btn btn-primary">
+        📝 রিপোর্ট করুন
       </a>
 
-      <a href="#about" class="btn secondary">
-        আরও জানুন
+      <a href="#about" class="btn btn-secondary">
+        ℹ️ কীভাবে কাজ করে
       </a>
     </div>
 
   </div>
 </section>
 
-<section id="report">
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+
+    <div class="stat">
+      <strong id="reportCount">0</strong>
+      <span>মোট রিপোর্ট</span>
+    </div>
+
+    <div class="stat">
+      <strong>৬৪</strong>
+      <span>জেলা</span>
+    </div>
+
+    <div class="stat">
+      <strong>২৪/৭</strong>
+      <span>রিপোর্ট গ্রহণ</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- REPORT -->
+<section class="report-section" id="report">
 
   <div class="container">
 
-    <h2>ঘুষের ঘটনা রিপোর্ট করুন</h2>
+    <div class="section-title">
+      <h2>ঘটনা রিপোর্ট করুন</h2>
+      <p>যতটা সম্ভব নির্ভুল ও তথ্যভিত্তিক বিবরণ দিন</p>
+    </div>
 
     <div class="form-box">
 
-      <form onsubmit="submitReport(event)">
+      <form id="reportForm">
 
-        <label>জেলা</label>
+        <div class="form-grid">
 
-        <select required>
-          <option value="">জেলা নির্বাচন করুন</option>
-          <option>ঢাকা</option>
-          <option>টাঙ্গাইল</option>
-          <option>গাজীপুর</option>
-          <option>ময়মনসিংহ</option>
-          <option>চট্টগ্রাম</option>
-          <option>রাজশাহী</option>
-          <option>খুলনা</option>
-          <option>সিলেট</option>
-          <option>বরিশাল</option>
-          <option>রংপুর</option>
-          <option>অন্যান্য</option>
-        </select>
+          <div class="form-group">
+            <label for="district">জেলা *</label>
 
-        <label>অফিস / প্রতিষ্ঠানের নাম</label>
+            <select id="district" required>
+              <option value="">জেলা নির্বাচন করুন</option>
+              <option>ঢাকা</option>
+              <option>টাঙ্গাইল</option>
+              <option>গাজীপুর</option>
+              <option>ময়মনসিংহ</option>
+              <option>চট্টগ্রাম</option>
+              <option>রাজশাহী</option>
+              <option>খুলনা</option>
+              <option>সিলেট</option>
+              <option>বরিশাল</option>
+              <option>রংপুর</option>
+              <option>অন্যান্য</option>
+            </select>
+          </div>
 
-        <input
-          type="text"
-          placeholder="যেমন: ভূমি অফিস"
-          required
-        >
 
-        <label>ঘুষের পরিমাণ</label>
+          <div class="form-group">
+            <label for="office">অফিস / প্রতিষ্ঠানের নাম *</label>
 
-        <input
-          type="number"
-          placeholder="টাকার পরিমাণ"
-        >
+            <input
+              id="office"
+              type="text"
+              placeholder="যেমন: ভূমি অফিস"
+              maxlength="150"
+              required
+            >
+          </div>
 
-        <label>ঘটনার বিবরণ</label>
 
-        <textarea
-          placeholder="ঘটনাটি বিস্তারিত লিখুন..."
-          required
-        ></textarea>
+          <div class="form-group">
+            <label for="amount">ঘুষের পরিমাণ (টাকা)</label>
 
-        <div class="warning">
-          ⚠️ আপনার নিজের বা অন্য কারও জাতীয় পরিচয়পত্র নম্বর,
-          ফোন নম্বর, ঠিকানা বা অন্যান্য সংবেদনশীল ব্যক্তিগত তথ্য এখানে
-          লিখবেন না।
-          <br><br>
-          এই সংস্করণটি একটি demo form। পরবর্তী ধাপে নিরাপদ
-          database ও moderation ব্যবস্থা যুক্ত করা হবে।
+            <input
+              id="amount"
+              type="number"
+              min="0"
+              placeholder="যেমন: ৫০০০"
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="date">ঘটনার তারিখ</label>
+
+            <input
+              id="date"
+              type="date"
+            >
+          </div>
+
+
+          <div class="form-group full">
+            <label for="details">ঘটনার বিবরণ *</label>
+
+            <textarea
+              id="details"
+              maxlength="3000"
+              placeholder="কী ঘটেছে, কোন সেবা নিতে গিয়ে সমস্যা হয়েছে এবং কীভাবে ঘুষ চাওয়া হয়েছিল—তথ্যভিত্তিকভাবে লিখুন..."
+              required
+            ></textarea>
+
+            <div class="help">
+              সর্বোচ্চ ৩০০০ অক্ষর।
+            </div>
+          </div>
+
         </div>
 
-        <button type="submit">
-          রিপোর্ট জমা দিন
+
+        <div class="privacy">
+          ⚠️ <strong>গুরুত্বপূর্ণ:</strong>
+          আপনার বা অন্য কারও NID নম্বর, ফোন নম্বর,
+          বাসার ঠিকানা, ব্যাংক তথ্য, পাসওয়ার্ড বা অন্য
+          সংবেদনশীল ব্যক্তিগত তথ্য এখানে লিখবেন না।
+          <br><br>
+          রিপোর্টকে স্বয়ংক্রিয়ভাবে প্রমাণিত ঘটনা হিসেবে বিবেচনা
+          করা হবে না। প্রকাশের আগে যথাযথ যাচাই ও moderation
+          প্রয়োজন।
+        </div>
+
+
+        <button class="submit-btn" type="submit">
+          🛡️ রিপোর্ট জমা দেওয়ার জন্য পাঠান
         </button>
 
       </form>
@@ -290,50 +714,235 @@
 
 </section>
 
-<section class="about" id="about">
+
+<!-- FEATURES -->
+<section class="features">
 
   <div class="container">
 
-    <h2>GushKhor সম্পর্কে</h2>
+    <div class="section-title">
+      <h2>প্ল্যাটফর্মের বৈশিষ্ট্য</h2>
+      <p>নিরাপদ ও দায়িত্বশীল রিপোর্টিংকে গুরুত্ব দেওয়া হবে</p>
+    </div>
 
-    <p style="text-align:center;max-width:750px;margin:auto;line-height:1.9">
 
-      GushKhor একটি তথ্যভিত্তিক জনসচেতনতা প্ল্যাটফর্মের ধারণা,
-      যেখানে নাগরিকরা ঘুষ বা অনিয়মের অভিজ্ঞতা রিপোর্ট করতে পারবেন।
-      প্রকাশ্য রিপোর্টকে অভিযোগ হিসেবে বিবেচনা করতে হবে এবং
-      প্রকাশের আগে যথাযথ যাচাই ও moderation প্রয়োজন।
+    <div class="feature-grid">
 
-    </p>
+      <div class="feature">
+        <div class="feature-icon">🕵️</div>
+        <h3>গোপনীয়তা</h3>
+        <p>
+          রিপোর্টে অপ্রয়োজনীয় ব্যক্তিগত তথ্য না দেওয়ার
+          ব্যবস্থা ও নির্দেশনা রাখা হয়েছে।
+        </p>
+      </div>
+
+
+      <div class="feature">
+        <div class="feature-icon">🔎</div>
+        <h3>তথ্যভিত্তিক অনুসন্ধান</h3>
+        <p>
+          ভবিষ্যতে জেলা, প্রতিষ্ঠান ও রিপোর্টের ধরন অনুযায়ী
+          তথ্য খোঁজার সুবিধা যুক্ত করা যাবে।
+        </p>
+      </div>
+
+
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Moderation</h3>
+        <p>
+          প্রকাশের আগে রিপোর্ট যাচাই ও moderation করার
+          জন্য আলাদা প্রশাসনিক ব্যবস্থা যুক্ত করা হবে।
+        </p>
+      </div>
+
+
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>পরিসংখ্যান</h3>
+        <p>
+          ভবিষ্যতে যাচাইকৃত ও প্রকাশযোগ্য রিপোর্টের
+          সামগ্রিক পরিসংখ্যান দেখানো যাবে।
+        </p>
+      </div>
+
+
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>মোবাইল ফ্রেন্ডলি</h3>
+        <p>
+          মোবাইল, ট্যাবলেট এবং কম্পিউটার—সব ডিভাইসে
+          ব্যবহারযোগ্য responsive design।
+        </p>
+      </div>
+
+
+      <div class="feature">
+        <div class="feature-icon">⚖️</div>
+        <h3>দায়িত্বশীল প্রকাশ</h3>
+        <p>
+          অভিযোগকে প্রমাণিত সত্য হিসেবে উপস্থাপন না করে
+          যাচাই ও দায়িত্বশীল প্রকাশের নীতি অনুসরণ করা হবে।
+        </p>
+      </div>
+
+    </div>
 
   </div>
 
 </section>
 
+
+<!-- SEARCH -->
+<section class="search-section" id="search">
+
+  <div class="container">
+
+    <div class="section-title">
+      <h2>রিপোর্ট খুঁজুন</h2>
+      <p>Database যুক্ত হওয়ার পর এখান থেকে প্রকাশযোগ্য রিপোর্ট খোঁজা যাবে</p>
+    </div>
+
+    <div class="search-box">
+
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="জেলা বা প্রতিষ্ঠানের নাম লিখুন..."
+      >
+
+      <button onclick="searchReport()">
+        🔎 খুঁজুন
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+  <div class="container">
+
+    <div class="section-title">
+      <h2>GushKhor সম্পর্কে</h2>
+    </div>
+
+    <div class="about-card">
+
+      <p>
+        GushKhor একটি তথ্যভিত্তিক জনসচেতনতা ও রিপোর্টিং
+        প্ল্যাটফর্মের ধারণা। এর উদ্দেশ্য হলো নাগরিকদের
+        অভিজ্ঞতা দায়িত্বশীলভাবে নথিভুক্ত করার একটি
+        ডিজিটাল মাধ্যম তৈরি করা।
+        <br><br>
+        কোনো রিপোর্টকে স্বয়ংক্রিয়ভাবে সত্য বা প্রমাণিত
+        অভিযোগ হিসেবে বিবেচনা করা উচিত নয়। বাস্তব
+        প্ল্যাটফর্মে প্রকাশের আগে যাচাই, moderation,
+        privacy protection এবং প্রযোজ্য আইন অনুসরণ করা
+        প্রয়োজন।
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
 <footer>
 
-  <p>© 2026 GushKhor</p>
+  <div class="footer-inner">
 
-  <p style="margin-top:8px">
-    তথ্য • সচেতনতা • স্বচ্ছতা
-  </p>
+    <div>
+      <div class="footer-logo">🛡️ GushKhor</div>
+      <p style="margin-top:8px">
+        তথ্য • সচেতনতা • স্বচ্ছতা
+      </p>
+    </div>
+
+    <div class="footer-note">
+      এই প্ল্যাটফর্মে জমা দেওয়া তথ্যের যথাযথ যাচাই ছাড়া
+      কোনো ব্যক্তি বা প্রতিষ্ঠানের বিরুদ্ধে চূড়ান্ত
+      অভিযোগ হিসেবে তথ্য প্রকাশ করা উচিত নয়।
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 GushKhor — All Rights Reserved
+  </div>
 
 </footer>
 
+
 <script>
 
-function submitReport(event) {
+const form = document.getElementById("reportForm");
+
+form.addEventListener("submit", function(event){
 
   event.preventDefault();
 
+  const district =
+    document.getElementById("district").value;
+
+  const office =
+    document.getElementById("office").value.trim();
+
+  const details =
+    document.getElementById("details").value.trim();
+
+  if(!district || !office || !details){
+
+    alert("অনুগ্রহ করে প্রয়োজনীয় তথ্য পূরণ করুন।");
+    return;
+
+  }
+
   alert(
-    "আপনার রিপোর্ট গ্রহণের জন্য প্রস্তুত।\n\n" +
-    "পরবর্তী ধাপে আমরা নিরাপদ database যুক্ত করব।"
+    "রিপোর্টটি গ্রহণের জন্য প্রস্তুত হয়েছে।\n\n" +
+    "বর্তমান সংস্করণে এটি database-এ সংরক্ষণ হচ্ছে না।\n\n" +
+    "পরবর্তী ধাপে নিরাপদ database ও moderation system যুক্ত করা হবে।"
+  );
+
+  form.reset();
+
+});
+
+
+function searchReport(){
+
+  const value =
+    document.getElementById("searchInput").value.trim();
+
+  if(!value){
+
+    alert("অনুগ্রহ করে জেলা বা প্রতিষ্ঠানের নাম লিখুন।");
+    return;
+
+  }
+
+  alert(
+    "Search system প্রস্তুত আছে।\n\n" +
+    "Database যুক্ত হলে এখানে বাস্তব রিপোর্টের ফলাফল দেখানো হবে।"
   );
 
 }
+
+
+/* Demo statistic */
+let demoReports = 0;
+
+document.getElementById("reportCount").textContent =
+  demoReports;
 
 </script>
 
 </body>
 </html>
-<!-- GushKhor GitHub Pages -->
