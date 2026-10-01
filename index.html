@@ -12,6 +12,7 @@ content="GushKhor একটি তথ্যভিত্তিক জনসচে
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -38,7 +39,9 @@ body{
   --muted:#66756e;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header{
   position:sticky;
@@ -88,7 +91,9 @@ nav a:hover{
   color:#8ff0c0;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero{
   position:relative;
@@ -173,7 +178,9 @@ nav a:hover{
   border:1px solid #bcd9ca;
 }
 
-/* STATS */
+/* =========================
+   STATS
+========================= */
 
 .stats{
   max-width:1050px;
@@ -214,7 +221,9 @@ nav a:hover{
   font-size:14px;
 }
 
-/* GENERAL */
+/* =========================
+   GENERAL
+========================= */
 
 section{
   padding:80px 6%;
@@ -240,7 +249,9 @@ section{
   margin-top:8px;
 }
 
-/* REPORT */
+/* =========================
+   REPORT FORM
+========================= */
 
 .report-section{
   background:#fff;
@@ -337,7 +348,9 @@ textarea{
   cursor:not-allowed;
 }
 
-/* FEATURES */
+/* =========================
+   FEATURES
+========================= */
 
 .features{
   background:#f3f8f5;
@@ -383,7 +396,117 @@ textarea{
   font-size:14px;
 }
 
-/* SEARCH */
+/* =========================
+   APPROVED REPORTS
+========================= */
+
+.public-reports-section{
+  background:#f5f8f7;
+}
+
+.public-reports-list{
+  max-width:900px;
+  margin:auto;
+}
+
+.report-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:18px;
+  box-shadow:0 8px 25px rgba(20,55,40,.07);
+  transition:.2s;
+}
+
+.report-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(20,55,40,.10);
+}
+
+.report-card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.report-office{
+  margin:0;
+  color:var(--dark);
+  font-size:20px;
+}
+
+.approved-badge{
+  background:#eaf7f0;
+  color:#08764d;
+  padding:6px 12px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.report-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:15px;
+  color:#53645c;
+  font-size:14px;
+}
+
+.report-details{
+  background:#f7faf8;
+  border-left:4px solid var(--green);
+  padding:15px;
+  border-radius:8px;
+  color:#26372f;
+  line-height:1.8;
+  font-size:14px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.report-id{
+  margin-top:15px;
+  padding-top:12px;
+  border-top:1px solid #edf1ef;
+  color:#8a9891;
+  font-size:11px;
+}
+
+.loading-box,
+.empty-box,
+.error-box{
+  max-width:850px;
+  margin:auto;
+  padding:30px;
+  text-align:center;
+  border-radius:16px;
+}
+
+.loading-box{
+  background:white;
+  border:1px solid var(--border);
+}
+
+.empty-box{
+  background:white;
+  border:1px solid var(--border);
+  color:#66756e;
+}
+
+.error-box{
+  background:#fff0f0;
+  border:1px solid #f0caca;
+  color:#8a2222;
+}
+
+/* =========================
+   SEARCH
+========================= */
 
 .search-section{
   background:white;
@@ -415,7 +538,9 @@ textarea{
   margin:25px auto 0;
 }
 
-/* ABOUT */
+/* =========================
+   ABOUT
+========================= */
 
 .about{
   background:#eaf4ef;
@@ -432,7 +557,9 @@ textarea{
   line-height:1.9;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer{
   background:#062c20;
@@ -468,7 +595,9 @@ footer{
   font-size:12px;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:750px){
 
@@ -540,30 +669,70 @@ footer{
   .logo{
     font-size:20px;
   }
+
+  .report-card{
+    padding:18px;
+  }
+
+  .report-office{
+    font-size:18px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
 
   <div class="logo">
-    <div class="logo-icon">🛡️</div>
+
+    <div class="logo-icon">
+      🛡️
+    </div>
+
     GushKhor
+
   </div>
 
+
   <nav>
-    <a href="#home">হোম</a>
-    <a href="#report">রিপোর্ট</a>
-    <a href="#search">খুঁজুন</a>
-    <a href="#about">সম্পর্কে</a>
+
+    <a href="#home">
+      হোম
+    </a>
+
+    <a href="#report">
+      রিপোর্ট
+    </a>
+
+    <a href="#publicReports">
+      প্রকাশিত রিপোর্ট
+    </a>
+
+    <a href="#search">
+      খুঁজুন
+    </a>
+
+    <a href="#about">
+      সম্পর্কে
+    </a>
+
   </nav>
 
 </header>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero" id="home">
 
@@ -574,25 +743,40 @@ footer{
     </div>
 
     <h1>
+
       ঘুষ ও অনিয়মের বিরুদ্ধে<br>
-      <span>তথ্যের শক্তি</span>
+
+      <span>
+        তথ্যের শক্তি
+      </span>
+
     </h1>
 
     <p>
+
       সেবা গ্রহণের সময় ঘুষ চাওয়া বা অনিয়মের অভিজ্ঞতা হলে
       তথ্যভিত্তিকভাবে ঘটনাটি রিপোর্ট করুন। আপনার রিপোর্ট
       যাচাই ও moderation-এর মাধ্যমে দায়িত্বশীলভাবে পরিচালনার
       উদ্দেশ্যে এই প্ল্যাটফর্ম তৈরি করা হয়েছে।
+
     </p>
+
 
     <div class="hero-buttons">
 
-      <a href="#report" class="btn btn-primary">
+      <a
+        href="#report"
+        class="btn btn-primary"
+      >
         📝 রিপোর্ট করুন
       </a>
 
-      <a href="#about" class="btn btn-secondary">
-        ℹ️ কীভাবে কাজ করে
+
+      <a
+        href="#publicReports"
+        class="btn btn-secondary"
+      >
+        📢 প্রকাশিত রিপোর্ট
       </a>
 
     </div>
@@ -602,25 +786,50 @@ footer{
 </section>
 
 
-<!-- STATS -->
+<!-- =========================
+     STATS
+========================= -->
 
 <div class="stats">
 
   <div class="stats-grid">
 
     <div class="stat">
-      <strong id="reportCount">0</strong>
-      <span>প্রকাশিত রিপোর্ট</span>
+
+      <strong id="reportCount">
+        0
+      </strong>
+
+      <span>
+        প্রকাশিত রিপোর্ট
+      </span>
+
     </div>
 
-    <div class="stat">
-      <strong>৬৪</strong>
-      <span>জেলা</span>
-    </div>
 
     <div class="stat">
-      <strong>২৪/৭</strong>
-      <span>রিপোর্ট গ্রহণ</span>
+
+      <strong>
+        ৬৪
+      </strong>
+
+      <span>
+        জেলা
+      </span>
+
+    </div>
+
+
+    <div class="stat">
+
+      <strong>
+        ২৪/৭
+      </strong>
+
+      <span>
+        রিপোর্ট গ্রহণ
+      </span>
+
     </div>
 
   </div>
@@ -628,15 +837,22 @@ footer{
 </div>
 
 
-<!-- REPORT -->
+<!-- =========================
+     REPORT FORM
+========================= -->
 
-<section class="report-section" id="report">
+<section
+  class="report-section"
+  id="report"
+>
 
   <div class="container">
 
     <div class="section-title">
 
-      <h2>ঘটনা রিপোর্ট করুন</h2>
+      <h2>
+        ঘটনা রিপোর্ট করুন
+      </h2>
 
       <p>
         যতটা সম্ভব নির্ভুল ও তথ্যভিত্তিক বিবরণ দিন
@@ -651,13 +867,17 @@ footer{
 
         <div class="form-grid">
 
+
           <div class="form-group">
 
             <label for="district">
               জেলা *
             </label>
 
-            <select id="district" required>
+            <select
+              id="district"
+              required
+            >
 
               <option value="">
                 জেলা নির্বাচন করুন
@@ -771,7 +991,9 @@ footer{
           type="submit"
           id="submitBtn"
         >
+
           🛡️ রিপোর্ট জমা দিন
+
         </button>
 
       </form>
@@ -783,7 +1005,9 @@ footer{
 </section>
 
 
-<!-- FEATURES -->
+<!-- =========================
+     FEATURES
+========================= -->
 
 <section class="features">
 
@@ -791,7 +1015,9 @@ footer{
 
     <div class="section-title">
 
-      <h2>প্ল্যাটফর্মের বৈশিষ্ট্য</h2>
+      <h2>
+        প্ল্যাটফর্মের বৈশিষ্ট্য
+      </h2>
 
       <p>
         নিরাপদ ও দায়িত্বশীল রিপোর্টিংকে গুরুত্ব দেওয়া হবে
@@ -801,6 +1027,7 @@ footer{
 
 
     <div class="feature-grid">
+
 
       <div class="feature">
 
@@ -909,6 +1136,7 @@ footer{
 
       </div>
 
+
     </div>
 
   </div>
@@ -916,9 +1144,54 @@ footer{
 </section>
 
 
-<!-- SEARCH -->
+<!-- =========================
+     APPROVED / PUBLIC REPORTS
+========================= -->
 
-<section class="search-section" id="search">
+<section
+  class="public-reports-section"
+  id="publicReports"
+>
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <h2>
+        📢 প্রকাশিত রিপোর্ট
+      </h2>
+
+      <p>
+        Admin কর্তৃক অনুমোদিত রিপোর্টগুলো এখানে দেখা যাবে
+      </p>
+
+    </div>
+
+
+    <div
+      id="publicReportsList"
+      class="public-reports-list"
+    >
+
+      <div class="loading-box">
+        ⏳ প্রকাশিত রিপোর্ট লোড হচ্ছে...
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<section
+  class="search-section"
+  id="search"
+>
 
   <div class="container">
 
@@ -941,7 +1214,9 @@ footer{
         type="search"
         id="searchInput"
         placeholder="জেলা বা প্রতিষ্ঠানের নাম লিখুন..."
+        onkeydown="if(event.key==='Enter') searchReport()"
       >
+
 
       <button
         type="button"
@@ -963,9 +1238,14 @@ footer{
 </section>
 
 
-<!-- ABOUT -->
+<!-- =========================
+     ABOUT
+========================= -->
 
-<section class="about" id="about">
+<section
+  class="about"
+  id="about"
+>
 
   <div class="container">
 
@@ -1004,11 +1284,14 @@ footer{
 </section>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
   <div class="footer-inner">
+
 
     <div>
 
@@ -1031,6 +1314,7 @@ footer{
 
     </div>
 
+
   </div>
 
 
@@ -1045,6 +1329,7 @@ footer{
 
 <script>
 
+
 // ============================================
 // SUPABASE CONFIGURATION
 // ============================================
@@ -1054,6 +1339,7 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
   "sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE";
+
 
 const supabaseClient =
   window.supabase.createClient(
@@ -1083,16 +1369,20 @@ form.addEventListener(
     const district =
       document.getElementById("district").value;
 
+
     const office =
       document.getElementById("office")
         .value
         .trim();
 
+
     const amount =
       document.getElementById("amount").value;
 
+
     const date =
       document.getElementById("date").value;
+
 
     const details =
       document.getElementById("details")
@@ -1111,6 +1401,7 @@ form.addEventListener(
       );
 
       return;
+
     }
 
 
@@ -1122,15 +1413,16 @@ form.addEventListener(
 
     try{
 
+
       const { error } =
         await supabaseClient
           .from("reports")
           .insert([
 
             {
-              district: district,
+              district:district,
 
-              office: office,
+              office:office,
 
               amount:
                 amount
@@ -1140,9 +1432,10 @@ form.addEventListener(
               incident_date:
                 date || null,
 
-              details: details,
+              details:details,
 
-              status: "pending"
+              status:"pending"
+
             }
 
           ]);
@@ -1155,31 +1448,39 @@ form.addEventListener(
           error
         );
 
+
         alert(
           "❌ রিপোর্ট জমা দেওয়া যায়নি।\n\n" +
-          "Supabase configuration বা security policy পরীক্ষা করুন।"
+          "Supabase security policy পরীক্ষা করুন।"
         );
 
         return;
+
       }
 
 
       alert(
         "✅ রিপোর্ট সফলভাবে জমা হয়েছে!\n\n" +
         "রিপোর্টটি বর্তমানে যাচাইয়ের অপেক্ষায় আছে।\n" +
-        "যাচাই ছাড়া এটি প্রকাশ করা হবে না।"
+        "Admin অনুমোদন করার পর এটি প্রকাশিত রিপোর্টে দেখা যাবে।"
       );
 
 
       form.reset();
 
+
       loadReportCount();
 
+      loadPublicReports();
+
+
     }
+
 
     catch(error){
 
       console.error(error);
+
 
       alert(
         "❌ একটি অপ্রত্যাশিত সমস্যা হয়েছে।\n\n" +
@@ -1187,6 +1488,7 @@ form.addEventListener(
       );
 
     }
+
 
     finally{
 
@@ -1199,6 +1501,245 @@ form.addEventListener(
 
   }
 );
+
+
+// ============================================
+// LOAD APPROVED PUBLIC REPORTS
+// ============================================
+
+async function loadPublicReports(){
+
+  const container =
+    document.getElementById(
+      "publicReportsList"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  container.innerHTML = `
+
+    <div class="loading-box">
+      ⏳ প্রকাশিত রিপোর্ট লোড হচ্ছে...
+    </div>
+
+  `;
+
+
+  try{
+
+
+    const { data, error } =
+      await supabaseClient
+        .from("reports")
+        .select(
+          "id,district,office,amount,incident_date,details,created_at"
+        )
+        .eq(
+          "status",
+          "approved"
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+
+    if(error){
+
+      console.error(
+        "Public reports error:",
+        error
+      );
+
+
+      container.innerHTML = `
+
+        <div class="error-box">
+
+          ❌ রিপোর্ট লোড করা যাচ্ছে না।
+
+          <br>
+
+          <small>
+            Supabase RLS policy পরীক্ষা করুন।
+          </small>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    if(
+      !data ||
+      data.length === 0
+    ){
+
+      container.innerHTML = `
+
+        <div class="empty-box">
+
+          📭 এখনো কোনো অনুমোদিত রিপোর্ট প্রকাশিত হয়নি।
+
+          <br><br>
+
+          <small>
+            Admin কোনো রিপোর্ট approve করলে
+            সেটি এখানে দেখা যাবে।
+          </small>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      data.map(
+        function(report){
+
+          const amount =
+            report.amount !== null &&
+            report.amount !== undefined &&
+            report.amount !== ""
+              ? Number(
+                  report.amount
+                ).toLocaleString(
+                  "bn-BD"
+                )
+              : "উল্লেখ নেই";
+
+
+          const date =
+            report.incident_date
+              ? escapeHTML(
+                  report.incident_date
+                )
+              : "উল্লেখ নেই";
+
+
+          return `
+
+            <article class="report-card">
+
+
+              <div class="report-card-header">
+
+
+                <h3 class="report-office">
+
+                  ${escapeHTML(
+                    report.office
+                  )}
+
+                </h3>
+
+
+                <span class="approved-badge">
+
+                  ✓ অনুমোদিত
+
+                </span>
+
+
+              </div>
+
+
+              <div class="report-meta">
+
+                <span>
+                  📍
+                  ${escapeHTML(
+                    report.district
+                  )}
+                </span>
+
+
+                <span>
+                  •
+                </span>
+
+
+                <span>
+                  💰
+                  ${amount}
+                  টাকা
+                </span>
+
+
+                <span>
+                  •
+                </span>
+
+
+                <span>
+                  📅
+                  ${date}
+                </span>
+
+              </div>
+
+
+              <div class="report-details">
+
+                ${escapeHTML(
+                  report.details
+                )}
+
+              </div>
+
+
+              <div class="report-id">
+
+                রিপোর্ট ID:
+                ${escapeHTML(
+                  String(report.id)
+                )}
+
+              </div>
+
+
+            </article>
+
+          `;
+
+        }
+      ).join("");
+
+
+  }
+
+
+  catch(error){
+
+    console.error(error);
+
+
+    container.innerHTML = `
+
+      <div class="error-box">
+
+        ❌ রিপোর্ট লোড করতে সমস্যা হয়েছে।
+
+      </div>
+
+    `;
+
+  }
+
+}
 
 
 // ============================================
@@ -1227,22 +1768,27 @@ async function searchReport(){
     );
 
     return;
+
   }
 
 
   results.innerHTML = `
-    <div style="
-      padding:20px;
-      text-align:center;
-      background:#f5f8f7;
-      border-radius:14px;
-    ">
+
+    <div class="loading-box">
+
       🔎 রিপোর্ট খোঁজা হচ্ছে...
+
     </div>
+
   `;
 
 
   try{
+
+
+    const filterValue =
+      escapeFilter(value);
+
 
     const { data, error } =
       await supabaseClient
@@ -1255,7 +1801,7 @@ async function searchReport(){
           "approved"
         )
         .or(
-          `district.ilike.%${escapeFilter(value)}%,office.ilike.%${escapeFilter(value)}%`
+          `district.ilike.%${filterValue}%,office.ilike.%${filterValue}%`
         )
         .order(
           "created_at",
@@ -1269,19 +1815,19 @@ async function searchReport(){
 
       console.error(error);
 
+
       results.innerHTML = `
-        <div style="
-          padding:20px;
-          background:#fff0f0;
-          border:1px solid #f0caca;
-          border-radius:14px;
-          color:#8a2222;
-        ">
+
+        <div class="error-box">
+
           ❌ রিপোর্ট খুঁজতে সমস্যা হয়েছে।
+
         </div>
+
       `;
 
       return;
+
     }
 
 
@@ -1291,18 +1837,17 @@ async function searchReport(){
     ){
 
       results.innerHTML = `
-        <div style="
-          padding:25px;
-          text-align:center;
-          background:#f5f8f7;
-          border-radius:14px;
-          color:#66756e;
-        ">
+
+        <div class="empty-box">
+
           🔎 কোনো প্রকাশিত রিপোর্ট পাওয়া যায়নি।
+
         </div>
+
       `;
 
       return;
+
     }
 
 
@@ -1311,7 +1856,9 @@ async function searchReport(){
         function(report){
 
           const amount =
-            report.amount
+            report.amount !== null &&
+            report.amount !== undefined &&
+            report.amount !== ""
               ? Number(
                   report.amount
                 ).toLocaleString(
@@ -1322,99 +1869,98 @@ async function searchReport(){
 
           const date =
             report.incident_date
-              || "উল্লেখ নেই";
+              ? escapeHTML(
+                  report.incident_date
+                )
+              : "উল্লেখ নেই";
 
 
           return `
 
-            <div style="
-              background:white;
-              border:1px solid #d9e5df;
-              border-radius:16px;
-              padding:22px;
-              margin-bottom:15px;
-              box-shadow:0 8px 25px rgba(20,55,40,.06);
-            ">
+            <div class="report-card">
 
-              <div style="
-                display:flex;
-                justify-content:space-between;
-                gap:10px;
-                flex-wrap:wrap;
-                margin-bottom:12px;
-              ">
 
-                <strong style="
-                  color:#073b2b;
-                  font-size:18px;
-                ">
+              <div class="report-card-header">
+
+
+                <strong class="report-office">
+
                   ${escapeHTML(
                     report.office
                   )}
+
                 </strong>
 
-                <span style="
-                  background:#eaf7f0;
-                  color:#08764d;
-                  padding:5px 10px;
-                  border-radius:20px;
-                  font-size:12px;
-                  font-weight:bold;
-                ">
-                  প্রকাশিত
+
+                <span class="approved-badge">
+
+                  ✓ প্রকাশিত
+
+                </span>
+
+
+              </div>
+
+
+              <div class="report-meta">
+
+                <span>
+
+                  📍
+                  ${escapeHTML(
+                    report.district
+                  )}
+
+                </span>
+
+
+                <span>
+                  •
+                </span>
+
+
+                <span>
+
+                  💰
+                  ${amount}
+                  টাকা
+
+                </span>
+
+
+                <span>
+                  •
+                </span>
+
+
+                <span>
+
+                  📅
+                  ${date}
+
                 </span>
 
               </div>
 
 
-              <div style="
-                color:#53645c;
-                font-size:14px;
-                margin-bottom:12px;
-              ">
+              <div class="report-details">
 
-                📍
-                ${escapeHTML(
-                  report.district
-                )}
-
-                &nbsp; • &nbsp;
-
-                💰
-                ${amount}
-                টাকা
-
-                &nbsp; • &nbsp;
-
-                📅
-                ${escapeHTML(
-                  date
-                )}
-
-              </div>
-
-
-              <p style="
-                color:#26372f;
-                line-height:1.8;
-                font-size:14px;
-              ">
                 ${escapeHTML(
                   report.details
                 )}
-              </p>
+
+              </div>
 
 
-              <div style="
-                margin-top:12px;
-                font-size:11px;
-                color:#8a9891;
-              ">
+              <div class="report-id">
+
                 রিপোর্ট ID:
                 ${escapeHTML(
-                  report.id
+                  String(report.id)
                 )}
+
               </div>
+
 
             </div>
 
@@ -1423,20 +1969,23 @@ async function searchReport(){
         }
       ).join("");
 
+
   }
+
 
   catch(error){
 
     console.error(error);
 
+
     results.innerHTML = `
-      <div style="
-        padding:20px;
-        background:#fff0f0;
-        border-radius:14px;
-      ">
+
+      <div class="error-box">
+
         ❌ Search system-এ সমস্যা হয়েছে।
+
       </div>
+
     `;
 
   }
@@ -1453,22 +2002,27 @@ function escapeHTML(value){
   return String(
     value ?? ""
   )
+
   .replace(
     /&/g,
     "&amp;"
   )
+
   .replace(
     /</g,
     "&lt;"
   )
+
   .replace(
     />/g,
     "&gt;"
   )
+
   .replace(
     /"/g,
     "&quot;"
   )
+
   .replace(
     /'/g,
     "&#039;"
@@ -1479,10 +2033,24 @@ function escapeHTML(value){
 
 function escapeFilter(value){
 
-  return String(value ?? "")
-    .replace(/[%_]/g, "\\$&")
-    .replace(/,/g, "\\,")
-    .replace(/\./g, "\\.");
+  return String(
+    value ?? ""
+  )
+
+  .replace(
+    /[%_]/g,
+    "\\$&"
+  )
+
+  .replace(
+    /,/g,
+    "\\,"
+  )
+
+  .replace(
+    /\./g,
+    "\\."
+  );
 
 }
 
@@ -1493,31 +2061,52 @@ function escapeFilter(value){
 
 async function loadReportCount(){
 
-  const {
-    count,
-    error
-  } =
-    await supabaseClient
-      .from("reports")
-      .select(
-        "*",
-        {
-          count:"exact",
-          head:true
-        }
-      )
-      .eq(
-        "status",
-        "approved"
-      );
+  try{
+
+    const {
+      count,
+      error
+    } =
+      await supabaseClient
+        .from("reports")
+        .select(
+          "*",
+          {
+            count:"exact",
+            head:true
+          }
+        )
+        .eq(
+          "status",
+          "approved"
+        );
 
 
-  if(!error){
+    if(!error){
 
-    document.getElementById(
-      "reportCount"
-    ).textContent =
-      count || 0;
+      const countElement =
+        document.getElementById(
+          "reportCount"
+        );
+
+
+      if(countElement){
+
+        countElement.textContent =
+          count || 0;
+
+      }
+
+    }
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Count error:",
+      error
+    );
 
   }
 
@@ -1525,10 +2114,13 @@ async function loadReportCount(){
 
 
 // ============================================
-// START
+// START WEBSITE
 // ============================================
 
 loadReportCount();
+
+loadPublicReports();
+
 
 </script>
 
