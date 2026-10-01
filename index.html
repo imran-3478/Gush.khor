@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
-<head>
+<head><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -804,7 +804,19 @@ footer{
       <p>Database যুক্ত হওয়ার পর এখান থেকে প্রকাশযোগ্য রিপোর্ট খোঁজা যাবে</p>
     </div>
 
-    <div class="search-box">
+    <div class="search-box"><div class="search-box">
+
+  <input
+    type="search"
+    id="searchInput"
+    placeholder="জেলা বা প্রতিষ্ঠানের নাম লিখুন..."
+  >
+
+  <button onclick="searchReport()">
+    🔎 খুঁজুন
+  </button>
+
+</div>
 
       <input
         type="search"
