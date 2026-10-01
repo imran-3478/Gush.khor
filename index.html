@@ -179,11 +179,11 @@ nav a:hover{
 }
 
 /* =========================
-   STATS
+   LIVE STATISTICS
 ========================= */
 
 .stats{
-  max-width:1050px;
+  max-width:1100px;
   margin:-35px auto 0;
   position:relative;
   z-index:5;
@@ -192,7 +192,7 @@ nav a:hover{
 
 .stats-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   background:white;
   border-radius:20px;
   box-shadow:0 15px 45px rgba(20,55,40,.10);
@@ -214,6 +214,7 @@ nav a:hover{
   display:block;
   font-size:30px;
   color:var(--green);
+  margin-bottom:4px;
 }
 
 .stat span{
@@ -787,7 +788,7 @@ footer{
 
 
 <!-- =========================
-     STATS
+     LIVE STATISTICS
 ========================= -->
 
 <div class="stats">
@@ -797,11 +798,11 @@ footer{
     <div class="stat">
 
       <strong id="reportCount">
-        0
+        ০
       </strong>
 
       <span>
-        প্রকাশিত রিপোর্ট
+        📢 প্রকাশিত রিপোর্ট
       </span>
 
     </div>
@@ -809,12 +810,12 @@ footer{
 
     <div class="stat">
 
-      <strong>
-        ৬৪
+      <strong id="totalAmount">
+        ০ ৳
       </strong>
 
       <span>
-        জেলা
+        💰 রিপোর্টে উল্লেখিত মোট ঘুষ
       </span>
 
     </div>
@@ -822,12 +823,25 @@ footer{
 
     <div class="stat">
 
-      <strong>
-        ২৪/৭
+      <strong id="officeCount">
+        ০
       </strong>
 
       <span>
-        রিপোর্ট গ্রহণ
+        🏢 রিপোর্ট হওয়া অফিস
+      </span>
+
+    </div>
+
+
+    <div class="stat">
+
+      <strong id="districtCount">
+        ০
+      </strong>
+
+      <span>
+        📍 রিপোর্ট হওয়া জেলা
       </span>
 
     </div>
@@ -1469,7 +1483,7 @@ form.addEventListener(
       form.reset();
 
 
-      loadReportCount();
+      loadReportStatistics();
 
       loadPublicReports();
 
@@ -2056,25 +2070,18 @@ function escapeFilter(value){
 
 
 // ============================================
-// APPROVED REPORT COUNT
+// LIVE STATISTICS
 // ============================================
 
-async function loadReportCount(){
+async function loadReportStatistics(){
 
   try{
 
-    const {
-      count,
-      error
-    } =
+    const { data, error } =
       await supabaseClient
         .from("reports")
         .select(
-          "*",
-          {
-            count:"exact",
-            head:true
-          }
+          "id,district,office,amount"
         )
         .eq(
           "status",
@@ -2082,29 +2089,217 @@ async function loadReportCount(){
         );
 
 
-    if(!error){
+    if(error){
 
-      const countElement =
-        document.getElementById(
-          "reportCount"
-        );
+      console.error(
+        "Statistics error:",
+        error
+      );
 
-
-      if(countElement){
-
-        countElement.textContent =
-          count || 0;
-
-      }
+      return;
 
     }
+
+
+    // ========================================
+    // APPROVED REPORT COUNT
+    // ========================================
+
+    const reportCount =
+      data
+        ? data.length
+        : 0;
+
+
+    // ========================================
+    // TOTAL REPORTED AMOUNT
+    // ========================================
+
+    let totalAmount = 0;
+
+
+    // ========================================
+    // UNIQUE OFFICES
+    // ========================================
+
+    const offices =
+      new Set();
+
+
+    // ========================================
+    // UNIQUE DISTRICTS
+    // ========================================
+
+    const districts =
+      new Set();
+
+
+    if(data){
+
+      data.forEach(
+        function(report){
+
+          // -------------------------------
+          // Amount
+          // -------------------------------
+
+          if(
+            report.amount !== null &&
+            report.amount !== undefined &&
+            report.amount !== ""
+          ){
+
+            const amount =
+              Number(report.amount);
+
+
+            if(
+              Number.isFinite(amount) &&
+              amount > 0
+            ){
+
+              totalAmount += amount;
+
+            }
+
+          }
+
+
+          // -------------------------------
+          // Office
+          // -------------------------------
+
+          if(
+            report.office &&
+            String(report.office).trim()
+          ){
+
+            offices.add(
+              String(
+                report.office
+              ).trim()
+            );
+
+          }
+
+
+          // -------------------------------
+          // District
+          // -------------------------------
+
+          if(
+            report.district &&
+            String(report.district).trim()
+          ){
+
+            districts.add(
+              String(
+                report.district
+              ).trim()
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+    // ========================================
+    // UPDATE REPORT COUNT
+    // ========================================
+
+    const reportCountElement =
+      document.getElementById(
+        "reportCount"
+      );
+
+
+    if(reportCountElement){
+
+      reportCountElement.textContent =
+        Number(
+          reportCount
+        ).toLocaleString(
+          "bn-BD"
+        );
+
+    }
+
+
+    // ========================================
+    // UPDATE TOTAL AMOUNT
+    // ========================================
+
+    const totalAmountElement =
+      document.getElementById(
+        "totalAmount"
+      );
+
+
+    if(totalAmountElement){
+
+      totalAmountElement.textContent =
+        Number(
+          totalAmount
+        ).toLocaleString(
+          "bn-BD"
+        ) + " ৳";
+
+    }
+
+
+    // ========================================
+    // UPDATE OFFICE COUNT
+    // ========================================
+
+    const officeCountElement =
+      document.getElementById(
+        "officeCount"
+      );
+
+
+    if(officeCountElement){
+
+      officeCountElement.textContent =
+        Number(
+          offices.size
+        ).toLocaleString(
+          "bn-BD"
+        );
+
+    }
+
+
+    // ========================================
+    // UPDATE DISTRICT COUNT
+    // ========================================
+
+    const districtCountElement =
+      document.getElementById(
+        "districtCount"
+      );
+
+
+    if(districtCountElement){
+
+      districtCountElement.textContent =
+        Number(
+          districts.size
+        ).toLocaleString(
+          "bn-BD"
+        );
+
+    }
+
 
   }
 
   catch(error){
 
     console.error(
-      "Count error:",
+      "Statistics loading error:",
       error
     );
 
@@ -2117,7 +2312,7 @@ async function loadReportCount(){
 // START WEBSITE
 // ============================================
 
-loadReportCount();
+loadReportStatistics();
 
 loadPublicReports();
 
