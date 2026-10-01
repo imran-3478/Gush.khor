@@ -1,1 +1,678 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>GushKhor Admin Panel</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7f5;
+      color: #1f2937;
+    }
+
+    .header {
+      background: #087443;
+      color: white;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+    }
+
+    .logout-btn {
+      background: white;
+      color: #087443;
+      border: none;
+      padding: 9px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .login-box,
+    .panel {
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .login-box {
+      max-width: 430px;
+      margin: 70px auto;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #087443;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 11px 17px;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: #087443;
+      color: white;
+      font-size: 16px;
+    }
+
+    .login-btn:hover {
+      background: #065c35;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .refresh-btn {
+      background: #087443;
+      color: white;
+    }
+
+    .report-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .report-card h3 {
+      color: #087443;
+      margin-bottom: 12px;
+    }
+
+    .info {
+      margin: 7px 0;
+      line-height: 1.5;
+    }
+
+    .details {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .approve {
+      background: #16a34a;
+      color: white;
+    }
+
+    .reject {
+      background: #dc2626;
+      color: white;
+    }
+
+    .status {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px 10px;
+      color: #6b7280;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header hidden" id="adminHeader">
+    <h1>🛡️ GushKhor Admin Panel</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </header>
+
+
+  <!-- Login -->
+  <div class="container" id="loginSection">
+
+    <div class="login-box">
+
+      <h2>🔐 Admin Login</h2>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Admin Email"
+        autocomplete="email"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      >
+
+      <button class="login-btn" onclick="login()">
+        Login
+      </button>
+
+      <div id="loginMessage" class="message"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Admin Panel -->
+  <main class="container hidden" id="adminSection">
+
+    <div class="panel">
+
+      <div class="topbar">
+        <div>
+          <h2>📋 Pending Reports</h2>
+          <p>নতুন রিপোর্ট যাচাই করে Approve অথবা Reject করুন।</p>
+        </div>
+
+        <button class="refresh-btn" onclick="loadReports()">
+          🔄 Refresh
+        </button>
+      </div>
+
+      <div id="reportsList"></div>
+
+    </div>
+
+  </main>
+
+
+<script>
+
+  // ==============================
+  // SUPABASE CONFIG
+  // ==============================
+
+  const SUPABASE_URL =
+    "https://dzsgcrgcotwxruhqrder.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  // ==============================
+  // LOGIN
+  // ==============================
+
+  async function login() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    if (!email || !password) {
+
+      showMessage(
+        "Email এবং Password দিন।",
+        "error"
+      );
+
+      return;
+    }
+
+    showMessage(
+      "Login হচ্ছে...",
+      "success"
+    );
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+    if (error) {
+
+      showMessage(
+        "Login failed: " + error.message,
+        "error"
+      );
+
+      return;
+    }
+
+    await checkAdmin(data.user);
+
+  }
+
+
+  // ==============================
+  // CHECK ADMIN
+  // ==============================
+
+  async function checkAdmin(user) {
+
+    const { data, error } =
+      await supabaseClient
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+
+    if (error) {
+
+      showMessage(
+        "Admin verification failed: " +
+        error.message,
+        "error"
+      );
+
+      await supabaseClient.auth.signOut();
+
+      return;
+    }
+
+
+    if (!data) {
+
+      showMessage(
+        "আপনার এই Admin Panel ব্যবহারের অনুমতি নেই।",
+        "error"
+      );
+
+      await supabaseClient.auth.signOut();
+
+      return;
+    }
+
+
+    // Admin confirmed
+
+    document
+      .getElementById("loginSection")
+      .classList.add("hidden");
+
+    document
+      .getElementById("adminHeader")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("adminSection")
+      .classList.remove("hidden");
+
+    loadReports();
+  }
+
+
+  // ==============================
+  // LOAD PENDING REPORTS
+  // ==============================
+
+  async function loadReports() {
+
+    const reportsList =
+      document.getElementById("reportsList");
+
+    reportsList.innerHTML =
+      "<div class='empty'>⏳ Reports loading...</div>";
+
+
+    const { data, error } =
+      await supabaseClient
+        .from("reports")
+        .select(
+          "id,district,office,amount,incident_date,details,status,created_at"
+        )
+        .eq("status", "pending")
+        .order("created_at", {
+          ascending: false
+        });
+
+
+    if (error) {
+
+      reportsList.innerHTML =
+        "<div class='empty'>❌ Reports load করা যায়নি।<br><br>" +
+        escapeHTML(error.message) +
+        "</div>";
+
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+      reportsList.innerHTML =
+        "<div class='empty'>" +
+        "✅ বর্তমানে কোনো Pending Report নেই।" +
+        "</div>";
+
+      return;
+    }
+
+
+    reportsList.innerHTML =
+      data.map(report => {
+
+        const amount =
+          report.amount !== null &&
+          report.amount !== undefined
+            ? Number(report.amount).toLocaleString("bn-BD") + " টাকা"
+            : "উল্লেখ নেই";
+
+
+        const date =
+          report.incident_date
+            ? formatDate(report.incident_date)
+            : "উল্লেখ নেই";
+
+
+        return `
+
+          <div class="report-card">
+
+            <span class="status">
+              ⏳ Pending
+            </span>
+
+            <h3>
+              ${escapeHTML(report.office || "অফিস উল্লেখ নেই")}
+            </h3>
+
+            <div class="info">
+              📍 <strong>জেলা:</strong>
+              ${escapeHTML(report.district || "উল্লেখ নেই")}
+            </div>
+
+            <div class="info">
+              🏢 <strong>অফিস:</strong>
+              ${escapeHTML(report.office || "উল্লেখ নেই")}
+            </div>
+
+            <div class="info">
+              💰 <strong>ঘুষের পরিমাণ:</strong>
+              ${amount}
+            </div>
+
+            <div class="info">
+              📅 <strong>ঘটনার তারিখ:</strong>
+              ${date}
+            </div>
+
+            <div class="info">
+              📝 <strong>বিবরণ:</strong>
+            </div>
+
+            <div class="details">
+              ${escapeHTML(report.details || "কোনো বিবরণ নেই")}
+            </div>
+
+            <div class="actions">
+
+              <button
+                class="approve"
+                onclick="updateReport('${report.id}', 'approved')"
+              >
+                ✅ Approve
+              </button>
+
+              <button
+                class="reject"
+                onclick="updateReport('${report.id}', 'rejected')"
+              >
+                ❌ Reject
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+  }
+
+
+  // ==============================
+  // APPROVE / REJECT
+  // ==============================
+
+  async function updateReport(id, newStatus) {
+
+    const action =
+      newStatus === "approved"
+        ? "Approve"
+        : "Reject";
+
+
+    const confirmed =
+      confirm(
+        `আপনি কি এই Report-টি ${action} করতে চান?`
+      );
+
+
+    if (!confirmed) return;
+
+
+    const { error } =
+      await supabaseClient
+        .from("reports")
+        .update({
+          status: newStatus
+        })
+        .eq("id", id);
+
+
+    if (error) {
+
+      alert(
+        "❌ Update failed:\n" +
+        error.message
+      );
+
+      return;
+    }
+
+
+    alert(
+      newStatus === "approved"
+        ? "✅ Report Approved হয়েছে।"
+        : "❌ Report Rejected হয়েছে।"
+    );
+
+
+    loadReports();
+
+  }
+
+
+  // ==============================
+  // LOGOUT
+  // ==============================
+
+  async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    location.reload();
+
+  }
+
+
+  // ==============================
+  // AUTO LOGIN CHECK
+  // ==============================
+
+  async function checkExistingSession() {
+
+    const {
+      data: { session }
+    } = await supabaseClient.auth.getSession();
+
+
+    if (session && session.user) {
+
+      await checkAdmin(session.user);
+
+    }
+
+  }
+
+
+  // ==============================
+  // HELPERS
+  // ==============================
+
+  function showMessage(message, type) {
+
+    const box =
+      document.getElementById("loginMessage");
+
+    box.innerHTML =
+      escapeHTML(message);
+
+    box.className =
+      "message " + type;
+
+    box.style.display = "block";
+
+  }
+
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  function formatDate(value) {
+
+    try {
+
+      return new Date(value).toLocaleDateString(
+        "bn-BD",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+      );
+
+    } catch {
+
+      return value;
+
+    }
+
+  }
+
+
+  // Start
+  checkExistingSession();
+
+</script>
+
+</body>
+</html>
