@@ -148,18 +148,28 @@
       line-height: 1.5;
     }
 
-    .details {
+    .details-preview {
       background: #f8fafc;
       padding: 12px;
       border-radius: 8px;
       margin-top: 10px;
-      white-space: pre-wrap;
+      color: #4b5563;
     }
 
     .actions {
       display: flex;
       gap: 10px;
       margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .view-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .view-btn:hover {
+      background: #1d4ed8;
     }
 
     .approve {
@@ -167,9 +177,17 @@
       color: white;
     }
 
+    .approve:hover {
+      background: #15803d;
+    }
+
     .reject {
       background: #dc2626;
       color: white;
+    }
+
+    .reject:hover {
+      background: #b91c1c;
     }
 
     .status {
@@ -188,7 +206,81 @@
       color: #6b7280;
     }
 
+    /* MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: white;
+      width: 100%;
+      max-width: 650px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 16px;
+      padding: 25px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 15px;
+      top: 12px;
+      background: #ef4444;
+      color: white;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      padding: 0;
+      font-size: 22px;
+      line-height: 35px;
+    }
+
+    .modal-close:hover {
+      background: #dc2626;
+    }
+
+    .modal-title {
+      color: #087443;
+      margin-bottom: 20px;
+      padding-right: 40px;
+    }
+
+    .modal-row {
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+
+    .modal-row strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .modal-details {
+      white-space: pre-wrap;
+      line-height: 1.7;
+      color: #111827;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
     @media (max-width: 600px) {
+
       .header h1 {
         font-size: 18px;
       }
@@ -205,21 +297,42 @@
       .actions button {
         width: 100%;
       }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+
+      .modal-actions button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Header -->
+  <!-- HEADER -->
+
   <header class="header hidden" id="adminHeader">
+
     <h1>🛡️ GushKhor Admin Panel</h1>
-    <button class="logout-btn" onclick="logout()">Logout</button>
+
+    <button
+      class="logout-btn"
+      onclick="logout()"
+    >
+      🚪 Logout
+    </button>
+
   </header>
 
 
-  <!-- Login -->
-  <div class="container" id="loginSection">
+  <!-- LOGIN -->
+
+  <div
+    class="container"
+    id="loginSection"
+  >
 
     <div class="login-box">
 
@@ -239,31 +352,51 @@
         autocomplete="current-password"
       >
 
-      <button class="login-btn" onclick="login()">
+      <button
+        class="login-btn"
+        onclick="login()"
+      >
         Login
       </button>
 
-      <div id="loginMessage" class="message"></div>
+      <div
+        id="loginMessage"
+        class="message"
+      ></div>
 
     </div>
 
   </div>
 
 
-  <!-- Admin Panel -->
-  <main class="container hidden" id="adminSection">
+  <!-- ADMIN PANEL -->
+
+  <main
+    class="container hidden"
+    id="adminSection"
+  >
 
     <div class="panel">
 
       <div class="topbar">
+
         <div>
+
           <h2>📋 Pending Reports</h2>
-          <p>নতুন রিপোর্ট যাচাই করে Approve অথবা Reject করুন।</p>
+
+          <p>
+            নতুন রিপোর্ট যাচাই করে Approve অথবা Reject করুন।
+          </p>
+
         </div>
 
-        <button class="refresh-btn" onclick="loadReports()">
+        <button
+          class="refresh-btn"
+          onclick="loadReports()"
+        >
           🔄 Refresh
         </button>
+
       </div>
 
       <div id="reportsList"></div>
@@ -273,11 +406,38 @@
   </main>
 
 
+  <!-- DETAILS MODAL -->
+
+  <div
+    id="detailsModal"
+    class="modal hidden"
+  >
+
+    <div class="modal-content">
+
+      <button
+        class="modal-close"
+        onclick="closeModal()"
+      >
+        ×
+      </button>
+
+      <h2 class="modal-title">
+        📄 সম্পূর্ণ Report Details
+      </h2>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+
 <script>
 
-  // ==============================
+  // ==========================================
   // SUPABASE CONFIG
-  // ==============================
+  // ==========================================
 
   const SUPABASE_URL =
     "https://dzsgcrgcotwxruhqrder.supabase.co";
@@ -292,17 +452,23 @@
     );
 
 
-  // ==============================
+  // ==========================================
   // LOGIN
-  // ==============================
+  // ==========================================
 
   async function login() {
 
     const email =
-      document.getElementById("email").value.trim();
+      document
+        .getElementById("email")
+        .value
+        .trim();
 
     const password =
-      document.getElementById("password").value;
+      document
+        .getElementById("password")
+        .value;
+
 
     if (!email || !password) {
 
@@ -314,35 +480,43 @@
       return;
     }
 
+
     showMessage(
       "Login হচ্ছে...",
       "success"
     );
 
+
     const { data, error } =
       await supabaseClient.auth.signInWithPassword({
+
         email: email,
+
         password: password
+
       });
+
 
     if (error) {
 
       showMessage(
-        "Login failed: " + error.message,
+        "Login failed: " +
+        error.message,
         "error"
       );
 
       return;
     }
 
+
     await checkAdmin(data.user);
 
   }
 
 
-  // ==============================
+  // ==========================================
   // CHECK ADMIN
-  // ==============================
+  // ==========================================
 
   async function checkAdmin(user) {
 
@@ -381,32 +555,35 @@
     }
 
 
-    // Admin confirmed
-
     document
       .getElementById("loginSection")
       .classList.add("hidden");
+
 
     document
       .getElementById("adminHeader")
       .classList.remove("hidden");
 
+
     document
       .getElementById("adminSection")
       .classList.remove("hidden");
 
+
     loadReports();
+
   }
 
 
-  // ==============================
+  // ==========================================
   // LOAD PENDING REPORTS
-  // ==============================
+  // ==========================================
 
   async function loadReports() {
 
     const reportsList =
       document.getElementById("reportsList");
+
 
     reportsList.innerHTML =
       "<div class='empty'>⏳ Reports loading...</div>";
@@ -419,15 +596,19 @@
           "id,district,office,amount,incident_date,details,status,created_at"
         )
         .eq("status", "pending")
-        .order("created_at", {
-          ascending: false
-        });
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
 
 
     if (error) {
 
       reportsList.innerHTML =
-        "<div class='empty'>❌ Reports load করা যায়নি।<br><br>" +
+        "<div class='empty'>" +
+        "❌ Reports load করা যায়নি।<br><br>" +
         escapeHTML(error.message) +
         "</div>";
 
@@ -447,93 +628,346 @@
 
 
     reportsList.innerHTML =
-      data.map(report => {
+      data
+        .map(report => {
 
-        const amount =
-          report.amount !== null &&
-          report.amount !== undefined
-            ? Number(report.amount).toLocaleString("bn-BD") + " টাকা"
-            : "উল্লেখ নেই";
-
-
-        const date =
-          report.incident_date
-            ? formatDate(report.incident_date)
-            : "উল্লেখ নেই";
+          const amount =
+            report.amount !== null &&
+            report.amount !== undefined
+              ? Number(report.amount)
+                  .toLocaleString("bn-BD") +
+                " টাকা"
+              : "উল্লেখ নেই";
 
 
-        return `
+          const date =
+            report.incident_date
+              ? formatDate(
+                  report.incident_date
+                )
+              : "উল্লেখ নেই";
 
-          <div class="report-card">
 
-            <span class="status">
-              ⏳ Pending
-            </span>
+          const preview =
+            report.details
+              ? report.details.length > 140
+                ? report.details.substring(
+                    0,
+                    140
+                  ) + "..."
+                : report.details
+              : "কোনো বিবরণ নেই";
 
-            <h3>
-              ${escapeHTML(report.office || "অফিস উল্লেখ নেই")}
-            </h3>
 
-            <div class="info">
-              📍 <strong>জেলা:</strong>
-              ${escapeHTML(report.district || "উল্লেখ নেই")}
+          return `
+
+            <div class="report-card">
+
+              <span class="status">
+                ⏳ Pending
+              </span>
+
+              <h3>
+                ${escapeHTML(
+                  report.office ||
+                  "অফিস উল্লেখ নেই"
+                )}
+              </h3>
+
+              <div class="info">
+                📍 <strong>জেলা:</strong>
+                ${escapeHTML(
+                  report.district ||
+                  "উল্লেখ নেই"
+                )}
+              </div>
+
+              <div class="info">
+                💰 <strong>ঘুষের পরিমাণ:</strong>
+                ${amount}
+              </div>
+
+              <div class="info">
+                📅 <strong>ঘটনার তারিখ:</strong>
+                ${date}
+              </div>
+
+              <div class="details-preview">
+                📝 ${escapeHTML(preview)}
+              </div>
+
+              <div class="actions">
+
+                <button
+                  class="view-btn"
+                  onclick="viewReport('${report.id}')"
+                >
+                  👁️ View Details
+                </button>
+
+                <button
+                  class="approve"
+                  onclick="updateReport(
+                    '${report.id}',
+                    'approved'
+                  )"
+                >
+                  ✅ Approve
+                </button>
+
+                <button
+                  class="reject"
+                  onclick="updateReport(
+                    '${report.id}',
+                    'rejected'
+                  )"
+                >
+                  ❌ Reject
+                </button>
+
+              </div>
+
             </div>
 
-            <div class="info">
-              🏢 <strong>অফিস:</strong>
-              ${escapeHTML(report.office || "উল্লেখ নেই")}
-            </div>
+          `;
 
-            <div class="info">
-              💰 <strong>ঘুষের পরিমাণ:</strong>
-              ${amount}
-            </div>
-
-            <div class="info">
-              📅 <strong>ঘটনার তারিখ:</strong>
-              ${date}
-            </div>
-
-            <div class="info">
-              📝 <strong>বিবরণ:</strong>
-            </div>
-
-            <div class="details">
-              ${escapeHTML(report.details || "কোনো বিবরণ নেই")}
-            </div>
-
-            <div class="actions">
-
-              <button
-                class="approve"
-                onclick="updateReport('${report.id}', 'approved')"
-              >
-                ✅ Approve
-              </button>
-
-              <button
-                class="reject"
-                onclick="updateReport('${report.id}', 'rejected')"
-              >
-                ❌ Reject
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      }).join("");
+        })
+        .join("");
 
   }
 
 
-  // ==============================
-  // APPROVE / REJECT
-  // ==============================
+  // ==========================================
+  // VIEW FULL REPORT
+  // ==========================================
 
-  async function updateReport(id, newStatus) {
+  async function viewReport(id) {
+
+    const { data, error } =
+      await supabaseClient
+        .from("reports")
+        .select(
+          "id,district,office,amount,incident_date,details,status,created_at"
+        )
+        .eq("id", id)
+        .single();
+
+
+    if (error) {
+
+      alert(
+        "Report details পাওয়া যায়নি:\n" +
+        error.message
+      );
+
+      return;
+    }
+
+
+    const amount =
+      data.amount !== null &&
+      data.amount !== undefined
+        ? Number(data.amount)
+            .toLocaleString("bn-BD") +
+          " টাকা"
+        : "উল্লেখ নেই";
+
+
+    const incidentDate =
+      data.incident_date
+        ? formatDate(
+            data.incident_date
+          )
+        : "উল্লেখ নেই";
+
+
+    const createdDate =
+      data.created_at
+        ? new Date(
+            data.created_at
+          ).toLocaleString("bn-BD")
+        : "উল্লেখ নেই";
+
+
+    document
+      .getElementById("modalBody")
+      .innerHTML = `
+
+        <div class="modal-row">
+
+          <strong>
+            📍 জেলা
+          </strong>
+
+          ${escapeHTML(
+            data.district ||
+            "উল্লেখ নেই"
+          )}
+
+        </div>
+
+
+        <div class="modal-row">
+
+          <strong>
+            🏢 অফিস
+          </strong>
+
+          ${escapeHTML(
+            data.office ||
+            "উল্লেখ নেই"
+          )}
+
+        </div>
+
+
+        <div class="modal-row">
+
+          <strong>
+            💰 ঘুষের পরিমাণ
+          </strong>
+
+          ${amount}
+
+        </div>
+
+
+        <div class="modal-row">
+
+          <strong>
+            📅 ঘটনার তারিখ
+          </strong>
+
+          ${incidentDate}
+
+        </div>
+
+
+        <div class="modal-row">
+
+          <strong>
+            🕐 রিপোর্ট জমা দেওয়ার সময়
+          </strong>
+
+          ${createdDate}
+
+        </div>
+
+
+        <div class="modal-row">
+
+          <strong>
+            📌 বর্তমান Status
+          </strong>
+
+          ${escapeHTML(
+            data.status ||
+            "unknown"
+          )}
+
+        </div>
+
+
+        <div class="modal-row">
+
+          <strong>
+            📝 সম্পূর্ণ অভিযোগ
+          </strong>
+
+          <div class="modal-details">
+
+            ${escapeHTML(
+              data.details ||
+              "কোনো বিস্তারিত তথ্য নেই।"
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            class="approve"
+            onclick="
+              closeModal();
+              updateReport(
+                '${data.id}',
+                'approved'
+              )
+            "
+          >
+            ✅ Approve
+          </button>
+
+
+          <button
+            class="reject"
+            onclick="
+              closeModal();
+              updateReport(
+                '${data.id}',
+                'rejected'
+              )
+            "
+          >
+            ❌ Reject
+          </button>
+
+        </div>
+
+      `;
+
+
+    document
+      .getElementById("detailsModal")
+      .classList.remove("hidden");
+
+  }
+
+
+  // ==========================================
+  // CLOSE MODAL
+  // ==========================================
+
+  function closeModal() {
+
+    document
+      .getElementById("detailsModal")
+      .classList.add("hidden");
+
+  }
+
+
+  // Close modal when clicking outside
+
+  document
+    .getElementById("detailsModal")
+    .addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target === this
+        ) {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+  // ==========================================
+  // APPROVE / REJECT
+  // ==========================================
+
+  async function updateReport(
+    id,
+    newStatus
+  ) {
 
     const action =
       newStatus === "approved"
@@ -547,7 +981,11 @@
       );
 
 
-    if (!confirmed) return;
+    if (!confirmed) {
+
+      return;
+
+    }
 
 
     const { error } =
@@ -567,6 +1005,7 @@
       );
 
       return;
+
     }
 
 
@@ -582,76 +1021,127 @@
   }
 
 
-  // ==============================
+  // ==========================================
   // LOGOUT
-  // ==============================
+  // ==========================================
 
   async function logout() {
 
-    await supabaseClient.auth.signOut();
+    await supabaseClient
+      .auth
+      .signOut();
 
     location.reload();
 
   }
 
 
-  // ==============================
-  // AUTO LOGIN CHECK
-  // ==============================
+  // ==========================================
+  // EXISTING SESSION
+  // ==========================================
 
   async function checkExistingSession() {
 
     const {
-      data: { session }
-    } = await supabaseClient.auth.getSession();
+      data: {
+        session
+      }
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
 
 
-    if (session && session.user) {
+    if (
+      session &&
+      session.user
+    ) {
 
-      await checkAdmin(session.user);
+      await checkAdmin(
+        session.user
+      );
 
     }
 
   }
 
 
-  // ==============================
-  // HELPERS
-  // ==============================
+  // ==========================================
+  // MESSAGE
+  // ==========================================
 
-  function showMessage(message, type) {
+  function showMessage(
+    message,
+    type
+  ) {
 
     const box =
-      document.getElementById("loginMessage");
+      document
+        .getElementById(
+          "loginMessage"
+        );
+
 
     box.innerHTML =
       escapeHTML(message);
 
+
     box.className =
       "message " + type;
 
-    box.style.display = "block";
+
+    box.style.display =
+      "block";
 
   }
 
+
+  // ==========================================
+  // SECURITY: ESCAPE HTML
+  // ==========================================
 
   function escapeHTML(value) {
 
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+    return String(
+      value ?? ""
+    )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
   }
 
 
-  function formatDate(value) {
+  // ==========================================
+  // DATE FORMAT
+  // ==========================================
+
+  function formatDate(
+    value
+  ) {
 
     try {
 
-      return new Date(value).toLocaleDateString(
+      return new Date(
+        value
+      ).toLocaleDateString(
         "bn-BD",
         {
           year: "numeric",
@@ -669,7 +1159,10 @@
   }
 
 
-  // Start
+  // ==========================================
+  // START
+  // ==========================================
+
   checkExistingSession();
 
 </script>
