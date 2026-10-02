@@ -1,461 +1,779 @@
+```html
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>GushKhor — ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</title>
-
-  <meta name="description" content="ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতা তৈরি এবং মানুষের অভিজ্ঞতা তুলে ধরার একটি প্ল্যাটফর্ম।">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    body{
-      font-family:Arial,"Noto Sans Bengali",sans-serif;
-      background:#f5f7fb;
-      color:#172033;
-      line-height:1.7;
-    }
-
-    header{
-      background:linear-gradient(135deg,#063b2b,#087f5b);
-      color:white;
-      padding:18px 5%;
-      position:sticky;
-      top:0;
-      z-index:1000;
-      box-shadow:0 3px 15px rgba(0,0,0,.15);
-    }
-
-    .nav{
-      max-width:1200px;
-      margin:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
-
-    .logo{
-      font-size:27px;
-      font-weight:800;
-    }
-
-    .logo span{
-      color:#ffd43b;
-    }
-
-    nav a{
-      color:white;
-      text-decoration:none;
-      margin-left:18px;
-      font-weight:600;
-    }
-
-    nav a:hover{
-      color:#ffd43b;
-    }
-
-    .hero{
-      background:linear-gradient(135deg,#063b2b,#0b8f67);
-      color:white;
-      padding:80px 20px;
-      text-align:center;
-    }
-
-    .hero h1{
-      font-size:44px;
-      margin-bottom:15px;
-    }
-
-    .hero p{
-      max-width:800px;
-      margin:auto;
-      font-size:19px;
-      opacity:.95;
-    }
-
-    .container{
-      max-width:1200px;
-      margin:auto;
-      padding:55px 20px;
-    }
-
-    .section-title{
-      text-align:center;
-      margin-bottom:30px;
-    }
-
-    .section-title h2{
-      font-size:32px;
-      margin-bottom:8px;
-    }
-
-    .section-title p{
-      color:#667085;
-    }
-
-    /* Statistics */
-
-    .stats-grid{
-      max-width:1200px;
-      margin:-40px auto 0;
-      padding:0 20px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      position:relative;
-      z-index:2;
-    }
-
-    .stat-card{
-      background:white;
-      padding:25px 15px;
-      border-radius:16px;
-      text-align:center;
-      box-shadow:0 8px 25px rgba(0,0,0,.09);
-    }
-
-    .stat-icon{
-      font-size:32px;
-      margin-bottom:7px;
-    }
-
-    .stat-number{
-      font-size:28px;
-      font-weight:800;
-      color:#087f5b;
-    }
-
-    .stat-title{
-      color:#667085;
-      font-size:15px;
-    }
-
-    /* Form */
-
-    .form-box{
-      max-width:900px;
-      margin:auto;
-      background:white;
-      padding:30px;
-      border-radius:18px;
-      box-shadow:0 8px 30px rgba(0,0,0,.08);
-    }
-
-    .form-group{
-      margin-bottom:20px;
-    }
-
-    label{
-      display:block;
-      font-weight:700;
-      margin-bottom:7px;
-    }
-
-    input,
-    select,
-    textarea{
-      width:100%;
-      padding:13px 14px;
-      border:1px solid #d0d5dd;
-      border-radius:10px;
-      font-size:16px;
-      outline:none;
-      background:white;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus{
-      border-color:#087f5b;
-      box-shadow:0 0 0 3px rgba(8,127,91,.1);
-    }
-
-    select:disabled{
-      background:#f1f3f5;
-      color:#98a2b3;
-      cursor:not-allowed;
-    }
-
-    textarea{
-      min-height:150px;
-      resize:vertical;
-    }
-
-    .location-title{
-      background:#e8f7f1;
-      color:#087f5b;
-      padding:12px 15px;
-      border-radius:10px;
-      margin-bottom:18px;
-      font-weight:700;
-    }
-
-    .location-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
-    }
-
-    .btn{
-      border:0;
-      background:#087f5b;
-      color:white;
-      padding:14px 25px;
-      border-radius:10px;
-      font-size:17px;
-      font-weight:700;
-      cursor:pointer;
-      width:100%;
-    }
-
-    .btn:hover{
-      background:#066b4d;
-    }
-
-    .btn:disabled{
-      opacity:.6;
-      cursor:not-allowed;
-    }
-
-    .message{
-      margin-top:15px;
-      padding:13px;
-      border-radius:10px;
-      display:none;
-      text-align:center;
-      font-weight:600;
-    }
-
-    .success{
-      display:block;
-      background:#d1fae5;
-      color:#065f46;
-    }
-
-    .error{
-      display:block;
-      background:#fee2e2;
-      color:#991b1b;
-    }
-
-    /* Features */
-
-    .features{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-    }
-
-    .feature{
-      background:white;
-      padding:25px;
-      border-radius:15px;
-      box-shadow:0 5px 20px rgba(0,0,0,.06);
-      text-align:center;
-    }
-
-    .feature .icon{
-      font-size:40px;
-      margin-bottom:10px;
-    }
-
-    .feature h3{
-      margin-bottom:8px;
-    }
-
-    .feature p{
-      color:#667085;
-    }
-
-    /* Reports */
-
-    .search-box{
-      max-width:700px;
-      margin:0 auto 30px;
-    }
-
-    .reports-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:20px;
-    }
-
-    .report-card{
-      background:white;
-      border-radius:16px;
-      padding:22px;
-      box-shadow:0 5px 20px rgba(0,0,0,.07);
-      border-left:5px solid #087f5b;
-    }
-
-    .report-card h3{
-      margin-bottom:12px;
-      color:#087f5b;
-    }
-
-    .report-meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-bottom:12px;
-    }
-
-    .badge{
-      background:#eef6f3;
-      color:#087f5b;
-      padding:5px 9px;
-      border-radius:20px;
-      font-size:13px;
-    }
-
-    .report-details{
-      color:#475467;
-      white-space:pre-wrap;
-    }
-
-    .report-date{
-      color:#98a2b3;
-      font-size:13px;
-      margin-top:12px;
-    }
-
-    .loading,
-    .no-data{
-      text-align:center;
-      padding:30px;
-      color:#667085;
-      grid-column:1/-1;
-    }
-
-    /* About */
-
-    .about-box{
-      background:white;
-      padding:30px;
-      border-radius:18px;
-      box-shadow:0 5px 20px rgba(0,0,0,.06);
-    }
-
-    .warning{
-      background:#fff7ed;
-      border-left:5px solid #f97316;
-      padding:15px;
-      margin-top:20px;
-      border-radius:8px;
-    }
-
-    footer{
-      background:#10231d;
-      color:white;
-      text-align:center;
-      padding:35px 20px;
-      margin-top:30px;
-    }
-
-    footer p{
-      opacity:.85;
-    }
-
-    @media(max-width:900px){
-      .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .features{
-        grid-template-columns:1fr;
-      }
-
-      .reports-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media(max-width:650px){
-      .nav{
-        flex-direction:column;
-      }
-
-      nav a{
-        margin:0 7px;
-        font-size:14px;
-      }
-
-      .hero{
-        padding:60px 20px;
-      }
-
-      .hero h1{
-        font-size:32px;
-      }
-
-      .hero p{
-        font-size:16px;
-      }
-
-      .stats-grid{
-        grid-template-columns:1fr 1fr;
-        padding:0 10px;
-      }
-
-      .stat-card{
-        padding:18px 8px;
-      }
-
-      .stat-number{
-        font-size:22px;
-      }
-
-      .location-grid{
-        grid-template-columns:1fr;
-      }
-
-      .form-box{
-        padding:20px 15px;
-      }
-
-      .container{
-        padding:40px 15px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GushKhor — ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</title>
+
+<meta name="description"
+content="ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতা তৈরি এবং মানুষের অভিজ্ঞতা তুলে ধরার একটি নাগরিক প্ল্যাটফর্ম।">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f5f7fb;
+  color:#172033;
+  line-height:1.7;
+}
+
+header{
+  background:linear-gradient(135deg,#063b2b,#087f5b);
+  color:white;
+  padding:15px 5%;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 3px 15px rgba(0,0,0,.15);
+}
+
+.nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:27px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#ffd43b;
+}
+
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:18px;
+  font-weight:600;
+}
+
+nav a:hover{
+  color:#ffd43b;
+}
+
+.hero{
+  background:
+    linear-gradient(135deg,rgba(6,59,43,.96),rgba(11,143,103,.93));
+  color:white;
+  padding:85px 20px 100px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:44px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  max-width:850px;
+  margin:auto;
+  font-size:19px;
+  opacity:.96;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:28px;
+}
+
+.hero-btn{
+  display:inline-block;
+  padding:13px 22px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:700;
+  background:#ffd43b;
+  color:#172033;
+}
+
+.hero-btn.secondary{
+  background:white;
+  color:#087f5b;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:55px 20px;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.section-title h2{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.section-title p{
+  color:#667085;
+}
+
+/* STATISTICS */
+
+.stats-grid{
+  max-width:1200px;
+  margin:-45px auto 0;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  position:relative;
+  z-index:2;
+}
+
+.stat-card{
+  background:white;
+  padding:25px 15px;
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 8px 25px rgba(0,0,0,.09);
+}
+
+.stat-icon{
+  font-size:32px;
+  margin-bottom:7px;
+}
+
+.stat-number{
+  font-size:28px;
+  font-weight:800;
+  color:#087f5b;
+}
+
+.stat-title{
+  color:#667085;
+  font-size:15px;
+}
+
+/* QUICK SERVICES */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.quick-card{
+  background:white;
+  padding:23px 18px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.quick-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 9px 25px rgba(0,0,0,.1);
+}
+
+.quick-card .icon{
+  font-size:38px;
+  margin-bottom:8px;
+}
+
+.quick-card h3{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.quick-card p{
+  color:#667085;
+  font-size:14px;
+}
+
+/* FORM */
+
+.form-box{
+  max-width:900px;
+  margin:auto;
+  background:white;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid #d0d5dd;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+  background:white;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#087f5b;
+  box-shadow:0 0 0 3px rgba(8,127,91,.1);
+}
+
+select:disabled{
+  background:#f1f3f5;
+  color:#98a2b3;
+  cursor:not-allowed;
+}
+
+textarea{
+  min-height:150px;
+  resize:vertical;
+}
+
+.location-title{
+  background:#e8f7f1;
+  color:#087f5b;
+  padding:12px 15px;
+  border-radius:10px;
+  margin-bottom:18px;
+  font-weight:700;
+}
+
+.location-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.help-text{
+  color:#667085;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.btn{
+  border:0;
+  background:#087f5b;
+  color:white;
+  padding:14px 25px;
+  border-radius:10px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  width:100%;
+}
+
+.btn:hover{
+  background:#066b4d;
+}
+
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.message{
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+  display:none;
+  text-align:center;
+  font-weight:600;
+}
+
+.success{
+  display:block;
+  background:#d1fae5;
+  color:#065f46;
+}
+
+.error{
+  display:block;
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+/* SAFETY */
+
+.safety-box{
+  max-width:900px;
+  margin:auto;
+  background:#fff7ed;
+  border-left:5px solid #f97316;
+  padding:22px;
+  border-radius:12px;
+}
+
+.safety-box h3{
+  margin-bottom:10px;
+  color:#9a3412;
+}
+
+.safety-box ul{
+  padding-left:22px;
+}
+
+.safety-box li{
+  margin:5px 0;
+}
+
+/* FEATURES */
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.feature{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
+  text-align:center;
+}
+
+.feature .icon{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+.feature h3{
+  margin-bottom:8px;
+}
+
+.feature p{
+  color:#667085;
+}
+
+/* REPORT SEARCH */
+
+.search-panel{
+  max-width:1000px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
+  margin-bottom:30px;
+}
+
+.search-row{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:12px;
+}
+
+.search-box{
+  width:100%;
+}
+
+.clear-btn{
+  margin-top:12px;
+  background:#eef2f6;
+  color:#344054;
+  border:0;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.reports-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.report-card{
+  background:white;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+  border-left:5px solid #087f5b;
+}
+
+.report-card h3{
+  margin-bottom:12px;
+  color:#087f5b;
+}
+
+.report-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.badge{
+  background:#eef6f3;
+  color:#087f5b;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:13px;
+}
+
+.report-details{
+  color:#475467;
+  white-space:pre-wrap;
+  margin-top:12px;
+  max-height:120px;
+  overflow:hidden;
+}
+
+.report-date{
+  color:#98a2b3;
+  font-size:13px;
+  margin-top:12px;
+}
+
+.details-btn{
+  margin-top:15px;
+  background:#087f5b;
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:9px 15px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.loading,
+.no-data{
+  text-align:center;
+  padding:30px;
+  color:#667085;
+  grid-column:1/-1;
+}
+
+/* FEE GUIDE */
+
+.fee-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.fee-card{
+  background:white;
+  padding:23px;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.fee-card h3{
+  color:#087f5b;
+  margin-bottom:10px;
+}
+
+.fee-card p{
+  color:#667085;
+}
+
+.info-note{
+  background:#eff6ff;
+  border-left:5px solid #2563eb;
+  padding:15px;
+  border-radius:8px;
+  margin-top:20px;
+}
+
+/* GRS */
+
+.grs-box{
+  max-width:900px;
+  margin:auto;
+  background:linear-gradient(135deg,#063b2b,#087f5b);
+  color:white;
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+
+.grs-box p{
+  opacity:.95;
+  margin:10px auto 20px;
+  max-width:700px;
+}
+
+.grs-btn{
+  display:inline-block;
+  background:#ffd43b;
+  color:#172033;
+  padding:13px 22px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:800;
+}
+
+/* ABOUT */
+
+.about-box{
+  background:white;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.warning{
+  background:#fff7ed;
+  border-left:5px solid #f97316;
+  padding:15px;
+  margin-top:20px;
+  border-radius:8px;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:5000;
+  padding:20px;
+  overflow:auto;
+}
+
+.modal-content{
+  background:white;
+  max-width:750px;
+  margin:50px auto;
+  border-radius:18px;
+  padding:28px;
+  position:relative;
+}
+
+.close-modal{
+  position:absolute;
+  right:18px;
+  top:12px;
+  border:0;
+  background:#f1f3f5;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:20px;
+}
+
+.modal-content h2{
+  color:#087f5b;
+  margin-bottom:15px;
+}
+
+.modal-line{
+  padding:9px 0;
+  border-bottom:1px solid #eee;
+}
+
+.modal-details{
+  margin-top:15px;
+  white-space:pre-wrap;
+  background:#f8fafc;
+  padding:15px;
+  border-radius:10px;
+}
+
+/* FOOTER */
+
+footer{
+  background:#10231d;
+  color:white;
+  text-align:center;
+  padding:35px 20px;
+  margin-top:30px;
+}
+
+footer p{
+  opacity:.85;
+}
+
+.footer-links{
+  margin-top:12px;
+}
+
+.footer-links a{
+  color:#ffd43b;
+  text-decoration:none;
+  margin:0 8px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .reports-grid{
+    grid-template-columns:1fr;
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .fee-grid{
+    grid-template-columns:1fr;
+  }
+
+  .search-row{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:650px){
+
+  .nav{
+    flex-direction:column;
+  }
+
+  nav a{
+    margin:0 6px;
+    font-size:13px;
+  }
+
+  .hero{
+    padding:60px 20px 75px;
+  }
+
+  .hero h1{
+    font-size:32px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr 1fr;
+    padding:0 10px;
+  }
+
+  .stat-card{
+    padding:18px 8px;
+  }
+
+  .stat-number{
+    font-size:22px;
+  }
+
+  .location-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-box{
+    padding:20px 15px;
+  }
+
+  .container{
+    padding:40px 15px;
+  }
+
+  .quick-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+
+  .hero-btn{
+    width:100%;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <!-- HEADER -->
 <header>
-  <div class="nav">
-    <div class="logo">
-      Gush<span>Khor</span>
-    </div>
+<div class="nav">
 
-    <nav>
-      <a href="#home">হোম</a>
-      <a href="#report">রিপোর্ট করুন</a>
-      <a href="#reports">রিপোর্টসমূহ</a>
-      <a href="#about">আমাদের সম্পর্কে</a>
-    </nav>
+  <div class="logo">
+    Gush<span>Khor</span>
   </div>
+
+  <nav>
+    <a href="#home">হোম</a>
+    <a href="#report">রিপোর্ট</a>
+    <a href="#reports">রিপোর্টসমূহ</a>
+    <a href="#fees">সেবা/ফি</a>
+    <a href="#help">সহায়তা</a>
+    <a href="#about">সম্পর্কে</a>
+  </nav>
+
+</div>
 </header>
 
 
 <!-- HERO -->
 <section class="hero" id="home">
+
   <h1>ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</h1>
 
   <p>
-    আপনি যদি ঘুষ দিতে বাধ্য হন অথবা কোনো ধরনের দুর্নীতির শিকার হন,
-    তাহলে আপনার অভিজ্ঞতা আমাদের মাধ্যমে রিপোর্ট করতে পারেন।
+    আপনি যদি ঘুষ দিতে বাধ্য হন অথবা কোনো ধরনের দুর্নীতির
+    অভিজ্ঞতার সম্মুখীন হন, তাহলে দায়িত্বশীলভাবে তথ্য রিপোর্ট
+    করতে পারেন।
   </p>
+
+  <div class="hero-buttons">
+
+    <a class="hero-btn" href="#report">
+      📝 রিপোর্ট করুন
+    </a>
+
+    <a class="hero-btn secondary" href="#reports">
+      🔎 প্রকাশিত রিপোর্ট দেখুন
+    </a>
+
+  </div>
+
 </section>
 
 
@@ -471,7 +789,7 @@
   <div class="stat-card">
     <div class="stat-icon">💰</div>
     <div class="stat-number" id="totalAmount">৳০</div>
-    <div class="stat-title">রিপোর্টে উল্লেখিত মোট ঘুষ</div>
+    <div class="stat-title">রিপোর্টে উল্লেখিত মোট টাকা</div>
   </div>
 
   <div class="stat-card">
@@ -489,126 +807,307 @@
 </section>
 
 
+<!-- QUICK ACTIONS -->
+<section class="container">
+
+<div class="section-title">
+  <h2>আপনি কী করতে চান?</h2>
+  <p>প্রয়োজনীয় সেবাটি দ্রুত নির্বাচন করুন।</p>
+</div>
+
+<div class="quick-grid">
+
+  <div class="quick-card" onclick="location.href='#report'">
+    <div class="icon">📝</div>
+    <h3>ঘুষ রিপোর্ট করুন</h3>
+    <p>ঘুষ বা দুর্নীতির অভিজ্ঞতা রিপোর্ট করুন।</p>
+  </div>
+
+  <div class="quick-card" onclick="location.href='#reports'">
+    <div class="icon">🔎</div>
+    <h3>রিপোর্ট খুঁজুন</h3>
+    <p>জেলা, উপজেলা বা অফিস দিয়ে খুঁজুন।</p>
+  </div>
+
+  <div class="quick-card" onclick="location.href='#fees'">
+    <div class="icon">💰</div>
+    <h3>ফি যাচাই করুন</h3>
+    <p>সেবার সরকারি ফি সম্পর্কে তথ্য দেখুন।</p>
+  </div>
+
+  <div class="quick-card" onclick="location.href='#help'">
+    <div class="icon">🚨</div>
+    <h3>অভিযোগের সহায়তা</h3>
+    <p>সরকারি অভিযোগ ব্যবস্থার তথ্য দেখুন।</p>
+  </div>
+
+</div>
+
+</section>
+
+
 <!-- REPORT FORM -->
 <section class="container" id="report">
 
-  <div class="section-title">
-    <h2>ঘুষ/দুর্নীতির রিপোর্ট করুন</h2>
-    <p>আপনার তথ্য সঠিকভাবে পূরণ করুন।</p>
-  </div>
+<div class="section-title">
+  <h2>📝 ঘুষ/দুর্নীতির রিপোর্ট করুন</h2>
+  <p>
+    প্রয়োজনীয় তথ্য দিন। প্রকাশের আগে রিপোর্ট প্রশাসনিকভাবে
+    পর্যালোচনা করা হতে পারে।
+  </p>
+</div>
 
-  <div class="form-box">
+<div class="form-box">
 
-    <div class="location-title">
-      📍 ঘটনার স্থান নির্বাচন করুন
-    </div>
+<div class="location-title">
+  📍 ঘটনার স্থান নির্বাচন করুন
+</div>
 
-    <form id="reportForm">
+<form id="reportForm">
 
-      <!-- LOCATION -->
-      <div class="location-grid">
+<!-- LOCATION -->
 
-        <div class="form-group">
-          <label for="district">জেলা *</label>
+<div class="location-grid">
 
-          <select id="district" required>
-            <option value="">জেলা নির্বাচন করুন</option>
-            <option value="টাঙ্গাইল">টাঙ্গাইল</option>
-          </select>
-        </div>
+<div class="form-group">
+<label for="district">জেলা *</label>
 
-
-        <div class="form-group">
-          <label for="upazila">উপজেলা/থানা *</label>
-
-          <select id="upazila" required disabled>
-            <option value="">আগে জেলা নির্বাচন করুন</option>
-          </select>
-        </div>
+<select id="district" required>
+<option value="">জেলা নির্বাচন করুন</option>
+<option value="টাঙ্গাইল">টাঙ্গাইল</option>
+</select>
+</div>
 
 
-        <div class="form-group">
-          <label for="union">ইউনিয়ন/পৌরসভা *</label>
+<div class="form-group">
+<label for="upazila">উপজেলা/থানা *</label>
 
-          <select id="union" required disabled>
-            <option value="">আগে উপজেলা নির্বাচন করুন</option>
-          </select>
-        </div>
-
-
-        <div class="form-group">
-          <label for="village">গ্রাম/এলাকা *</label>
-
-          <select id="village" required disabled>
-            <option value="">আগে ইউনিয়ন নির্বাচন করুন</option>
-          </select>
-        </div>
-
-      </div>
+<select id="upazila" required disabled>
+<option value="">আগে জেলা নির্বাচন করুন</option>
+</select>
+</div>
 
 
-      <!-- OFFICE -->
-      <div class="form-group">
-        <label for="office">অফিস/প্রতিষ্ঠানের নাম *</label>
+<div class="form-group">
+<label for="union">ইউনিয়ন/পৌরসভা *</label>
 
-        <input
-          type="text"
-          id="office"
-          placeholder="যেমন: ভূমি অফিস, ইউনিয়ন পরিষদ, হাসপাতাল"
-          required
-        >
-      </div>
+<select id="union" required disabled>
+<option value="">আগে উপজেলা নির্বাচন করুন</option>
+</select>
+</div>
 
 
-      <!-- AMOUNT -->
-      <div class="form-group">
-        <label for="amount">ঘুষের পরিমাণ (টাকা)</label>
+<div class="form-group">
+<label for="village">গ্রাম/এলাকা *</label>
 
-        <input
-          type="number"
-          id="amount"
-          min="0"
-          placeholder="যেমন: 5000"
-        >
-      </div>
+<select id="village" required disabled>
+<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>
+</select>
+</div>
+
+</div>
 
 
-      <!-- DATE -->
-      <div class="form-group">
-        <label for="incidentDate">ঘটনার তারিখ</label>
+<!-- REPORT TYPE -->
 
-        <input
-          type="date"
-          id="incidentDate"
-        >
-      </div>
+<div class="form-group">
+
+<label for="reportType">
+  রিপোর্টের ধরন
+</label>
+
+<select id="reportType">
+
+<option value="">
+ধরন নির্বাচন করুন
+</option>
+
+<option value="সরকারি অফিস">
+🏢 সরকারি অফিস
+</option>
+
+<option value="পুলিশ/আইনশৃঙ্খলা">
+👮 পুলিশ/আইনশৃঙ্খলা
+</option>
+
+<option value="ভূমি সংক্রান্ত">
+🏡 ভূমি সংক্রান্ত
+</option>
+
+<option value="বিচার/শালিস">
+⚖️ বিচার/শালিস
+</option>
+
+<option value="ইউনিয়ন পরিষদ">
+🏛️ ইউনিয়ন পরিষদ
+</option>
+
+<option value="হাসপাতাল">
+🏥 হাসপাতাল/স্বাস্থ্যসেবা
+</option>
+
+<option value="শিক্ষা প্রতিষ্ঠান">
+🎓 শিক্ষা প্রতিষ্ঠান
+</option>
+
+<option value="চাকরি/নিয়োগ">
+💼 চাকরি/নিয়োগ
+</option>
+
+<option value="অন্যান্য">
+📌 অন্যান্য
+</option>
+
+</select>
+
+<p class="help-text">
+রিপোর্টের ধরন database-এ আলাদা কলাম ছাড়াই আপনার রিপোর্টের
+বিস্তারিত অংশে প্রয়োজন হলে উল্লেখ করতে পারেন।
+</p>
+
+</div>
 
 
-      <!-- DETAILS -->
-      <div class="form-group">
-        <label for="details">ঘটনার বিস্তারিত বিবরণ *</label>
+<!-- OFFICE -->
 
-        <textarea
-          id="details"
-          placeholder="কী ঘটেছে, কোথায় ঘটেছে এবং কত টাকা ঘুষ চাওয়া/দেওয়া হয়েছে—বিস্তারিত লিখুন..."
-          required
-        ></textarea>
-      </div>
+<div class="form-group">
+
+<label for="office">
+🏢 অফিস/প্রতিষ্ঠানের নাম *
+</label>
+
+<input
+type="text"
+id="office"
+placeholder="যেমন: ভূমি অফিস, ইউনিয়ন পরিষদ, হাসপাতাল"
+required
+>
+
+</div>
 
 
-      <button
-        type="submit"
-        class="btn"
-        id="submitBtn"
-      >
-        📤 রিপোর্ট জমা দিন
-      </button>
+<!-- AMOUNT -->
 
-      <div id="formMessage" class="message"></div>
+<div class="form-group">
 
-    </form>
+<label for="amount">
+💰 ঘুষের পরিমাণ (টাকা)
+</label>
 
-  </div>
+<input
+type="number"
+id="amount"
+min="0"
+placeholder="যেমন: 5000"
+>
+
+<p class="help-text">
+টাকা না দিলে ০ লিখতে পারেন।
+</p>
+
+</div>
+
+
+<!-- DATE -->
+
+<div class="form-group">
+
+<label for="incidentDate">
+📅 ঘটনার তারিখ
+</label>
+
+<input
+type="date"
+id="incidentDate"
+>
+
+</div>
+
+
+<!-- DETAILS -->
+
+<div class="form-group">
+
+<label for="details">
+📄 ঘটনার বিস্তারিত বিবরণ *
+</label>
+
+<textarea
+id="details"
+placeholder="কী ঘটেছে, কোথায় ঘটেছে, কোন সেবার জন্য টাকা চাওয়া/দেওয়া হয়েছে—যতটা সম্ভব নিরপেক্ষভাবে লিখুন..."
+required
+></textarea>
+
+</div>
+
+
+<!-- SAFETY NOTICE -->
+
+<div class="warning" style="margin-bottom:20px;">
+
+<strong>🔐 নিরাপত্তা:</strong>
+
+রিপোর্টে নিজের বা অন্য কারও
+NID নম্বর, ব্যাংক তথ্য, পাসওয়ার্ড, OTP বা অন্যান্য
+অতি সংবেদনশীল ব্যক্তিগত তথ্য লিখবেন না।
+
+</div>
+
+
+<button
+type="submit"
+class="btn"
+id="submitBtn"
+>
+📤 রিপোর্ট জমা দিন
+</button>
+
+<div id="formMessage" class="message"></div>
+
+</form>
+
+</div>
+
+</section>
+
+
+<!-- SAFETY -->
+<section class="container">
+
+<div class="section-title">
+<h2>🛡️ নিরাপদভাবে রিপোর্ট করার পরামর্শ</h2>
+</div>
+
+<div class="safety-box">
+
+<h3>রিপোর্ট করার আগে মনে রাখুন</h3>
+
+<ul>
+
+<li>
+সম্ভব হলে সরকারি ফি ও নিয়ম আগে যাচাই করুন।
+</li>
+
+<li>
+নিরাপদ থাকলে রসিদ বা অন্যান্য বৈধ প্রমাণ সংরক্ষণ করুন।
+</li>
+
+<li>
+কাউকে হুমকি বা ঝুঁকির মধ্যে ফেলে প্রমাণ সংগ্রহ করবেন না।
+</li>
+
+<li>
+রিপোর্টে অপ্রয়োজনীয় ব্যক্তিগত তথ্য প্রকাশ করবেন না।
+</li>
+
+<li>
+কোনো অভিযোগকে আদালত/কর্তৃপক্ষের চূড়ান্ত সিদ্ধান্তের আগে
+প্রমাণিত সত্য হিসেবে ধরে নেবেন না।
+</li>
+
+</ul>
+
+</div>
 
 </section>
 
@@ -616,38 +1115,154 @@
 <!-- FEATURES -->
 <section class="container">
 
-  <div class="section-title">
-    <h2>আমাদের উদ্দেশ্য</h2>
-    <p>ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতা তৈরি করা।</p>
-  </div>
+<div class="section-title">
+<h2>আমাদের উদ্দেশ্য</h2>
 
-  <div class="features">
+<p>
+ঘুষ ও দুর্নীতির বিষয়ে জনসচেতনতা তৈরি এবং
+নাগরিকদের তথ্যভিত্তিক সহায়তা করা।
+</p>
 
-    <div class="feature">
-      <div class="icon">🛡️</div>
-      <h3>নিরাপদ রিপোর্টিং</h3>
-      <p>
-        আপনার রিপোর্ট দায়িত্বশীলভাবে গ্রহণ ও পর্যালোচনা করা হবে।
-      </p>
-    </div>
+</div>
 
-    <div class="feature">
-      <div class="icon">🔎</div>
-      <h3>তথ্য যাচাই</h3>
-      <p>
-        প্রকাশের আগে রিপোর্ট প্রশাসনিকভাবে পর্যালোচনা করা হবে।
-      </p>
-    </div>
+<div class="features">
 
-    <div class="feature">
-      <div class="icon">📊</div>
-      <h3>জনসচেতনতা</h3>
-      <p>
-        প্রকাশিত রিপোর্টের মাধ্যমে দুর্নীতির বিষয়ে জনসচেতনতা তৈরি করা।
-      </p>
-    </div>
+<div class="feature">
 
-  </div>
+<div class="icon">🛡️</div>
+
+<h3>দায়িত্বশীল রিপোর্টিং</h3>
+
+<p>
+রিপোর্টে সত্য ও যাচাইযোগ্য তথ্য দেওয়ার জন্য উৎসাহিত করা হয়।
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">🔎</div>
+
+<h3>পর্যালোচনা</h3>
+
+<p>
+প্রকাশিত রিপোর্টগুলো প্রশাসনিক পর্যালোচনার মাধ্যমে
+নিয়ন্ত্রিত হতে পারে।
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="icon">📊</div>
+
+<h3>জনসচেতনতা</h3>
+
+<p>
+প্রকাশিত তথ্যের মাধ্যমে নাগরিক সচেতনতা বাড়ানো।
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FEE GUIDE -->
+<section class="container" id="fees">
+
+<div class="section-title">
+
+<h2>💰 সরকারি ফি ও সেবা যাচাই</h2>
+
+<p>
+কোনো সেবার জন্য অতিরিক্ত টাকা দাবি করা হলে আগে
+সংশ্লিষ্ট সরকারি উৎসে নির্ধারিত ফি যাচাই করুন।
+</p>
+
+</div>
+
+<div class="fee-grid">
+
+<div class="fee-card">
+
+<h3>🏡 ভূমি সেবা</h3>
+
+<p>
+নামজারি, ভূমি উন্নয়ন কর, খতিয়ানসহ ভূমি সেবার
+বর্তমান ফি ও নিয়ম সংশ্লিষ্ট সরকারি ভূমি সেবা
+প্ল্যাটফর্ম থেকে যাচাই করুন।
+</p>
+
+</div>
+
+
+<div class="fee-card">
+
+<h3>🏛️ স্থানীয় সরকার</h3>
+
+<p>
+জন্মনিবন্ধন, সনদ ও স্থানীয় পরিষদের বিভিন্ন সেবার
+ফি সংশ্লিষ্ট ইউনিয়ন/পৌরসভা বা সরকারি উৎস থেকে
+যাচাই করুন।
+</p>
+
+</div>
+
+
+<div class="fee-card">
+
+<h3>🏥 স্বাস্থ্যসেবা</h3>
+
+<p>
+সরকারি হাসপাতাল বা স্বাস্থ্য প্রতিষ্ঠানের সেবা,
+ফি ও নিয়ম সংশ্লিষ্ট প্রতিষ্ঠানের অফিসিয়াল তথ্য
+থেকে যাচাই করুন।
+</p>
+
+</div>
+
+</div>
+
+<div class="info-note">
+
+<strong>ℹ️ গুরুত্বপূর্ণ:</strong>
+
+সরকারি ফি সময়ের সঙ্গে পরিবর্তিত হতে পারে।
+তাই এখানে কোনো নির্দিষ্ট টাকার অঙ্ককে চূড়ান্ত সরকারি
+ফি হিসেবে ধরে নেবেন না। সংশ্লিষ্ট সরকারি উৎসে
+সর্বশেষ তথ্য যাচাই করুন।
+
+</div>
+
+</section>
+
+
+<!-- GRS HELP -->
+<section class="container" id="help">
+
+<div class="grs-box">
+
+<h2>🚨 সরকারি অভিযোগ করতে চান?</h2>
+
+<p>
+কোনো সরকারি সেবা নিয়ে অভিযোগ থাকলে বাংলাদেশ সরকারের
+অভিযোগ প্রতিকার ব্যবস্থা (GRS) সম্পর্কে জানতে পারেন।
+</p>
+
+<a
+href="https://www.grs.gov.bd/"
+target="_blank"
+rel="noopener noreferrer"
+class="grs-btn"
+>
+সরকারি GRS ওয়েবসাইট খুলুন ↗
+</a>
+
+</div>
 
 </section>
 
@@ -655,33 +1270,70 @@
 <!-- PUBLIC REPORTS -->
 <section class="container" id="reports">
 
-  <div class="section-title">
-    <h2>প্রকাশিত রিপোর্ট</h2>
+<div class="section-title">
 
-    <p>
-      যাচাই/অনুমোদনের পর প্রকাশিত রিপোর্টগুলো এখানে দেখা যাবে।
-    </p>
-  </div>
+<h2>🔎 প্রকাশিত রিপোর্ট</h2>
 
+<p>
+শুধুমাত্র অনুমোদিত/প্রকাশিত রিপোর্ট এখানে প্রদর্শিত হবে।
+</p>
 
-  <div class="search-box">
-
-    <input
-      type="search"
-      id="searchInput"
-      placeholder="🔎 জেলা, উপজেলা, ইউনিয়ন, গ্রাম বা অফিস দিয়ে খুঁজুন..."
-    >
-
-  </div>
+</div>
 
 
-  <div id="reportsContainer" class="reports-grid">
+<div class="search-panel">
 
-    <div class="loading">
-      রিপোর্ট লোড হচ্ছে...
-    </div>
+<div class="search-row">
 
-  </div>
+<input
+type="search"
+id="searchInput"
+placeholder="🔎 জেলা, উপজেলা, ইউনিয়ন, গ্রাম বা অফিস দিয়ে খুঁজুন..."
+>
+
+<select id="reportDistrictFilter">
+
+<option value="">
+সব জেলা
+</option>
+
+<option value="টাঙ্গাইল">
+টাঙ্গাইল
+</option>
+
+</select>
+
+
+<select id="reportUpazilaFilter">
+
+<option value="">
+সব উপজেলা
+</option>
+
+</select>
+
+</div>
+
+<button
+class="clear-btn"
+id="clearSearch"
+>
+✕ সার্চ/ফিল্টার পরিষ্কার করুন
+</button>
+
+</div>
+
+
+<div
+id="reportsContainer"
+class="reports-grid"
+>
+
+<div class="loading">
+রিপোর্ট লোড হচ্ছে...
+</div>
+
+</div>
 
 </section>
 
@@ -689,31 +1341,46 @@
 <!-- ABOUT -->
 <section class="container" id="about">
 
-  <div class="section-title">
-    <h2>আমাদের সম্পর্কে</h2>
-  </div>
+<div class="section-title">
+<h2>আমাদের সম্পর্কে</h2>
+</div>
 
-  <div class="about-box">
+<div class="about-box">
 
-    <p>
-      প্রিয় দর্শনার্থী, আশা করি আপনারা সবাই ভালো আছেন।
-      ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতা তৈরি করা এবং সাধারণ
-      মানুষের কথা তুলে ধরাই আমাদের এই সাইটের প্রধান উদ্দেশ্য।
-    </p>
+<p>
 
-    <p style="margin-top:15px;">
-      সমাজে কেউ যদি ঘুষ দিতে বাধ্য হন কিংবা কোনো ধরনের
-      দুর্নীতির শিকার হন, তাহলে আমাদের মাধ্যমে রিপোর্ট করতে পারেন।
-    </p>
+প্রিয় দর্শনার্থী, আশা করি আপনারা সবাই ভালো আছেন।
 
-    <div class="warning">
-      <strong>⚠️ গুরুত্বপূর্ণ:</strong>
-      কোনো ব্যক্তির বিরুদ্ধে অভিযোগকে প্রমাণিত সত্য হিসেবে বিবেচনা
-      করবেন না। প্রকাশিত রিপোর্টগুলো অভিযোগ/রিপোর্ট হিসেবে উপস্থাপন
-      করা হয় এবং প্রকাশের আগে প্রশাসনিক পর্যালোচনা করা হতে পারে।
-    </div>
+ঘুষ ও দুর্নীতির বিষয়ে জনসচেতনতা তৈরি করা এবং
+সাধারণ মানুষের অভিজ্ঞতা দায়িত্বশীলভাবে তুলে ধরাই
+GushKhor-এর প্রধান উদ্দেশ্য।
 
-  </div>
+</p>
+
+
+<p style="margin-top:15px;">
+
+কেউ যদি ঘুষ দিতে বাধ্য হন কিংবা কোনো ধরনের
+দুর্নীতির অভিজ্ঞতার সম্মুখীন হন, তাহলে তথ্যভিত্তিক
+রিপোর্ট করতে পারেন।
+
+</p>
+
+
+<div class="warning">
+
+<strong>⚠️ গুরুত্বপূর্ণ:</strong>
+
+কোনো ব্যক্তির বিরুদ্ধে অভিযোগকে প্রমাণিত সত্য হিসেবে
+বিবেচনা করবেন না। প্রকাশিত রিপোর্টগুলো অভিযোগ/রিপোর্ট
+হিসেবে উপস্থাপন করা হয়।
+
+কোনো রিপোর্ট প্রকাশ করা মানেই অভিযোগটি আইনগতভাবে
+প্রমাণিত হয়েছে—এমন নয়।
+
+</div>
+
+</div>
 
 </section>
 
@@ -721,904 +1388,1256 @@
 <!-- FOOTER -->
 <footer>
 
-  <h3>GushKhor</h3>
+<h3>GushKhor</h3>
 
-  <p>
-    ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর।
-  </p>
+<p>
+ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর।
+</p>
 
-  <p style="margin-top:10px;">
-    © 2026 GushKhor. All Rights Reserved.
-  </p>
+<div class="footer-links">
+
+<a href="#report">রিপোর্ট করুন</a>
+<a href="#reports">রিপোর্ট দেখুন</a>
+<a href="#help">সহায়তা</a>
+
+</div>
+
+<p style="margin-top:15px;">
+© 2026 GushKhor. All Rights Reserved.
+</p>
 
 </footer>
 
 
+<!-- REPORT DETAILS MODAL -->
+
+<div class="modal" id="reportModal">
+
+<div class="modal-content">
+
+<button
+class="close-modal"
+id="closeModal"
+>
+×
+</button>
+
+<div id="modalBody">
+</div>
+
+</div>
+
+</div>
+
+
 <script>
 
-  /* =====================================================
-     SUPABASE CONFIGURATION
-  ===================================================== */
-
-  const SUPABASE_URL =
-    "https://dzsgcrgcotwxruhqrder.supabase.co";
-
-  const SUPABASE_KEY =
-    "sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE";
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
-
-  /* =====================================================
-     BHUAPUR LOCATION DATA
-  ===================================================== */
-
-  const locationData = {
-
-    "টাঙ্গাইল": {
-
-      "ভূঞাপুর": {
-
-        "ভূঞাপুর পৌরসভা": [
-          "কুতুবপুর",
-          "পলিশা মাঝিপাড়া",
-          "পলিশা",
-          "টেপীবাড়ী",
-          "প",
-          "বেতুয়া আটানি পাড়া",
-          "বাহাদিপুর",
-          "বেতুয়া ঘোনা পাড়া",
-          "ভূঞাপুর পূর্ব পাড়া",
-          "ভূঞাপুর পশ্চিম পাড়া",
-          "ছাব্বিশা",
-          "বামনহাটা পূর্ব",
-          "বামনহাটা পশ্চিম",
-          "চর বামনহাটা",
-          "তেঘরী",
-          "সরই",
-          "ঘাটান্দি",
-          "রসুনা",
-          "পুকুরিয়া শিয়ালকোল",
-          "ফসলান্দি",
-          "বীরহাটি",
-          "বিরামদি"
-        ],
-
-        "অর্জুনা ইউনিয়ন": [
-          "চর তারাই",
-          "বলরামপুর",
-          "কুঠি বয়ড়া",
-          "চুকাই নগর",
-          "অর্জুনা পশ্চিম পাড়া",
-          "অর্জুনা পূর্ব পাড়া",
-          "জুমার বয়ড়া",
-          "ভরুয়া",
-          "জগৎপুরা উত্তর",
-          "জগৎপুরা দক্ষিণ",
-          "জগৎপুরা মধ্য",
-          "চর তালতলা",
-          "চর শুশুয়া",
-          "বাসুদেবকোল",
-          "বোরার বয়ড়া",
-          "বানিয়াবাড়ী",
-          "রামাইল",
-          "খাষ বোরার বয়ড়া",
-          "গোবিন্দপুর"
-        ],
-
-        "গাবসারা ইউনিয়ন": [
-          "কাশিহাটা",
-          "ভদ্রশিমুল",
-          "চর বিহারী",
-          "মেঘারপটল",
-          "চণ্ডিপুর",
-          "ছোট নলছিয়াপাড়া",
-          "বড় নলছিয়াপাড়া",
-          "জঙ্গীপুর",
-          "রেহাই গাবসারা",
-          "গোপিনাথপুর",
-          "রামপুর",
-          "রায়ের বাশালিয়া",
-          "গোবিন্দপুর",
-          "ছোট জয়পুর",
-          "বড় জয়পুর",
-          "পুংলিপাড়া",
-          "কর্ণগাতি",
-          "কালিপুর",
-          "নিকলাপাড়া",
-          "রেহাই চন্দনী",
-          "ডিগ্রীর চর",
-          "রাজাপুর",
-          "রুলী পাড়া",
-          "বেলটিয়া পাড়া",
-          "ফলদা পাড়া",
-          "ভূঞা পাড়া",
-          "ফকির পাড়া",
-          "চানগঞ্জ",
-          "চর চন্দনী"
-        ],
-
-        "ফলদা ইউনিয়ন": [
-          "আগতেরিল্যা",
-          "মমিনপুর",
-          "গাড়াবাড়ী",
-          "ধুবলিয়া",
-          "ফলদা চণ্ডিপুর",
-          "ফলদা দক্ষিণ পাড়া",
-          "ফলদা হিন্দুপাড়া",
-          "ফলদা চণ্ডিপুর পূর্ব",
-          "ঝনঝনিয়া",
-          "মাইজবাড়ী",
-          "মাদারিয়া",
-          "ফলদা ঘোনাপাড়া",
-          "ফলদা দিঘুলিয়াপাড়া",
-          "ঢেপাকান্দি",
-          "পাঁছতেরিল্যা",
-          "সানক বয়ড়া",
-          "ফলদা চরপাড়া",
-          "ফলদা পূর্ব পাড়া"
-        ],
-
-        "গোবিন্দাসী ইউনিয়ন": [
-          "খুপীবাড়ী",
-          "বাগবাড়ী",
-          "ভাদুরির চর",
-          "শালদাইর",
-          "শাফলকুড়া",
-          "কুকাদাইর",
-          "চিতুলিয়া",
-          "জিগাতলা",
-          "গোবিন্দাসী",
-          "যদুরগাতী",
-          "রাউৎবাড়ী",
-          "চিতুলিয়াপাড়া",
-          "নাগরগাতি",
-          "ভালকুটিয়া",
-          "স্থলকাশি",
-          "বিলচাপড়া",
-          "রুহুলী",
-          "বিল রুহুলী",
-          "কয়ড়া",
-          "চর কয়ড়া",
-          "কষ্টাপাড়া",
-          "খানুরবাড়ী",
-          "চর গোয়াদাইর"
-        ],
-
-        "অলোয়া ইউনিয়ন": [
-          "কাগমারীপাড়া",
-          "ভারই",
-          "অলোয়া",
-          "নিকলা",
-          "চর নিকলা",
-          "বরকতপুর",
-          "খরক",
-          "নিকলা নয়াপাড়া",
-          "আকালু",
-          "আমুলা",
-          "আমুলা দহভরট",
-          "দীঘি কাতুলী",
-          "বিল আমুলা",
-          "আমুলা চান",
-          "চেংটাপাড়া",
-          "নিকলা আনার খাষপাড়া",
-          "নিকলা গোবর্ধন",
-          "নিকলা গোপাল",
-          "নিকলা নরসিংহপাড়া",
-          "নিকলা রায়েরপাড়া",
-          "গোলাবাড়ী",
-          "নলুয়া",
-          "নিকলা কদিম",
-          "নিকলা দড়িপাড়া",
-          "নিকলা মহব্বত",
-          "বিল"
-        ],
-
-        "নিকরাইল ইউনিয়ন": [
-          "চর পাথাইল কান্দি",
-          "সার পলশিয়া",
-          "নিকরাইল",
-          "খাষ বিয়ারা (পলশিয়া)",
-          "নলছিয়া পূনর্বাসন",
-          "পাছগাছি",
-          "বাইন তাইন",
-          "বেলুয়া",
-          "হাউল ভাঙ্গা",
-          "কোনাবাড়ী",
-          "গোপালগঞ্জ",
-          "বাহাদুর টুকনা",
-          "কৃষ্ণপুর",
-          "পলশিয়া উত্তর",
-          "মাটিকাটা",
-          "দোভায়া",
-          "পাটিতাপাড়া",
-          "চর বাইন তাইন",
-          "সিরাজকান্দি"
-        ]
-
-      }
-
-    }
-
-  };
-
-
-  /* =====================================================
-     DOM ELEMENTS
-  ===================================================== */
-
-  const districtSelect =
-    document.getElementById("district");
-
-  const upazilaSelect =
-    document.getElementById("upazila");
-
-  const unionSelect =
-    document.getElementById("union");
-
-  const villageSelect =
-    document.getElementById("village");
-
-
-  /* =====================================================
-     DISTRICT CHANGE
-  ===================================================== */
-
-  districtSelect.addEventListener("change", function(){
-
-    const district = this.value;
-
-    upazilaSelect.innerHTML =
-      '<option value="">উপজেলা নির্বাচন করুন</option>';
-
-    unionSelect.innerHTML =
-      '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
-
-    villageSelect.innerHTML =
-      '<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
-
-    upazilaSelect.disabled = true;
-    unionSelect.disabled = true;
-    villageSelect.disabled = true;
-
-    if(!district || !locationData[district]){
-      return;
-    }
-
-    Object.keys(locationData[district]).forEach(
-      function(upazila){
-
-        const option =
-          document.createElement("option");
-
-        option.value = upazila;
-        option.textContent = upazila;
-
-        upazilaSelect.appendChild(option);
-
-      }
-    );
-
-    upazilaSelect.disabled = false;
-
-  });
-
-
-  /* =====================================================
-     UPAZILA CHANGE
-  ===================================================== */
-
-  upazilaSelect.addEventListener("change", function(){
-
-    const district = districtSelect.value;
-    const upazila = this.value;
-
-    unionSelect.innerHTML =
-      '<option value="">ইউনিয়ন/পৌরসভা নির্বাচন করুন</option>';
-
-    villageSelect.innerHTML =
-      '<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
-
-    unionSelect.disabled = true;
-    villageSelect.disabled = true;
-
-    if(
-      !district ||
-      !upazila ||
-      !locationData[district] ||
-      !locationData[district][upazila]
-    ){
-      return;
-    }
-
-    Object.keys(
-      locationData[district][upazila]
-    ).forEach(function(union){
-
-      const option =
-        document.createElement("option");
-
-      option.value = union;
-      option.textContent = union;
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
+
+const SUPABASE_URL =
+"https://dzsgcrgcotwxruhqrder.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/* =====================================================
+   BHUAPUR LOCATION DATA
+===================================================== */
+
+const locationData = {
+
+"টাঙ্গাইল": {
+
+"ভূঞাপুর": {
+
+"ভূঞাপুর পৌরসভা":[
+"কুতুবপুর",
+"পলিশা মাঝিপাড়া",
+"পলিশা",
+"টেপীবাড়ী",
+"প",
+"বেতুয়া আটানি পাড়া",
+"বাহাদিপুর",
+"বেতুয়া ঘোনা পাড়া",
+"ভূঞাপুর পূর্ব পাড়া",
+"ভূঞাপুর পশ্চিম পাড়া",
+"ছাব্বিশা",
+"বামনহাটা পূর্ব",
+"বামনহাটা পশ্চিম",
+"চর বামনহাটা",
+"তেঘরী",
+"সরই",
+"ঘাটান্দি",
+"রসুনা",
+"পুকুরিয়া শিয়ালকোল",
+"ফসলান্দি",
+"বীরহাটি",
+"বিরামদি"
+],
+
+"অর্জুনা ইউনিয়ন":[
+"চর তারাই",
+"বলরামপুর",
+"কুঠি বয়ড়া",
+"চুকাই নগর",
+"অর্জুনা পশ্চিম পাড়া",
+"অর্জুনা পূর্ব পাড়া",
+"জুমার বয়ড়া",
+"ভরুয়া",
+"জগৎপুরা উত্তর",
+"জগৎপুরা দক্ষিণ",
+"জগৎপুরা মধ্য",
+"চর তালতলা",
+"চর শুশুয়া",
+"বাসুদেবকোল",
+"বোরার বয়ড়া",
+"বানিয়াবাড়ী",
+"রামাইল",
+"খাষ বোরার বয়ড়া",
+"গোবিন্দপুর"
+],
+
+"গাবসারা ইউনিয়ন":[
+"কাশিহাটা",
+"ভদ্রশিমুল",
+"চর বিহারী",
+"মেঘারপটল",
+"চণ্ডিপুর",
+"ছোট নলছিয়াপাড়া",
+"বড় নলছিয়াপাড়া",
+"জঙ্গীপুর",
+"রেহাই গাবসারা",
+"গোপিনাথপুর",
+"রামপুর",
+"রায়ের বাশালিয়া",
+"গোবিন্দপুর",
+"ছোট জয়পুর",
+"বড় জয়পুর",
+"পুংলিপাড়া",
+"কর্ণগাতি",
+"কালিপুর",
+"নিকলাপাড়া",
+"রেহাই চন্দনী",
+"ডিগ্রীর চর",
+"রাজাপুর",
+"রুলী পাড়া",
+"বেলটিয়া পাড়া",
+"ফলদা পাড়া",
+"ভূঞা পাড়া",
+"ফকির পাড়া",
+"চানগঞ্জ",
+"চর চন্দনী"
+],
+
+"ফলদা ইউনিয়ন":[
+"আগতেরিল্যা",
+"মমিনপুর",
+"গাড়াবাড়ী",
+"ধুবলিয়া",
+"ফলদা চণ্ডিপুর",
+"ফলদা দক্ষিণ পাড়া",
+"ফলদা হিন্দুপাড়া",
+"ফলদা চণ্ডিপুর পূর্ব",
+"ঝনঝনিয়া",
+"মাইজবাড়ী",
+"মাদারিয়া",
+"ফলদা ঘোনাপাড়া",
+"ফলদা দিঘুলিয়াপাড়া",
+"ঢেপাকান্দি",
+"পাঁছতেরিল্যা",
+"সানক বয়ড়া",
+"ফলদা চরপাড়া",
+"ফলদা পূর্ব পাড়া"
+],
+
+"গোবিন্দাসী ইউনিয়ন":[
+"খুপীবাড়ী",
+"বাগবাড়ী",
+"ভাদুরির চর",
+"শালদাইর",
+"শাফলকুড়া",
+"কুকাদাইর",
+"চিতুলিয়া",
+"জিগাতলা",
+"গোবিন্দাসী",
+"যদুরগাতী",
+"রাউৎবাড়ী",
+"চিতুলিয়াপাড়া",
+"নাগরগাতি",
+"ভালকুটিয়া",
+"স্থলকাশি",
+"বিলচাপড়া",
+"রুহুলী",
+"বিল রুহুলী",
+"কয়ড়া",
+"চর কয়ড়া",
+"কষ্টাপাড়া",
+"খানুরবাড়ী",
+"চর গোয়াদাইর"
+],
+
+"অলোয়া ইউনিয়ন":[
+"কাগমারীপাড়া",
+"ভারই",
+"অলোয়া",
+"নিকলা",
+"চর নিকলা",
+"বরকতপুর",
+"খরক",
+"নিকলা নয়াপাড়া",
+"আকালু",
+"আমুলা",
+"আমুলা দহভরট",
+"দীঘি কাতুলী",
+"বিল আমুলা",
+"আমুলা চান",
+"চেংটাপাড়া",
+"নিকলা আনার খাষপাড়া",
+"নিকলা গোবর্ধন",
+"নিকলা গোপাল",
+"নিকলা নরসিংহপাড়া",
+"নিকলা রায়েরপাড়া",
+"গোলাবাড়ী",
+"নলুয়া",
+"নিকলা কদিম",
+"নিকলা দড়িপাড়া",
+"নিকলা মহব্বত",
+"বিল"
+],
+
+"নিকরাইল ইউনিয়ন":[
+"চর পাথাইল কান্দি",
+"সার পলশিয়া",
+"নিকরাইল",
+"খাষ বিয়ারা (পলশিয়া)",
+"নলছিয়া পূনর্বাসন",
+"পাছগাছি",
+"বাইন তাইন",
+"বেলুয়া",
+"হাউল ভাঙ্গা",
+"কোনাবাড়ী",
+"গোপালগঞ্জ",
+"বাহাদুর টুকনা",
+"কৃষ্ণপুর",
+"পলশিয়া উত্তর",
+"মাটিকাটা",
+"দোভায়া",
+"পাটিতাপাড়া",
+"চর বাইন তাইন",
+"সিরাজকান্দি"
+]
+
+}
+
+}
+
+};
+
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const districtSelect =
+document.getElementById("district");
+
+const upazilaSelect =
+document.getElementById("upazila");
+
+const unionSelect =
+document.getElementById("union");
+
+const villageSelect =
+document.getElementById("village");
+
+
+/* =====================================================
+   DISTRICT CHANGE
+===================================================== */
+
+districtSelect.addEventListener(
+"change",
+function(){
+
+const district=this.value;
+
+upazilaSelect.innerHTML=
+'<option value="">উপজেলা নির্বাচন করুন</option>';
+
+unionSelect.innerHTML=
+'<option value="">আগে উপজেলা নির্বাচন করুন</option>';
+
+villageSelect.innerHTML=
+'<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
+
+upazilaSelect.disabled=true;
+unionSelect.disabled=true;
+villageSelect.disabled=true;
+
+if(!district || !locationData[district]){
+return;
+}
+
+Object.keys(locationData[district])
+.forEach(function(upazila){
+
+const option=document.createElement("option");
+
+option.value=upazila;
+option.textContent=upazila;
+
+upazilaSelect.appendChild(option);
+
+});
+
+upazilaSelect.disabled=false;
+
+});
+
+
+/* =====================================================
+   UPAZILA CHANGE
+===================================================== */
+
+upazilaSelect.addEventListener(
+"change",
+function(){
+
+const district=districtSelect.value;
+const upazila=this.value;
+
+unionSelect.innerHTML=
+'<option value="">ইউনিয়ন/পৌরসভা নির্বাচন করুন</option>';
+
+villageSelect.innerHTML=
+'<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
+
+unionSelect.disabled=true;
+villageSelect.disabled=true;
+
+if(
+!district ||
+!upazila ||
+!locationData[district] ||
+!locationData[district][upazila]
+){
+return;
+}
+
+Object.keys(
+locationData[district][upazila]
+)
+.forEach(function(union){
+
+const option=document.createElement("option");
+
+option.value=union;
+option.textContent=union;
+
+unionSelect.appendChild(option);
+
+});
+
+unionSelect.disabled=false;
+
+});
+
+
+/* =====================================================
+   UNION CHANGE
+===================================================== */
+
+unionSelect.addEventListener(
+"change",
+function(){
+
+const district=districtSelect.value;
+const upazila=upazilaSelect.value;
+const union=this.value;
+
+villageSelect.innerHTML=
+'<option value="">গ্রাম/এলাকা নির্বাচন করুন</option>';
+
+villageSelect.disabled=true;
+
+if(
+!district ||
+!upazila ||
+!union ||
+!locationData[district] ||
+!locationData[district][upazila] ||
+!locationData[district][upazila][union]
+){
+return;
+}
 
-      unionSelect.appendChild(option);
-
-    });
-
-    unionSelect.disabled = false;
-
-  });
-
-
-  /* =====================================================
-     UNION CHANGE
-  ===================================================== */
-
-  unionSelect.addEventListener("change", function(){
-
-    const district = districtSelect.value;
-    const upazila = upazilaSelect.value;
-    const union = this.value;
+locationData[district][upazila][union]
+.forEach(function(village){
 
-    villageSelect.innerHTML =
-      '<option value="">গ্রাম/এলাকা নির্বাচন করুন</option>';
-
-    villageSelect.disabled = true;
+const option=document.createElement("option");
 
-    if(
-      !district ||
-      !upazila ||
-      !union ||
-      !locationData[district] ||
-      !locationData[district][upazila] ||
-      !locationData[district][upazila][union]
-    ){
-      return;
-    }
+option.value=village;
+option.textContent=village;
 
-    locationData[district][upazila][union]
-      .forEach(function(village){
+villageSelect.appendChild(option);
 
-        const option =
-          document.createElement("option");
+});
 
-        option.value = village;
-        option.textContent = village;
+villageSelect.disabled=false;
+
+});
 
-        villageSelect.appendChild(option);
-
-      });
-
-    villageSelect.disabled = false;
-
-  });
 
+/* =====================================================
+   FORM
+===================================================== */
 
-  /* =====================================================
-     FORM SUBMISSION
-  ===================================================== */
+const reportForm=
+document.getElementById("reportForm");
 
-  const reportForm =
-    document.getElementById("reportForm");
+const submitBtn=
+document.getElementById("submitBtn");
 
-  const submitBtn =
-    document.getElementById("submitBtn");
+const formMessage=
+document.getElementById("formMessage");
 
-  const formMessage =
-    document.getElementById("formMessage");
 
+reportForm.addEventListener(
+"submit",
+async function(e){
 
-  reportForm.addEventListener("submit", async function(e){
+e.preventDefault();
 
-    e.preventDefault();
+formMessage.className="message";
+formMessage.textContent="";
 
-    formMessage.className = "message";
-    formMessage.textContent = "";
+const district=
+districtSelect.value.trim();
 
-    const district =
-      districtSelect.value.trim();
+const upazila=
+upazilaSelect.value.trim();
 
-    const upazila =
-      upazilaSelect.value.trim();
+const unionName=
+unionSelect.value.trim();
 
-    const unionName =
-      unionSelect.value.trim();
+const village=
+villageSelect.value.trim();
 
-    const village =
-      villageSelect.value.trim();
+const office=
+document.getElementById("office")
+.value.trim();
 
-    const office =
-      document.getElementById("office").value.trim();
+const amountValue=
+document.getElementById("amount")
+.value;
 
-    const amountValue =
-      document.getElementById("amount").value;
+const incidentDate=
+document.getElementById("incidentDate")
+.value;
 
-    const incidentDate =
-      document.getElementById("incidentDate").value;
+const details=
+document.getElementById("details")
+.value.trim();
 
-    const details =
-      document.getElementById("details").value.trim();
+const reportType=
+document.getElementById("reportType")
+.value;
 
 
-    if(
-      !district ||
-      !upazila ||
-      !unionName ||
-      !village ||
-      !office ||
-      !details
-    ){
+if(
+!district ||
+!upazila ||
+!unionName ||
+!village ||
+!office ||
+!details
+){
 
-      formMessage.textContent =
-        "⚠️ অনুগ্রহ করে প্রয়োজনীয় সব তথ্য পূরণ করুন।";
+formMessage.textContent=
+"⚠️ অনুগ্রহ করে প্রয়োজনীয় সব তথ্য পূরণ করুন।";
 
-      formMessage.className =
-        "message error";
+formMessage.className=
+"message error";
 
-      return;
-    }
+return;
 
+}
 
-    submitBtn.disabled = true;
-    submitBtn.textContent =
-      "⏳ রিপোর্ট জমা হচ্ছে...";
 
+submitBtn.disabled=true;
 
-    try{
+submitBtn.textContent=
+"⏳ রিপোর্ট জমা হচ্ছে...";
 
-      const amount =
-        amountValue
-          ? Number(amountValue)
-          : 0;
 
+try{
 
-      const { error } =
-        await supabaseClient
-          .from("reports")
-          .insert([
+const amount=
+amountValue
+?Number(amountValue)
+:0;
 
-            {
-              district: district,
-              upazila: upazila,
-              union_name: unionName,
-              village: village,
-              office: office,
-              amount: amount,
-              incident_date:
-                incidentDate || null,
-              details: details,
-              status: "pending"
-            }
 
-          ]);
+/*
+ IMPORTANT:
+ Existing Supabase columns only are being used.
+ reportType is added to details so no new
+ database column is required.
+*/
 
+let finalDetails=details;
 
-      if(error){
-        throw error;
-      }
+if(reportType){
 
+finalDetails=
+"রিপোর্টের ধরন: "+
+reportType+
+"\n\n"+
+details;
 
-      formMessage.textContent =
-        "✅ আপনার রিপোর্ট সফলভাবে জমা হয়েছে। প্রশাসনিক পর্যালোচনার পর অনুমোদিত হলে প্রকাশিত রিপোর্টে দেখা যাবে।";
+}
 
-      formMessage.className =
-        "message success";
 
+const {error}=
+await supabaseClient
+.from("reports")
+.insert([{
 
-      reportForm.reset();
+district:district,
 
-      upazilaSelect.innerHTML =
-        '<option value="">আগে জেলা নির্বাচন করুন</option>';
+upazila:upazila,
 
-      unionSelect.innerHTML =
-        '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
+union_name:unionName,
 
-      villageSelect.innerHTML =
-        '<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
+village:village,
 
-      upazilaSelect.disabled = true;
-      unionSelect.disabled = true;
-      villageSelect.disabled = true;
+office:office,
 
+amount:amount,
 
-      loadReportStatistics();
-      loadPublicReports();
+incident_date:
+incidentDate || null,
 
+details:finalDetails,
 
-    }catch(error){
+status:"pending"
 
-      console.error("Report submission error:", error);
+}]);
 
-      formMessage.textContent =
-        "❌ রিপোর্ট জমা দেওয়া যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।";
 
-      formMessage.className =
-        "message error";
+if(error){
+throw error;
+}
 
-    }
 
+formMessage.textContent=
+"✅ আপনার রিপোর্ট সফলভাবে জমা হয়েছে। প্রশাসনিক পর্যালোচনার পর অনুমোদিত হলে প্রকাশিত রিপোর্টে দেখা যাবে।";
 
-    submitBtn.disabled = false;
-    submitBtn.textContent =
-      "📤 রিপোর্ট জমা দিন";
+formMessage.className=
+"message success";
 
-  });
 
+reportForm.reset();
 
-  /* =====================================================
-     STATISTICS
-  ===================================================== */
 
-  async function loadReportStatistics(){
+upazilaSelect.innerHTML=
+'<option value="">আগে জেলা নির্বাচন করুন</option>';
 
-    try{
+unionSelect.innerHTML=
+'<option value="">আগে উপজেলা নির্বাচন করুন</option>';
 
-      const { data, error } =
-        await supabaseClient
-          .from("reports")
-          .select("id,district,office,amount")
-          .eq("status","approved");
+villageSelect.innerHTML=
+'<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
 
+upazilaSelect.disabled=true;
+unionSelect.disabled=true;
+villageSelect.disabled=true;
 
-      if(error){
-        console.error(error);
-        return;
-      }
 
+loadReportStatistics();
+loadPublicReports();
 
-      const reports =
-        data || [];
+}catch(error){
 
+console.error(
+"Report submission error:",
+error
+);
 
-      const totalReports =
-        reports.length;
+formMessage.textContent=
+"❌ রিপোর্ট জমা দেওয়া যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।";
 
+formMessage.className=
+"message error";
 
-      const totalAmount =
-        reports.reduce(function(total, report){
+}
 
-          const amount =
-            Number(report.amount) || 0;
 
-          return total + amount;
+submitBtn.disabled=false;
 
-        },0);
+submitBtn.textContent=
+"📤 রিপোর্ট জমা দিন";
 
+});
 
-      const offices =
-        new Set(
-          reports
-            .map(function(r){
-              return (r.office || "").trim();
-            })
-            .filter(Boolean)
-        );
 
+/* =====================================================
+   STATISTICS
+===================================================== */
 
-      const districts =
-        new Set(
-          reports
-            .map(function(r){
-              return (r.district || "").trim();
-            })
-            .filter(Boolean)
-        );
+async function loadReportStatistics(){
 
+try{
 
-      document.getElementById("totalReports")
-        .textContent =
-        Number(totalReports)
-          .toLocaleString("bn-BD");
+const {data,error}=
+await supabaseClient
+.from("reports")
+.select(
+"id,district,office,amount"
+)
+.eq(
+"status",
+"approved"
+);
 
+if(error){
 
-      document.getElementById("totalAmount")
-        .textContent =
-        "৳" +
-        Number(totalAmount)
-          .toLocaleString("bn-BD");
+console.error(error);
+return;
 
+}
 
-      document.getElementById("totalOffices")
-        .textContent =
-        Number(offices.size)
-          .toLocaleString("bn-BD");
+const reports=data || [];
 
 
-      document.getElementById("totalDistricts")
-        .textContent =
-        Number(districts.size)
-          .toLocaleString("bn-BD");
+const totalReports=
+reports.length;
 
 
-    }catch(error){
+const totalAmount=
+reports.reduce(
+function(total,report){
 
-      console.error(
-        "Statistics error:",
-        error
-      );
+return total+
+(Number(report.amount)||0);
 
-    }
+},
+0
+);
 
-  }
 
+const offices=
+new Set(
+reports
+.map(
+function(r){
+return (r.office||"").trim();
+}
+)
+.filter(Boolean)
+);
 
-  /* =====================================================
-     ESCAPE SEARCH FILTER
-  ===================================================== */
 
-  function escapeFilter(value){
+const districts=
+new Set(
+reports
+.map(
+function(r){
+return (r.district||"").trim();
+}
+)
+.filter(Boolean)
+);
 
-    return value
-      .replace(/\\/g,"\\\\")
-      .replace(/%/g,"\\%")
-      .replace(/_/g,"\\_")
-      .replace(/,/g,"\\,")
-      .replace(/\./g,"\\.");
 
-  }
+document.getElementById(
+"totalReports"
+)
+.textContent=
+Number(totalReports)
+.toLocaleString("bn-BD");
 
 
-  /* =====================================================
-     PUBLIC REPORTS
-  ===================================================== */
+document.getElementById(
+"totalAmount"
+)
+.textContent=
+"৳"+
+Number(totalAmount)
+.toLocaleString("bn-BD");
 
-  async function loadPublicReports(
-    searchText = ""
-  ){
 
-    const container =
-      document.getElementById(
-        "reportsContainer"
-      );
+document.getElementById(
+"totalOffices"
+)
+.textContent=
+Number(offices.size)
+.toLocaleString("bn-BD");
 
 
-    container.innerHTML =
-      '<div class="loading">⏳ রিপোর্ট লোড হচ্ছে...</div>';
+document.getElementById(
+"totalDistricts"
+)
+.textContent=
+Number(districts.size)
+.toLocaleString("bn-BD");
 
 
-    try{
+}catch(error){
 
-      let query =
-        supabaseClient
-          .from("reports")
-          .select(
-            "id,district,upazila,union_name,village,office,amount,incident_date,details,created_at"
-          )
-          .eq("status","approved")
-          .order(
-            "created_at",
-            {
-              ascending:false
-            }
-          );
+console.error(
+"Statistics error:",
+error
+);
 
+}
 
-      const search =
-        searchText.trim();
+}
 
 
-      if(search){
+/* =====================================================
+   SEARCH FILTER
+===================================================== */
 
-        const safeSearch =
-          escapeFilter(search);
+function escapeFilter(value){
 
-        query =
-          query.or(
-            "district.ilike.%" + safeSearch + "%," +
-            "upazila.ilike.%" + safeSearch + "%," +
-            "union_name.ilike.%" + safeSearch + "%," +
-            "village.ilike.%" + safeSearch + "%," +
-            "office.ilike.%" + safeSearch + "%"
-          );
+return value
+.replace(/\\/g,"\\\\")
+.replace(/%/g,"\\%")
+.replace(/_/g,"\\_")
+.replace(/,/g,"\\,")
+.replace(/\./g,"\\.");
 
-      }
+}
 
 
-      const { data, error } =
-        await query;
+function escapeHTML(value){
 
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
-      if(error){
-        throw error;
-      }
+}
 
 
-      if(!data || data.length === 0){
+function formatDate(dateString){
 
-        container.innerHTML =
-          '<div class="no-data">📭 এখনো কোনো প্রকাশিত রিপোর্ট পাওয়া যায়নি।</div>';
+try{
 
-        return;
+return new Date(dateString)
+.toLocaleDateString(
+"bn-BD",
+{
+year:"numeric",
+month:"long",
+day:"numeric"
+}
+);
 
-      }
+}catch(e){
 
+return dateString;
 
-      container.innerHTML = "";
+}
 
+}
 
-      data.forEach(function(report){
 
-        const card =
-          document.createElement("div");
+/* =====================================================
+   PUBLIC REPORTS
+===================================================== */
 
-        card.className =
-          "report-card";
+async function loadPublicReports(
+searchText=""
+){
 
+const container=
+document.getElementById(
+"reportsContainer"
+);
 
-        const amount =
-          Number(report.amount) || 0;
 
+container.innerHTML=
+'<div class="loading">⏳ রিপোর্ট লোড হচ্ছে...</div>';
 
-        const incidentDate =
-          report.incident_date
-            ? formatDate(report.incident_date)
-            : "তারিখ উল্লেখ নেই";
 
+try{
 
-        card.innerHTML = `
+let query=
+supabaseClient
+.from("reports")
+.select(
+"id,district,upazila,union_name,village,office,amount,incident_date,details,created_at"
+)
+.eq(
+"status",
+"approved"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
-          <h3>📢 দুর্নীতির রিপোর্ট</h3>
 
-          <div class="report-meta">
+const search=
+searchText.trim();
 
-            <span class="badge">
-              📍 ${escapeHTML(report.district || "জেলা নেই")}
-            </span>
+const filterDistrict=
+document.getElementById(
+"reportDistrictFilter"
+).value;
 
-            <span class="badge">
-              🏘️ ${escapeHTML(report.upazila || "উপজেলা নেই")}
-            </span>
+const filterUpazila=
+document.getElementById(
+"reportUpazilaFilter"
+).value;
 
-            <span class="badge">
-              🏛️ ${escapeHTML(report.union_name || "ইউনিয়ন নেই")}
-            </span>
 
-            <span class="badge">
-              🏡 ${escapeHTML(report.village || "গ্রাম নেই")}
-            </span>
+if(filterDistrict){
 
-          </div>
+query=
+query.eq(
+"district",
+filterDistrict
+);
 
+}
 
-          <p>
-            <strong>🏢 অফিস:</strong>
-            ${escapeHTML(report.office || "উল্লেখ নেই")}
-          </p>
 
+if(filterUpazila){
 
-          <p>
-            <strong>💰 ঘুষের পরিমাণ:</strong>
-            ৳${amount.toLocaleString("bn-BD")}
-          </p>
+query=
+query.eq(
+"upazila",
+filterUpazila
+);
 
+}
 
-          <p>
-            <strong>📅 ঘটনার তারিখ:</strong>
-            ${incidentDate}
-          </p>
 
+if(search){
 
-          <p class="report-details">
-            ${escapeHTML(report.details || "")}
-          </p>
+const safeSearch=
+escapeFilter(search);
 
+query=
+query.or(
+"district.ilike.%"+safeSearch+"%,"+
+"upazila.ilike.%"+safeSearch+"%,"+
+"union_name.ilike.%"+safeSearch+"%,"+
+"village.ilike.%"+safeSearch+"%,"+
+"office.ilike.%"+safeSearch+"%"
+);
 
-          <div class="report-date">
-            প্রকাশিত রিপোর্ট
-          </div>
+}
 
-        `;
 
+const {data,error}=
+await query;
 
-        container.appendChild(card);
 
-      });
+if(error){
+throw error;
+}
 
 
-    }catch(error){
+if(!data || data.length===0){
 
-      console.error(
-        "Public reports error:",
-        error
-      );
+container.innerHTML=
+'<div class="no-data">📭 এই ফিল্টারে কোনো প্রকাশিত রিপোর্ট পাওয়া যায়নি।</div>';
 
+return;
 
-      container.innerHTML =
-        '<div class="no-data">❌ রিপোর্ট লোড করা সম্ভব হয়নি।</div>';
+}
 
-    }
 
-  }
+container.innerHTML="";
 
 
-  /* =====================================================
-     SEARCH
-  ===================================================== */
+data.forEach(function(report){
 
-  let searchTimer;
+const card=
+document.createElement("div");
 
+card.className="report-card";
 
-  document.getElementById(
-    "searchInput"
-  ).addEventListener(
-    "input",
-    function(){
 
-      const value =
-        this.value;
+const amount=
+Number(report.amount)||0;
 
 
-      clearTimeout(searchTimer);
+const incidentDate=
+report.incident_date
+?formatDate(report.incident_date)
+:"তারিখ উল্লেখ নেই";
 
 
-      searchTimer =
-        setTimeout(function(){
+const shortDetails=
+report.details || "";
 
-          loadPublicReports(value);
 
-        },400);
+card.innerHTML=`
 
-    }
-  );
+<h3>📢 অভিযোগ/রিপোর্ট</h3>
 
+<div class="report-meta">
 
-  /* =====================================================
-     HTML ESCAPE
-  ===================================================== */
+<span class="badge">
+📍 ${escapeHTML(report.district||"জেলা নেই")}
+</span>
 
-  function escapeHTML(value){
+<span class="badge">
+🏘️ ${escapeHTML(report.upazila||"উপজেলা নেই")}
+</span>
 
-    return String(value)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
+<span class="badge">
+🏛️ ${escapeHTML(report.union_name||"ইউনিয়ন নেই")}
+</span>
 
-  }
+<span class="badge">
+🏡 ${escapeHTML(report.village||"গ্রাম নেই")}
+</span>
 
+</div>
 
-  /* =====================================================
-     DATE FORMAT
-  ===================================================== */
+<p>
+<strong>🏢 অফিস:</strong>
+${escapeHTML(report.office||"উল্লেখ নেই")}
+</p>
 
-  function formatDate(dateString){
+<p>
+<strong>💰 রিপোর্টে উল্লেখিত টাকা:</strong>
+৳${amount.toLocaleString("bn-BD")}
+</p>
 
-    try{
+<p>
+<strong>📅 ঘটনার তারিখ:</strong>
+${incidentDate}
+</p>
 
-      return new Date(
-        dateString
-      ).toLocaleDateString(
-        "bn-BD",
-        {
-          year:"numeric",
-          month:"long",
-          day:"numeric"
-        }
-      );
+<p class="report-details">
+${escapeHTML(shortDetails)}
+</p>
 
-    }catch(e){
+<button
+class="details-btn"
+onclick='showReportDetails(${JSON.stringify(report).replace(/'/g,"&#39;")})'
+>
+📄 বিস্তারিত দেখুন
+</button>
 
-      return dateString;
+<div class="report-date">
+প্রকাশিত রিপোর্ট
+</div>
 
-    }
+`;
 
-  }
 
+container.appendChild(card);
 
-  /* =====================================================
-     INITIAL LOAD
-  ===================================================== */
+});
 
-  loadReportStatistics();
 
-  loadPublicReports();
+}catch(error){
+
+console.error(
+"Public reports error:",
+error
+);
+
+container.innerHTML=
+'<div class="no-data">❌ রিপোর্ট লোড করা সম্ভব হয়নি।</div>';
+
+}
+
+}
+
+
+/* =====================================================
+   REPORT DETAILS MODAL
+===================================================== */
+
+function showReportDetails(report){
+
+const modal=
+document.getElementById(
+"reportModal"
+);
+
+const modalBody=
+document.getElementById(
+"modalBody"
+);
+
+const amount=
+Number(report.amount)||0;
+
+const date=
+report.incident_date
+?formatDate(report.incident_date)
+:"তারিখ উল্লেখ নেই";
+
+
+modalBody.innerHTML=`
+
+<h2>📢 রিপোর্টের বিস্তারিত</h2>
+
+<div class="modal-line">
+<strong>📍 জেলা:</strong>
+${escapeHTML(report.district||"")}
+</div>
+
+<div class="modal-line">
+<strong>🏘️ উপজেলা:</strong>
+${escapeHTML(report.upazila||"")}
+</div>
+
+<div class="modal-line">
+<strong>🏛️ ইউনিয়ন/পৌরসভা:</strong>
+${escapeHTML(report.union_name||"")}
+</div>
+
+<div class="modal-line">
+<strong>🏡 গ্রাম/এলাকা:</strong>
+${escapeHTML(report.village||"")}
+</div>
+
+<div class="modal-line">
+<strong>🏢 অফিস/প্রতিষ্ঠান:</strong>
+${escapeHTML(report.office||"")}
+</div>
+
+<div class="modal-line">
+<strong>💰 রিপোর্টে উল্লেখিত টাকা:</strong>
+৳${amount.toLocaleString("bn-BD")}
+</div>
+
+<div class="modal-line">
+<strong>📅 ঘটনার তারিখ:</strong>
+${date}
+</div>
+
+<div class="modal-details">
+<strong>📄 ঘটনার বিবরণ:</strong>
+
+<br><br>
+
+${escapeHTML(report.details||"")}
+</div>
+
+<div class="warning">
+
+<strong>⚠️ সতর্কতা:</strong>
+
+এই তথ্যটি একটি প্রকাশিত অভিযোগ/রিপোর্ট।
+রিপোর্ট প্রকাশিত হওয়া মানেই অভিযোগটি আইনগতভাবে
+প্রমাণিত—এমন নয়।
+
+</div>
+
+`;
+
+
+modal.style.display="block";
+
+}
+
+
+/* =====================================================
+   MODAL CLOSE
+===================================================== */
+
+document.getElementById(
+"closeModal"
+).addEventListener(
+"click",
+function(){
+
+document.getElementById(
+"reportModal"
+).style.display="none";
+
+}
+);
+
+
+document.getElementById(
+"reportModal"
+).addEventListener(
+"click",
+function(e){
+
+if(e.target===this){
+
+this.style.display="none";
+
+}
+
+}
+);
+
+
+/* =====================================================
+   UPAZILA FILTER
+===================================================== */
+
+const reportUpazilaFilter=
+document.getElementById(
+"reportUpazilaFilter"
+);
+
+
+function populateReportUpazilaFilter(){
+
+reportUpazilaFilter.innerHTML=
+'<option value="">সব উপজেলা</option>';
+
+const district=
+document.getElementById(
+"reportDistrictFilter"
+).value;
+
+if(
+district &&
+locationData[district]
+){
+
+Object.keys(
+locationData[district]
+)
+.forEach(function(upazila){
+
+const option=
+document.createElement("option");
+
+option.value=upazila;
+option.textContent=upazila;
+
+reportUpazilaFilter.appendChild(
+option
+);
+
+});
+
+}
+
+}
+
+
+document.getElementById(
+"reportDistrictFilter"
+).addEventListener(
+"change",
+function(){
+
+populateReportUpazilaFilter();
+
+loadPublicReports(
+document.getElementById(
+"searchInput"
+).value
+);
+
+}
+);
+
+
+reportUpazilaFilter.addEventListener(
+"change",
+function(){
+
+loadPublicReports(
+document.getElementById(
+"searchInput"
+).value
+);
+
+}
+);
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+let searchTimer;
+
+
+document.getElementById(
+"searchInput"
+).addEventListener(
+"input",
+function(){
+
+const value=this.value;
+
+clearTimeout(searchTimer);
+
+searchTimer=
+setTimeout(
+function(){
+
+loadPublicReports(value);
+
+},
+400
+);
+
+});
+
+
+/* =====================================================
+   CLEAR SEARCH
+===================================================== */
+
+document.getElementById(
+"clearSearch"
+).addEventListener(
+"click",
+function(){
+
+document.getElementById(
+"searchInput"
+).value="";
+
+document.getElementById(
+"reportDistrictFilter"
+).value="";
+
+populateReportUpazilaFilter();
+
+loadPublicReports("");
+
+}
+);
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+populateReportUpazilaFilter();
+
+loadReportStatistics();
+
+loadPublicReports();
 
 </script>
 
 </body>
 </html>
+```
