@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 <title>GushKhor — ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</title>
 
 <meta name="description"
-content="ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতা তৈরি এবং মানুষের অভিজ্ঞতা তুলে ধরার একটি নাগরিক প্ল্যাটফর্ম।">
+content="ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতা তৈরি এবং মানুষের অভিজ্ঞতা দায়িত্বশীলভাবে তুলে ধরার নাগরিক প্ল্যাটফর্ম।">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -76,8 +76,7 @@ nav a:hover{
 }
 
 .hero{
-  background:
-    linear-gradient(135deg,rgba(6,59,43,.96),rgba(11,143,103,.93));
+  background:linear-gradient(135deg,rgba(6,59,43,.96),rgba(11,143,103,.93));
   color:white;
   padding:85px 20px 100px;
   text-align:center;
@@ -138,8 +137,6 @@ nav a:hover{
   color:#667085;
 }
 
-/* STATISTICS */
-
 .stats-grid{
   max-width:1200px;
   margin:-45px auto 0;
@@ -174,8 +171,6 @@ nav a:hover{
   color:#667085;
   font-size:15px;
 }
-
-/* QUICK SERVICES */
 
 .quick-grid{
   display:grid;
@@ -212,8 +207,6 @@ nav a:hover{
   color:#667085;
   font-size:14px;
 }
-
-/* FORM */
 
 .form-box{
   max-width:900px;
@@ -285,6 +278,27 @@ textarea{
   margin-top:5px;
 }
 
+.checkbox-box{
+  background:#f8fafc;
+  border:1px solid #d0d5dd;
+  padding:15px;
+  border-radius:10px;
+}
+
+.checkbox-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  cursor:pointer;
+}
+
+.checkbox-row input{
+  width:20px;
+  height:20px;
+  margin-top:4px;
+  flex-shrink:0;
+}
+
 .btn{
   border:0;
   background:#087f5b;
@@ -327,7 +341,21 @@ textarea{
   color:#991b1b;
 }
 
-/* SAFETY */
+.tracking-box{
+  background:white;
+  border:2px dashed #087f5b;
+  padding:16px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+.tracking-code{
+  font-size:25px;
+  font-weight:900;
+  color:#087f5b;
+  letter-spacing:1px;
+  word-break:break-all;
+}
 
 .safety-box{
   max-width:900px;
@@ -350,8 +378,6 @@ textarea{
 .safety-box li{
   margin:5px 0;
 }
-
-/* FEATURES */
 
 .features{
   display:grid;
@@ -380,26 +406,19 @@ textarea{
   color:#667085;
 }
 
-/* REPORT SEARCH */
-
 .search-panel{
   max-width:1000px;
-  margin:auto;
+  margin:auto auto 30px;
   background:white;
   padding:20px;
   border-radius:15px;
   box-shadow:0 5px 20px rgba(0,0,0,.06);
-  margin-bottom:30px;
 }
 
 .search-row{
   display:grid;
   grid-template-columns:2fr 1fr 1fr;
   gap:12px;
-}
-
-.search-box{
-  width:100%;
 }
 
 .clear-btn{
@@ -480,8 +499,6 @@ textarea{
   grid-column:1/-1;
 }
 
-/* FEE GUIDE */
-
 .fee-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -512,8 +529,6 @@ textarea{
   margin-top:20px;
 }
 
-/* GRS */
-
 .grs-box{
   max-width:900px;
   margin:auto;
@@ -541,8 +556,6 @@ textarea{
   font-weight:800;
 }
 
-/* ABOUT */
-
 .about-box{
   background:white;
   padding:30px;
@@ -557,8 +570,6 @@ textarea{
   margin-top:20px;
   border-radius:8px;
 }
-
-/* MODAL */
 
 .modal{
   display:none;
@@ -610,8 +621,6 @@ textarea{
   border-radius:10px;
 }
 
-/* FOOTER */
-
 footer{
   background:#10231d;
   color:white;
@@ -633,8 +642,6 @@ footer p{
   text-decoration:none;
   margin:0 8px;
 }
-
-/* MOBILE */
 
 @media(max-width:900px){
 
@@ -723,200 +730,289 @@ footer p{
     width:100%;
   }
 
+  .tracking-code{
+    font-size:20px;
+  }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header>
+
 <div class="nav">
 
-  <div class="logo">
-    Gush<span>Khor</span>
-  </div>
+<div class="logo">
+Gush<span>Khor</span>
+</div>
 
-  <nav>
-    <a href="#home">হোম</a>
-    <a href="#report">রিপোর্ট</a>
-    <a href="#reports">রিপোর্টসমূহ</a>
-    <a href="#fees">সেবা/ফি</a>
-    <a href="#help">সহায়তা</a>
-    <a href="#about">সম্পর্কে</a>
-  </nav>
+<nav>
+<a href="#home">হোম</a>
+<a href="#report">রিপোর্ট</a>
+<a href="#reports">রিপোর্টসমূহ</a>
+<a href="#fees">সেবা/ফি</a>
+<a href="#help">সহায়তা</a>
+<a href="#about">সম্পর্কে</a>
+</nav>
 
 </div>
+
 </header>
 
-
-<!-- HERO -->
 <section class="hero" id="home">
 
-  <h1>ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</h1>
+<h1>ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</h1>
 
-  <p>
-    আপনি যদি ঘুষ দিতে বাধ্য হন অথবা কোনো ধরনের দুর্নীতির
-    অভিজ্ঞতার সম্মুখীন হন, তাহলে দায়িত্বশীলভাবে তথ্য রিপোর্ট
-    করতে পারেন।
-  </p>
+<p>
+আপনি যদি ঘুষ দিতে বাধ্য হন অথবা কোনো ধরনের দুর্নীতির
+অভিজ্ঞতার সম্মুখীন হন, তাহলে দায়িত্বশীলভাবে তথ্য রিপোর্ট
+করতে পারেন।
+</p>
 
-  <div class="hero-buttons">
+<div class="hero-buttons">
 
-    <a class="hero-btn" href="#report">
-      📝 রিপোর্ট করুন
-    </a>
+<a class="hero-btn" href="#report">
+📝 রিপোর্ট করুন
+</a>
 
-    <a class="hero-btn secondary" href="#reports">
-      🔎 প্রকাশিত রিপোর্ট দেখুন
-    </a>
+<a class="hero-btn secondary" href="#reports">
+🔎 প্রকাশিত রিপোর্ট দেখুন
+</a>
 
-  </div>
+</div>
 
 </section>
 
-
-<!-- STATISTICS -->
 <section class="stats-grid">
 
-  <div class="stat-card">
-    <div class="stat-icon">📢</div>
-    <div class="stat-number" id="totalReports">০</div>
-    <div class="stat-title">প্রকাশিত রিপোর্ট</div>
-  </div>
+<div class="stat-card">
 
-  <div class="stat-card">
-    <div class="stat-icon">💰</div>
-    <div class="stat-number" id="totalAmount">৳০</div>
-    <div class="stat-title">রিপোর্টে উল্লেখিত মোট টাকা</div>
-  </div>
+<div class="stat-icon">📢</div>
 
-  <div class="stat-card">
-    <div class="stat-icon">🏢</div>
-    <div class="stat-number" id="totalOffices">০</div>
-    <div class="stat-title">রিপোর্ট হওয়া অফিস</div>
-  </div>
+<div class="stat-number" id="totalReports">
+০
+</div>
 
-  <div class="stat-card">
-    <div class="stat-icon">📍</div>
-    <div class="stat-number" id="totalDistricts">০</div>
-    <div class="stat-title">রিপোর্ট হওয়া জেলা</div>
-  </div>
+<div class="stat-title">
+প্রকাশিত রিপোর্ট
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">💰</div>
+
+<div class="stat-number" id="totalAmount">
+৳০
+</div>
+
+<div class="stat-title">
+রিপোর্টে উল্লেখিত মোট টাকা
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">🏢</div>
+
+<div class="stat-number" id="totalOffices">
+০
+</div>
+
+<div class="stat-title">
+রিপোর্ট হওয়া অফিস
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-icon">📍</div>
+
+<div class="stat-number" id="totalDistricts">
+০
+</div>
+
+<div class="stat-title">
+রিপোর্ট হওয়া জেলা
+</div>
+
+</div>
 
 </section>
 
-
-<!-- QUICK ACTIONS -->
 <section class="container">
 
 <div class="section-title">
-  <h2>আপনি কী করতে চান?</h2>
-  <p>প্রয়োজনীয় সেবাটি দ্রুত নির্বাচন করুন।</p>
+
+<h2>আপনি কী করতে চান?</h2>
+
+<p>
+প্রয়োজনীয় সেবাটি দ্রুত নির্বাচন করুন।
+</p>
+
 </div>
 
 <div class="quick-grid">
 
-  <div class="quick-card" onclick="location.href='#report'">
-    <div class="icon">📝</div>
-    <h3>ঘুষ রিপোর্ট করুন</h3>
-    <p>ঘুষ বা দুর্নীতির অভিজ্ঞতা রিপোর্ট করুন।</p>
-  </div>
+<div class="quick-card" onclick="location.href='#report'">
 
-  <div class="quick-card" onclick="location.href='#reports'">
-    <div class="icon">🔎</div>
-    <h3>রিপোর্ট খুঁজুন</h3>
-    <p>জেলা, উপজেলা বা অফিস দিয়ে খুঁজুন।</p>
-  </div>
+<div class="icon">📝</div>
 
-  <div class="quick-card" onclick="location.href='#fees'">
-    <div class="icon">💰</div>
-    <h3>ফি যাচাই করুন</h3>
-    <p>সেবার সরকারি ফি সম্পর্কে তথ্য দেখুন।</p>
-  </div>
+<h3>ঘুষ রিপোর্ট করুন</h3>
 
-  <div class="quick-card" onclick="location.href='#help'">
-    <div class="icon">🚨</div>
-    <h3>অভিযোগের সহায়তা</h3>
-    <p>সরকারি অভিযোগ ব্যবস্থার তথ্য দেখুন।</p>
-  </div>
+<p>
+ঘুষ বা দুর্নীতির অভিজ্ঞতা রিপোর্ট করুন।
+</p>
+
+</div>
+
+<div class="quick-card" onclick="location.href='#reports'">
+
+<div class="icon">🔎</div>
+
+<h3>রিপোর্ট খুঁজুন</h3>
+
+<p>
+জেলা, উপজেলা বা অফিস দিয়ে খুঁজুন।
+</p>
+
+</div>
+
+<div class="quick-card" onclick="location.href='#fees'">
+
+<div class="icon">💰</div>
+
+<h3>ফি যাচাই করুন</h3>
+
+<p>
+সেবার সরকারি ফি সম্পর্কে তথ্য দেখুন।
+</p>
+
+</div>
+
+<div class="quick-card" onclick="location.href='#help'">
+
+<div class="icon">🚨</div>
+
+<h3>অভিযোগের সহায়তা</h3>
+
+<p>
+সরকারি অভিযোগ ব্যবস্থার তথ্য দেখুন।
+</p>
+
+</div>
 
 </div>
 
 </section>
 
-
-<!-- REPORT FORM -->
 <section class="container" id="report">
 
 <div class="section-title">
-  <h2>📝 ঘুষ/দুর্নীতির রিপোর্ট করুন</h2>
-  <p>
-    প্রয়োজনীয় তথ্য দিন। প্রকাশের আগে রিপোর্ট প্রশাসনিকভাবে
-    পর্যালোচনা করা হতে পারে।
-  </p>
+
+<h2>📝 ঘুষ/দুর্নীতির রিপোর্ট করুন</h2>
+
+<p>
+প্রয়োজনীয় তথ্য দিন। প্রকাশের আগে রিপোর্ট প্রশাসনিকভাবে
+পর্যালোচনা করা হতে পারে।
+</p>
+
 </div>
 
 <div class="form-box">
 
 <div class="location-title">
-  📍 ঘটনার স্থান নির্বাচন করুন
+📍 ঘটনার স্থান নির্বাচন করুন
 </div>
 
 <form id="reportForm">
 
-<!-- LOCATION -->
-
 <div class="location-grid">
 
 <div class="form-group">
-<label for="district">জেলা *</label>
+
+<label for="district">
+জেলা *
+</label>
 
 <select id="district" required>
-<option value="">জেলা নির্বাচন করুন</option>
-<option value="টাঙ্গাইল">টাঙ্গাইল</option>
+
+<option value="">
+জেলা নির্বাচন করুন
+</option>
+
+<option value="টাঙ্গাইল">
+টাঙ্গাইল
+</option>
+
 </select>
+
 </div>
 
-
 <div class="form-group">
-<label for="upazila">উপজেলা/থানা *</label>
+
+<label for="upazila">
+উপজেলা/থানা *
+</label>
 
 <select id="upazila" required disabled>
-<option value="">আগে জেলা নির্বাচন করুন</option>
+
+<option value="">
+আগে জেলা নির্বাচন করুন
+</option>
+
 </select>
+
 </div>
 
-
 <div class="form-group">
-<label for="union">ইউনিয়ন/পৌরসভা *</label>
+
+<label for="union">
+ইউনিয়ন/পৌরসভা *
+</label>
 
 <select id="union" required disabled>
-<option value="">আগে উপজেলা নির্বাচন করুন</option>
-</select>
-</div>
 
+<option value="">
+আগে উপজেলা নির্বাচন করুন
+</option>
+
+</select>
+
+</div>
 
 <div class="form-group">
-<label for="village">গ্রাম/এলাকা *</label>
+
+<label for="village">
+গ্রাম/এলাকা *
+</label>
 
 <select id="village" required disabled>
-<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>
+
+<option value="">
+আগে ইউনিয়ন নির্বাচন করুন
+</option>
+
 </select>
-</div>
 
 </div>
 
-
-<!-- REPORT TYPE -->
+</div>
 
 <div class="form-group">
 
 <label for="reportType">
-  রিপোর্টের ধরন
+📂 রিপোর্টের ধরন *
 </label>
 
-<select id="reportType">
+<select id="reportType" required>
 
 <option value="">
 ধরন নির্বাচন করুন
@@ -961,14 +1057,10 @@ footer p{
 </select>
 
 <p class="help-text">
-রিপোর্টের ধরন database-এ আলাদা কলাম ছাড়াই আপনার রিপোর্টের
-বিস্তারিত অংশে প্রয়োজন হলে উল্লেখ করতে পারেন।
+রিপোর্টের ধরন আলাদাভাবে database-এ সংরক্ষণ করা হবে।
 </p>
 
 </div>
-
-
-<!-- OFFICE -->
 
 <div class="form-group">
 
@@ -981,12 +1073,10 @@ type="text"
 id="office"
 placeholder="যেমন: ভূমি অফিস, ইউনিয়ন পরিষদ, হাসপাতাল"
 required
+
 >
 
 </div>
-
-
-<!-- AMOUNT -->
 
 <div class="form-group">
 
@@ -999,6 +1089,7 @@ type="number"
 id="amount"
 min="0"
 placeholder="যেমন: 5000"
+
 >
 
 <p class="help-text">
@@ -1006,9 +1097,6 @@ placeholder="যেমন: 5000"
 </p>
 
 </div>
-
-
-<!-- DATE -->
 
 <div class="form-group">
 
@@ -1019,12 +1107,10 @@ placeholder="যেমন: 5000"
 <input
 type="date"
 id="incidentDate"
+
 >
 
 </div>
-
-
-<!-- DETAILS -->
 
 <div class="form-group">
 
@@ -1040,8 +1126,34 @@ required
 
 </div>
 
+<div class="form-group">
 
-<!-- SAFETY NOTICE -->
+<div class="checkbox-box">
+
+<label class="checkbox-row">
+
+<input
+type="checkbox"
+id="anonymousReport"
+checked
+
+>
+
+<span>
+🔐 <strong>আমি চাই আমার রিপোর্টটি anonymous হিসেবে সংরক্ষণ করা হোক।</strong>
+<br>
+
+<small style="color:#667085;font-weight:400;">
+এই ফর্মে আপনার নাম, ফোন নম্বর বা ইমেইল নেওয়া হচ্ছে না।
+</small>
+
+</span>
+
+</label>
+
+</div>
+
+</div>
 
 <div class="warning" style="margin-bottom:20px;">
 
@@ -1053,14 +1165,14 @@ NID নম্বর, ব্যাংক তথ্য, পাসওয়ার্�
 
 </div>
 
-
 <button
 type="submit"
 class="btn"
 id="submitBtn"
+
 >
-📤 রিপোর্ট জমা দিন
-</button>
+
+📤 রিপোর্ট জমা দিন </button>
 
 <div id="formMessage" class="message"></div>
 
@@ -1070,17 +1182,19 @@ id="submitBtn"
 
 </section>
 
-
-<!-- SAFETY -->
 <section class="container">
 
 <div class="section-title">
+
 <h2>🛡️ নিরাপদভাবে রিপোর্ট করার পরামর্শ</h2>
+
 </div>
 
 <div class="safety-box">
 
-<h3>রিপোর্ট করার আগে মনে রাখুন</h3>
+<h3>
+রিপোর্ট করার আগে মনে রাখুন
+</h3>
 
 <ul>
 
@@ -1101,7 +1215,7 @@ id="submitBtn"
 </li>
 
 <li>
-কোনো অভিযোগকে আদালত/কর্তৃপক্ষের চূড়ান্ত সিদ্ধান্তের আগে
+কোনো অভিযোগকে কর্তৃপক্ষের চূড়ান্ত সিদ্ধান্তের আগে
 প্রমাণিত সত্য হিসেবে ধরে নেবেন না।
 </li>
 
@@ -1111,12 +1225,13 @@ id="submitBtn"
 
 </section>
 
-
-<!-- FEATURES -->
 <section class="container">
 
 <div class="section-title">
-<h2>আমাদের উদ্দেশ্য</h2>
+
+<h2>
+আমাদের উদ্দেশ্য
+</h2>
 
 <p>
 ঘুষ ও দুর্নীতির বিষয়ে জনসচেতনতা তৈরি এবং
@@ -1131,7 +1246,9 @@ id="submitBtn"
 
 <div class="icon">🛡️</div>
 
-<h3>দায়িত্বশীল রিপোর্টিং</h3>
+<h3>
+দায়িত্বশীল রিপোর্টিং
+</h3>
 
 <p>
 রিপোর্টে সত্য ও যাচাইযোগ্য তথ্য দেওয়ার জন্য উৎসাহিত করা হয়।
@@ -1139,26 +1256,27 @@ id="submitBtn"
 
 </div>
 
-
 <div class="feature">
 
 <div class="icon">🔎</div>
 
-<h3>পর্যালোচনা</h3>
+<h3>
+পর্যালোচনা
+</h3>
 
 <p>
-প্রকাশিত রিপোর্টগুলো প্রশাসনিক পর্যালোচনার মাধ্যমে
-নিয়ন্ত্রিত হতে পারে।
+প্রকাশিত রিপোর্টগুলো প্রশাসনিক পর্যালোচনার মাধ্যমে নিয়ন্ত্রিত হতে পারে।
 </p>
 
 </div>
-
 
 <div class="feature">
 
 <div class="icon">📊</div>
 
-<h3>জনসচেতনতা</h3>
+<h3>
+জনসচেতনতা
+</h3>
 
 <p>
 প্রকাশিত তথ্যের মাধ্যমে নাগরিক সচেতনতা বাড়ানো।
@@ -1170,13 +1288,13 @@ id="submitBtn"
 
 </section>
 
-
-<!-- FEE GUIDE -->
 <section class="container" id="fees">
 
 <div class="section-title">
 
-<h2>💰 সরকারি ফি ও সেবা যাচাই</h2>
+<h2>
+💰 সরকারি ফি ও সেবা যাচাই
+</h2>
 
 <p>
 কোনো সেবার জন্য অতিরিক্ত টাকা দাবি করা হলে আগে
@@ -1189,7 +1307,9 @@ id="submitBtn"
 
 <div class="fee-card">
 
-<h3>🏡 ভূমি সেবা</h3>
+<h3>
+🏡 ভূমি সেবা
+</h3>
 
 <p>
 নামজারি, ভূমি উন্নয়ন কর, খতিয়ানসহ ভূমি সেবার
@@ -1199,23 +1319,24 @@ id="submitBtn"
 
 </div>
 
-
 <div class="fee-card">
 
-<h3>🏛️ স্থানীয় সরকার</h3>
+<h3>
+🏛️ স্থানীয় সরকার
+</h3>
 
 <p>
 জন্মনিবন্ধন, সনদ ও স্থানীয় পরিষদের বিভিন্ন সেবার
-ফি সংশ্লিষ্ট ইউনিয়ন/পৌরসভা বা সরকারি উৎস থেকে
-যাচাই করুন।
+ফি সংশ্লিষ্ট ইউনিয়ন/পৌরসভা বা সরকারি উৎস থেকে যাচাই করুন।
 </p>
 
 </div>
 
-
 <div class="fee-card">
 
-<h3>🏥 স্বাস্থ্যসেবা</h3>
+<h3>
+🏥 স্বাস্থ্যসেবা
+</h3>
 
 <p>
 সরকারি হাসপাতাল বা স্বাস্থ্য প্রতিষ্ঠানের সেবা,
@@ -1229,7 +1350,9 @@ id="submitBtn"
 
 <div class="info-note">
 
-<strong>ℹ️ গুরুত্বপূর্ণ:</strong>
+<strong>
+ℹ️ গুরুত্বপূর্ণ:
+</strong>
 
 সরকারি ফি সময়ের সঙ্গে পরিবর্তিত হতে পারে।
 তাই এখানে কোনো নির্দিষ্ট টাকার অঙ্ককে চূড়ান্ত সরকারি
@@ -1240,13 +1363,13 @@ id="submitBtn"
 
 </section>
 
-
-<!-- GRS HELP -->
 <section class="container" id="help">
 
 <div class="grs-box">
 
-<h2>🚨 সরকারি অভিযোগ করতে চান?</h2>
+<h2>
+🚨 সরকারি অভিযোগ করতে চান?
+</h2>
 
 <p>
 কোনো সরকারি সেবা নিয়ে অভিযোগ থাকলে বাংলাদেশ সরকারের
@@ -1258,28 +1381,28 @@ href="https://www.grs.gov.bd/"
 target="_blank"
 rel="noopener noreferrer"
 class="grs-btn"
+
 >
-সরকারি GRS ওয়েবসাইট খুলুন ↗
-</a>
+
+সরকারি GRS ওয়েবসাইট খুলুন ↗ </a>
 
 </div>
 
 </section>
 
-
-<!-- PUBLIC REPORTS -->
 <section class="container" id="reports">
 
 <div class="section-title">
 
-<h2>🔎 প্রকাশিত রিপোর্ট</h2>
+<h2>
+🔎 প্রকাশিত রিপোর্ট
+</h2>
 
 <p>
 শুধুমাত্র অনুমোদিত/প্রকাশিত রিপোর্ট এখানে প্রদর্শিত হবে।
 </p>
 
 </div>
-
 
 <div class="search-panel">
 
@@ -1288,7 +1411,8 @@ class="grs-btn"
 <input
 type="search"
 id="searchInput"
-placeholder="🔎 জেলা, উপজেলা, ইউনিয়ন, গ্রাম বা অফিস দিয়ে খুঁজুন..."
+placeholder="🔎 জেলা, উপজেলা, ইউনিয়ন, গ্রাম, অফিস বা রিপোর্টের ধরন দিয়ে খুঁজুন..."
+
 >
 
 <select id="reportDistrictFilter">
@@ -1303,7 +1427,6 @@ placeholder="🔎 জেলা, উপজেলা, ইউনিয়ন, গ্�
 
 </select>
 
-
 <select id="reportUpazilaFilter">
 
 <option value="">
@@ -1317,12 +1440,12 @@ placeholder="🔎 জেলা, উপজেলা, ইউনিয়ন, গ্�
 <button
 class="clear-btn"
 id="clearSearch"
+
 >
-✕ সার্চ/ফিল্টার পরিষ্কার করুন
-</button>
+
+✕ সার্চ/ফিল্টার পরিষ্কার করুন </button>
 
 </div>
-
 
 <div
 id="reportsContainer"
@@ -1337,12 +1460,14 @@ class="reports-grid"
 
 </section>
 
-
-<!-- ABOUT -->
 <section class="container" id="about">
 
 <div class="section-title">
-<h2>আমাদের সম্পর্কে</h2>
+
+<h2>
+আমাদের সম্পর্কে
+</h2>
+
 </div>
 
 <div class="about-box">
@@ -1357,7 +1482,6 @@ GushKhor-এর প্রধান উদ্দেশ্য।
 
 </p>
 
-
 <p style="margin-top:15px;">
 
 কেউ যদি ঘুষ দিতে বাধ্য হন কিংবা কোনো ধরনের
@@ -1366,10 +1490,11 @@ GushKhor-এর প্রধান উদ্দেশ্য।
 
 </p>
 
-
 <div class="warning">
 
-<strong>⚠️ গুরুত্বপূর্ণ:</strong>
+<strong>
+⚠️ গুরুত্বপূর্ণ:
+</strong>
 
 কোনো ব্যক্তির বিরুদ্ধে অভিযোগকে প্রমাণিত সত্য হিসেবে
 বিবেচনা করবেন না। প্রকাশিত রিপোর্টগুলো অভিযোগ/রিপোর্ট
@@ -1384,11 +1509,11 @@ GushKhor-এর প্রধান উদ্দেশ্য।
 
 </section>
 
-
-<!-- FOOTER -->
 <footer>
 
-<h3>GushKhor</h3>
+<h3>
+GushKhor
+</h3>
 
 <p>
 ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর।
@@ -1396,9 +1521,17 @@ GushKhor-এর প্রধান উদ্দেশ্য।
 
 <div class="footer-links">
 
-<a href="#report">রিপোর্ট করুন</a>
-<a href="#reports">রিপোর্ট দেখুন</a>
-<a href="#help">সহায়তা</a>
+<a href="#report">
+রিপোর্ট করুন
+</a>
+
+<a href="#reports">
+রিপোর্ট দেখুন
+</a>
+
+<a href="#help">
+সহায়তা
+</a>
 
 </div>
 
@@ -1408,9 +1541,6 @@ GushKhor-এর প্রধান উদ্দেশ্য।
 
 </footer>
 
-
-<!-- REPORT DETAILS MODAL -->
-
 <div class="modal" id="reportModal">
 
 <div class="modal-content">
@@ -1418,22 +1548,21 @@ GushKhor-এর প্রধান উদ্দেশ্য।
 <button
 class="close-modal"
 id="closeModal"
+
 >
-×
-</button>
 
-<div id="modalBody">
-</div>
+× </button>
 
-</div>
+<div id="modalBody"></div>
 
 </div>
 
+</div>
 
 <script>
 
 /* =====================================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
@@ -1450,7 +1579,7 @@ SUPABASE_KEY
 
 
 /* =====================================================
-   BHUAPUR LOCATION DATA
+   LOCATION DATA
 ===================================================== */
 
 const locationData = {
@@ -1659,70 +1788,95 @@ document.getElementById("union");
 const villageSelect =
 document.getElementById("village");
 
+const reportForm =
+document.getElementById("reportForm");
+
+const submitBtn =
+document.getElementById("submitBtn");
+
+const formMessage =
+document.getElementById("formMessage");
+
 
 /* =====================================================
-   DISTRICT CHANGE
+   DISTRICT
 ===================================================== */
 
 districtSelect.addEventListener(
 "change",
 function(){
 
-const district=this.value;
+const district =
+this.value;
 
-upazilaSelect.innerHTML=
+upazilaSelect.innerHTML =
 '<option value="">উপজেলা নির্বাচন করুন</option>';
 
-unionSelect.innerHTML=
+unionSelect.innerHTML =
 '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
 
-villageSelect.innerHTML=
+villageSelect.innerHTML =
 '<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
 
-upazilaSelect.disabled=true;
-unionSelect.disabled=true;
-villageSelect.disabled=true;
+upazilaSelect.disabled = true;
+unionSelect.disabled = true;
+villageSelect.disabled = true;
 
-if(!district || !locationData[district]){
+if(
+!district ||
+!locationData[district]
+){
 return;
 }
 
-Object.keys(locationData[district])
-.forEach(function(upazila){
+Object.keys(
+locationData[district]
+).forEach(
+function(upazila){
 
-const option=document.createElement("option");
+const option =
+document.createElement("option");
 
-option.value=upazila;
-option.textContent=upazila;
+option.value =
+upazila;
 
-upazilaSelect.appendChild(option);
+option.textContent =
+upazila;
+
+upazilaSelect.appendChild(
+option
+);
 
 });
 
-upazilaSelect.disabled=false;
+upazilaSelect.disabled =
+false;
 
 });
 
 
 /* =====================================================
-   UPAZILA CHANGE
+   UPAZILA
 ===================================================== */
 
 upazilaSelect.addEventListener(
 "change",
 function(){
 
-const district=districtSelect.value;
-const upazila=this.value;
+const district =
+districtSelect.value;
 
-unionSelect.innerHTML=
+const upazila =
+this.value;
+
+unionSelect.innerHTML =
 '<option value="">ইউনিয়ন/পৌরসভা নির্বাচন করুন</option>';
 
-villageSelect.innerHTML=
+villageSelect.innerHTML =
 '<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
 
-unionSelect.disabled=true;
-villageSelect.disabled=true;
+unionSelect.disabled = true;
+villageSelect.disabled = true;
 
 if(
 !district ||
@@ -1735,39 +1889,52 @@ return;
 
 Object.keys(
 locationData[district][upazila]
-)
-.forEach(function(union){
+).forEach(
+function(union){
 
-const option=document.createElement("option");
+const option =
+document.createElement("option");
 
-option.value=union;
-option.textContent=union;
+option.value =
+union;
 
-unionSelect.appendChild(option);
+option.textContent =
+union;
+
+unionSelect.appendChild(
+option
+);
 
 });
 
-unionSelect.disabled=false;
+unionSelect.disabled =
+false;
 
 });
 
 
 /* =====================================================
-   UNION CHANGE
+   UNION
 ===================================================== */
 
 unionSelect.addEventListener(
 "change",
 function(){
 
-const district=districtSelect.value;
-const upazila=upazilaSelect.value;
-const union=this.value;
+const district =
+districtSelect.value;
 
-villageSelect.innerHTML=
+const upazila =
+upazilaSelect.value;
+
+const union =
+this.value;
+
+villageSelect.innerHTML =
 '<option value="">গ্রাম/এলাকা নির্বাচন করুন</option>';
 
-villageSelect.disabled=true;
+villageSelect.disabled =
+true;
 
 if(
 !district ||
@@ -1781,35 +1948,169 @@ return;
 }
 
 locationData[district][upazila][union]
-.forEach(function(village){
+.forEach(
+function(village){
 
-const option=document.createElement("option");
+const option =
+document.createElement("option");
 
-option.value=village;
-option.textContent=village;
+option.value =
+village;
 
-villageSelect.appendChild(option);
+option.textContent =
+village;
+
+villageSelect.appendChild(
+option
+);
 
 });
 
-villageSelect.disabled=false;
+villageSelect.disabled =
+false;
 
 });
 
 
 /* =====================================================
-   FORM
+   HELPERS
 ===================================================== */
 
-const reportForm=
-document.getElementById("reportForm");
+function escapeHTML(value){
 
-const submitBtn=
-document.getElementById("submitBtn");
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
-const formMessage=
-document.getElementById("formMessage");
+}
 
+
+function escapeFilter(value){
+
+return String(value)
+.replace(/\\/g,"\\\\")
+.replace(/%/g,"\\%")
+.replace(/_/g,"\\_")
+.replace(/,/g,"\\,")
+.replace(/\./g,"\\.");
+
+}
+
+
+function formatDate(dateString){
+
+if(!dateString){
+return "তারিখ উল্লেখ নেই";
+}
+
+const date =
+new Date(dateString);
+
+if(
+Number.isNaN(
+date.getTime()
+)
+){
+return dateString;
+}
+
+return date.toLocaleDateString(
+"bn-BD",
+{
+year:"numeric",
+month:"long",
+day:"numeric"
+}
+);
+
+}
+
+
+/* =====================================================
+   TRACKING CODE
+===================================================== */
+
+function generateTrackingCode(){
+
+const now =
+new Date();
+
+const year =
+now.getFullYear();
+
+const month =
+String(
+now.getMonth()+1
+).padStart(2,"0");
+
+const day =
+String(
+now.getDate()
+).padStart(2,"0");
+
+
+let randomPart = "";
+
+
+if(
+window.crypto &&
+window.crypto.getRandomValues
+){
+
+const array =
+new Uint32Array(1);
+
+window.crypto.getRandomValues(
+array
+);
+
+randomPart =
+array[0]
+.toString(36)
+.toUpperCase()
+.substring(0,6);
+
+}else{
+
+randomPart =
+Math.random()
+.toString(36)
+.substring(2,8)
+.toUpperCase();
+
+}
+
+
+while(
+randomPart.length < 6
+){
+
+randomPart +=
+Math.floor(
+Math.random()*10
+);
+
+}
+
+
+return (
+"GKH-" +
+year +
+month +
+day +
+"-" +
+randomPart.substring(0,6)
+);
+
+}
+
+
+/* =====================================================
+   SUBMIT REPORT
+===================================================== */
 
 reportForm.addEventListener(
 "submit",
@@ -1817,40 +2118,60 @@ async function(e){
 
 e.preventDefault();
 
-formMessage.className="message";
-formMessage.textContent="";
 
-const district=
+formMessage.className =
+"message";
+
+formMessage.innerHTML =
+"";
+
+
+const district =
 districtSelect.value.trim();
 
-const upazila=
+const upazila =
 upazilaSelect.value.trim();
 
-const unionName=
+const unionName =
 unionSelect.value.trim();
 
-const village=
+const village =
 villageSelect.value.trim();
 
-const office=
-document.getElementById("office")
-.value.trim();
+const reportType =
+document.getElementById(
+"reportType"
+).value.trim();
 
-const amountValue=
-document.getElementById("amount")
-.value;
+const office =
+document.getElementById(
+"office"
+).value.trim();
 
-const incidentDate=
-document.getElementById("incidentDate")
-.value;
+const amountValue =
+document.getElementById(
+"amount"
+).value;
 
-const details=
-document.getElementById("details")
-.value.trim();
+const incidentDate =
+document.getElementById(
+"incidentDate"
+).value;
 
-const reportType=
-document.getElementById("reportType")
-.value;
+const details =
+document.getElementById(
+"details"
+).value.trim();
+
+const anonymousCheckbox =
+document.getElementById(
+"anonymousReport"
+);
+
+const anonymousReport =
+anonymousCheckbox
+? anonymousCheckbox.checked
+: true;
 
 
 if(
@@ -1858,14 +2179,15 @@ if(
 !upazila ||
 !unionName ||
 !village ||
+!reportType ||
 !office ||
 !details
 ){
 
-formMessage.textContent=
+formMessage.innerHTML =
 "⚠️ অনুগ্রহ করে প্রয়োজনীয় সব তথ্য পূরণ করুন।";
 
-formMessage.className=
+formMessage.className =
 "message error";
 
 return;
@@ -1873,98 +2195,275 @@ return;
 }
 
 
-submitBtn.disabled=true;
+submitBtn.disabled =
+true;
 
-submitBtn.textContent=
+submitBtn.textContent =
 "⏳ রিপোর্ট জমা হচ্ছে...";
 
 
 try{
 
-const amount=
+const amount =
 amountValue
-?Number(amountValue)
-:0;
+? Number(amountValue)
+: 0;
 
 
 /*
- IMPORTANT:
- Existing Supabase columns only are being used.
- reportType is added to details so no new
- database column is required.
+ Generate code locally.
 */
 
-let finalDetails=details;
-
-if(reportType){
-
-finalDetails=
-"রিপোর্টের ধরন: "+
-reportType+
-"\n\n"+
-details;
-
-}
+let trackingCode =
+generateTrackingCode();
 
 
-const {error}=
+/*
+ Insert report.
+*/
+
+let result =
 await supabaseClient
 .from("reports")
 .insert([{
 
-district:district,
+district:
+district,
 
-upazila:upazila,
+upazila:
+upazila,
 
-union_name:unionName,
+union_name:
+unionName,
 
-village:village,
+village:
+village,
 
-office:office,
+report_type:
+reportType,
 
-amount:amount,
+office:
+office,
+
+amount:
+amount,
 
 incident_date:
 incidentDate || null,
 
-details:finalDetails,
+details:
+details,
 
-status:"pending"
+anonymous_report:
+anonymousReport,
 
-}]);
+tracking_code:
+trackingCode,
+
+status:
+"pending"
+
+}])
+.select(
+"tracking_code"
+)
+.single();
 
 
-if(error){
-throw error;
+/*
+ If tracking code already exists,
+ try once again with another code.
+*/
+
+if(
+result.error &&
+(
+result.error.code === "23505" ||
+String(result.error.message || "")
+.toLowerCase()
+.includes("duplicate")
+)
+){
+
+trackingCode =
+generateTrackingCode() +
+Math.floor(
+Math.random()*10
+);
+
+result =
+await supabaseClient
+.from("reports")
+.insert([{
+
+district:
+district,
+
+upazila:
+upazila,
+
+union_name:
+unionName,
+
+village:
+village,
+
+report_type:
+reportType,
+
+office:
+office,
+
+amount:
+amount,
+
+incident_date:
+incidentDate || null,
+
+details:
+details,
+
+anonymous_report:
+anonymousReport,
+
+tracking_code:
+trackingCode,
+
+status:
+"pending"
+
+}])
+.select(
+"tracking_code"
+)
+.single();
+
 }
 
 
-formMessage.textContent=
-"✅ আপনার রিপোর্ট সফলভাবে জমা হয়েছে। প্রশাসনিক পর্যালোচনার পর অনুমোদিত হলে প্রকাশিত রিপোর্টে দেখা যাবে।";
+if(result.error){
 
-formMessage.className=
+throw result.error;
+
+}
+
+
+/*
+ Use database returned tracking code
+ when available.
+*/
+
+if(
+result.data &&
+result.data.tracking_code
+){
+
+trackingCode =
+result.data.tracking_code;
+
+}
+
+
+/* SUCCESS */
+
+formMessage.innerHTML = `
+
+<div style="
+background:#ecfdf3;
+border:2px solid #10b981;
+padding:20px;
+border-radius:12px;
+">
+
+<div style="
+font-size:21px;
+font-weight:800;
+color:#065f46;
+margin-bottom:10px;
+">
+
+✅ রিপোর্ট সফলভাবে জমা হয়েছে
+
+</div>
+
+<p style="
+margin-bottom:15px;
+">
+
+আপনার রিপোর্ট প্রশাসনিক পর্যালোচনার জন্য জমা হয়েছে।
+
+</p>
+
+
+<div class="tracking-box">
+
+<div style="
+font-size:14px;
+color:#667085;
+margin-bottom:5px;
+">
+
+আপনার Tracking Code
+
+</div>
+
+
+<div class="tracking-code">
+
+${escapeHTML(trackingCode)}
+
+</div>
+
+</div>
+
+
+<p style="
+margin-top:14px;
+font-size:14px;
+color:#475467;
+">
+
+⚠️ এই Tracking Code-এর screenshot নিন
+অথবা লিখে রাখুন। ভবিষ্যতে রিপোর্ট শনাক্ত করতে
+এটি প্রয়োজন হতে পারে।
+
+</p>
+
+</div>
+
+`;
+
+
+formMessage.className =
 "message success";
 
 
 reportForm.reset();
 
 
-upazilaSelect.innerHTML=
+upazilaSelect.innerHTML =
 '<option value="">আগে জেলা নির্বাচন করুন</option>';
 
-unionSelect.innerHTML=
+unionSelect.innerHTML =
 '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
 
-villageSelect.innerHTML=
+villageSelect.innerHTML =
 '<option value="">আগে ইউনিয়ন নির্বাচন করুন</option>';
 
-upazilaSelect.disabled=true;
-unionSelect.disabled=true;
-villageSelect.disabled=true;
+upazilaSelect.disabled =
+true;
+
+unionSelect.disabled =
+true;
+
+villageSelect.disabled =
+true;
 
 
 loadReportStatistics();
+
 loadPublicReports();
+
 
 }catch(error){
 
@@ -1973,18 +2472,31 @@ console.error(
 error
 );
 
-formMessage.textContent=
-"❌ রিপোর্ট জমা দেওয়া যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।";
+formMessage.innerHTML = `
 
-formMessage.className=
+❌ রিপোর্ট জমা দেওয়া যায়নি।
+
+<br>
+
+<small>
+${escapeHTML(
+error.message ||
+"Supabase database error"
+)}
+</small>
+
+`;
+
+formMessage.className =
 "message error";
 
 }
 
 
-submitBtn.disabled=false;
+submitBtn.disabled =
+false;
 
-submitBtn.textContent=
+submitBtn.textContent =
 "📤 রিপোর্ট জমা দিন";
 
 });
@@ -1998,7 +2510,7 @@ async function loadReportStatistics(){
 
 try{
 
-const {data,error}=
+const {data,error} =
 await supabaseClient
 .from("reports")
 .select(
@@ -2011,48 +2523,64 @@ await supabaseClient
 
 if(error){
 
-console.error(error);
+console.error(
+"Statistics error:",
+error
+);
+
 return;
 
 }
 
-const reports=data || [];
+
+const reports =
+data || [];
 
 
-const totalReports=
+const totalReports =
 reports.length;
 
 
-const totalAmount=
+const totalAmount =
 reports.reduce(
 function(total,report){
 
-return total+
-(Number(report.amount)||0);
+return total +
+(
+Number(report.amount) || 0
+);
 
 },
 0
 );
 
 
-const offices=
+const offices =
 new Set(
 reports
 .map(
-function(r){
-return (r.office||"").trim();
+function(report){
+
+return (
+report.office || ""
+).trim();
+
 }
 )
 .filter(Boolean)
 );
 
 
-const districts=
+const districts =
 new Set(
 reports
 .map(
-function(r){
-return (r.district||"").trim();
+function(report){
+
+return (
+report.district || ""
+).trim();
+
 }
 )
 .filter(Boolean)
@@ -2061,35 +2589,35 @@ return (r.district||"").trim();
 
 document.getElementById(
 "totalReports"
-)
-.textContent=
-Number(totalReports)
-.toLocaleString("bn-BD");
+).textContent =
+totalReports.toLocaleString(
+"bn-BD"
+);
 
 
 document.getElementById(
 "totalAmount"
-)
-.textContent=
-"৳"+
-Number(totalAmount)
-.toLocaleString("bn-BD");
+).textContent =
+"৳" +
+totalAmount.toLocaleString(
+"bn-BD"
+);
 
 
 document.getElementById(
 "totalOffices"
-)
-.textContent=
-Number(offices.size)
-.toLocaleString("bn-BD");
+).textContent =
+offices.size.toLocaleString(
+"bn-BD"
+);
 
 
 document.getElementById(
 "totalDistricts"
-)
-.textContent=
-Number(districts.size)
-.toLocaleString("bn-BD");
+).textContent =
+districts.size.toLocaleString(
+"bn-BD"
+);
 
 
 }catch(error){
@@ -2105,81 +2633,30 @@ error
 
 
 /* =====================================================
-   SEARCH FILTER
-===================================================== */
-
-function escapeFilter(value){
-
-return value
-.replace(/\\/g,"\\\\")
-.replace(/%/g,"\\%")
-.replace(/_/g,"\\_")
-.replace(/,/g,"\\,")
-.replace(/\./g,"\\.");
-
-}
-
-
-function escapeHTML(value){
-
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-function formatDate(dateString){
-
-try{
-
-return new Date(dateString)
-.toLocaleDateString(
-"bn-BD",
-{
-year:"numeric",
-month:"long",
-day:"numeric"
-}
-);
-
-}catch(e){
-
-return dateString;
-
-}
-
-}
-
-
-/* =====================================================
    PUBLIC REPORTS
 ===================================================== */
 
 async function loadPublicReports(
-searchText=""
+searchText = ""
 ){
 
-const container=
+const container =
 document.getElementById(
 "reportsContainer"
 );
 
 
-container.innerHTML=
+container.innerHTML =
 '<div class="loading">⏳ রিপোর্ট লোড হচ্ছে...</div>';
 
 
 try{
 
-let query=
+let query =
 supabaseClient
 .from("reports")
 .select(
-"id,district,upazila,union_name,village,office,amount,incident_date,details,created_at"
+"id,district,upazila,union_name,village,report_type,office,amount,incident_date,details,created_at"
 )
 .eq(
 "status",
@@ -2193,15 +2670,17 @@ ascending:false
 );
 
 
-const search=
+const search =
 searchText.trim();
 
-const filterDistrict=
+
+const filterDistrict =
 document.getElementById(
 "reportDistrictFilter"
 ).value;
 
-const filterUpazila=
+
+const filterUpazila =
 document.getElementById(
 "reportUpazilaFilter"
 ).value;
@@ -2209,7 +2688,7 @@ document.getElementById(
 
 if(filterDistrict){
 
-query=
+query =
 query.eq(
 "district",
 filterDistrict
@@ -2220,7 +2699,7 @@ filterDistrict
 
 if(filterUpazila){
 
-query=
+query =
 query.eq(
 "upazila",
 filterUpazila
@@ -2231,33 +2710,39 @@ filterUpazila
 
 if(search){
 
-const safeSearch=
+const safeSearch =
 escapeFilter(search);
 
-query=
+query =
 query.or(
 "district.ilike.%"+safeSearch+"%,"+
 "upazila.ilike.%"+safeSearch+"%,"+
 "union_name.ilike.%"+safeSearch+"%,"+
 "village.ilike.%"+safeSearch+"%,"+
-"office.ilike.%"+safeSearch+"%"
+"office.ilike.%"+safeSearch+"%,"+
+"report_type.ilike.%"+safeSearch+"%"
 );
 
 }
 
 
-const {data,error}=
+const {data,error} =
 await query;
 
 
 if(error){
+
 throw error;
+
 }
 
 
-if(!data || data.length===0){
+if(
+!data ||
+data.length === 0
+){
 
-container.innerHTML=
+container.innerHTML =
 '<div class="no-data">📭 এই ফিল্টারে কোনো প্রকাশিত রিপোর্ট পাওয়া যায়নি।</div>';
 
 return;
@@ -2265,80 +2750,143 @@ return;
 }
 
 
-container.innerHTML="";
+container.innerHTML =
+"";
 
 
-data.forEach(function(report){
+data.forEach(
+function(report){
 
-const card=
-document.createElement("div");
+const card =
+document.createElement(
+"div"
+);
 
-card.className="report-card";
+card.className =
+"report-card";
 
 
-const amount=
-Number(report.amount)||0;
+const amount =
+Number(report.amount) || 0;
 
 
-const incidentDate=
+const incidentDate =
 report.incident_date
-?formatDate(report.incident_date)
-:"তারিখ উল্লেখ নেই";
+? formatDate(
+report.incident_date
+)
+: "তারিখ উল্লেখ নেই";
 
 
-const shortDetails=
+const shortDetails =
 report.details || "";
 
 
-card.innerHTML=`
+card.innerHTML = `
 
-<h3>📢 অভিযোগ/রিপোর্ট</h3>
+<h3>
+📢 অভিযোগ/রিপোর্ট
+</h3>
+
 
 <div class="report-meta">
 
-<span class="badge">
-📍 ${escapeHTML(report.district||"জেলা নেই")}
-</span>
 
 <span class="badge">
-🏘️ ${escapeHTML(report.upazila||"উপজেলা নেই")}
+📍 ${escapeHTML(
+report.district ||
+"জেলা নেই"
+)}
 </span>
 
-<span class="badge">
-🏛️ ${escapeHTML(report.union_name||"ইউনিয়ন নেই")}
-</span>
 
 <span class="badge">
-🏡 ${escapeHTML(report.village||"গ্রাম নেই")}
+🏘️ ${escapeHTML(
+report.upazila ||
+"উপজেলা নেই"
+)}
 </span>
+
+
+<span class="badge">
+🏛️ ${escapeHTML(
+report.union_name ||
+"ইউনিয়ন নেই"
+)}
+</span>
+
+
+<span class="badge">
+🏡 ${escapeHTML(
+report.village ||
+"গ্রাম নেই"
+)}
+</span>
+
+
+<span class="badge">
+📂 ${escapeHTML(
+report.report_type ||
+"অন্যান্য"
+)}
+</span>
+
 
 </div>
 
-<p>
-<strong>🏢 অফিস:</strong>
-${escapeHTML(report.office||"উল্লেখ নেই")}
-</p>
 
 <p>
-<strong>💰 রিপোর্টে উল্লেখিত টাকা:</strong>
-৳${amount.toLocaleString("bn-BD")}
+<strong>
+🏢 অফিস:
+</strong>
+
+${escapeHTML(
+report.office ||
+"উল্লেখ নেই"
+)}
+
 </p>
 
+
 <p>
-<strong>📅 ঘটনার তারিখ:</strong>
-${incidentDate}
+<strong>
+💰 রিপোর্টে উল্লেখিত টাকা:
+</strong>
+
+৳${amount.toLocaleString(
+"bn-BD"
+)}
+
 </p>
+
+
+<p>
+<strong>
+📅 ঘটনার তারিখ:
+</strong>
+
+${escapeHTML(
+incidentDate
+)}
+
+</p>
+
 
 <p class="report-details">
-${escapeHTML(shortDetails)}
+
+${escapeHTML(
+shortDetails
+)}
+
 </p>
+
 
 <button
 class="details-btn"
-onclick='showReportDetails(${JSON.stringify(report).replace(/'/g,"&#39;")})'
 >
 📄 বিস্তারিত দেখুন
 </button>
+
 
 <div class="report-date">
 প্রকাশিত রিপোর্ট
@@ -2347,7 +2895,27 @@ onclick='showReportDetails(${JSON.stringify(report).replace(/'/g,"&#39;")})'
 `;
 
 
-container.appendChild(card);
+const button =
+card.querySelector(
+".details-btn"
+);
+
+
+button.addEventListener(
+"click",
+function(){
+
+showReportDetails(
+report
+);
+
+}
+);
+
+
+container.appendChild(
+card
+);
 
 });
 
@@ -2359,7 +2927,7 @@ console.error(
 error
 );
 
-container.innerHTML=
+container.innerHTML =
 '<div class="no-data">❌ রিপোর্ট লোড করা সম্ভব হয়নি।</div>';
 
 }
@@ -2368,80 +2936,174 @@ container.innerHTML=
 
 
 /* =====================================================
-   REPORT DETAILS MODAL
+   REPORT DETAILS
 ===================================================== */
 
-function showReportDetails(report){
+function showReportDetails(
+report
+){
 
-const modal=
+const modal =
 document.getElementById(
 "reportModal"
 );
 
-const modalBody=
+const modalBody =
 document.getElementById(
 "modalBody"
 );
 
-const amount=
-Number(report.amount)||0;
 
-const date=
+const amount =
+Number(report.amount) || 0;
+
+
+const date =
 report.incident_date
-?formatDate(report.incident_date)
-:"তারিখ উল্লেখ নেই";
+? formatDate(
+report.incident_date
+)
+: "তারিখ উল্লেখ নেই";
 
 
-modalBody.innerHTML=`
+modalBody.innerHTML = `
 
-<h2>📢 রিপোর্টের বিস্তারিত</h2>
+<h2>
+📢 রিপোর্টের বিস্তারিত
+</h2>
+
 
 <div class="modal-line">
-<strong>📍 জেলা:</strong>
-${escapeHTML(report.district||"")}
+
+<strong>
+📂 রিপোর্টের ধরন:
+</strong>
+
+${escapeHTML(
+report.report_type ||
+"অন্যান্য"
+)}
+
 </div>
 
-<div class="modal-line">
-<strong>🏘️ উপজেলা:</strong>
-${escapeHTML(report.upazila||"")}
-</div>
 
 <div class="modal-line">
-<strong>🏛️ ইউনিয়ন/পৌরসভা:</strong>
-${escapeHTML(report.union_name||"")}
+
+<strong>
+📍 জেলা:
+</strong>
+
+${escapeHTML(
+report.district ||
+""
+)}
+
 </div>
 
-<div class="modal-line">
-<strong>🏡 গ্রাম/এলাকা:</strong>
-${escapeHTML(report.village||"")}
-</div>
 
 <div class="modal-line">
-<strong>🏢 অফিস/প্রতিষ্ঠান:</strong>
-${escapeHTML(report.office||"")}
+
+<strong>
+🏘️ উপজেলা:
+</strong>
+
+${escapeHTML(
+report.upazila ||
+""
+)}
+
 </div>
 
-<div class="modal-line">
-<strong>💰 রিপোর্টে উল্লেখিত টাকা:</strong>
-৳${amount.toLocaleString("bn-BD")}
-</div>
 
 <div class="modal-line">
-<strong>📅 ঘটনার তারিখ:</strong>
-${date}
+
+<strong>
+🏛️ ইউনিয়ন/পৌরসভা:
+</strong>
+
+${escapeHTML(
+report.union_name ||
+""
+)}
+
 </div>
+
+
+<div class="modal-line">
+
+<strong>
+🏡 গ্রাম/এলাকা:
+</strong>
+
+${escapeHTML(
+report.village ||
+""
+)}
+
+</div>
+
+
+<div class="modal-line">
+
+<strong>
+🏢 অফিস/প্রতিষ্ঠান:
+</strong>
+
+${escapeHTML(
+report.office ||
+""
+)}
+
+</div>
+
+
+<div class="modal-line">
+
+<strong>
+💰 রিপোর্টে উল্লেখিত টাকা:
+</strong>
+
+৳${amount.toLocaleString(
+"bn-BD"
+)}
+
+</div>
+
+
+<div class="modal-line">
+
+<strong>
+📅 ঘটনার তারিখ:
+</strong>
+
+${escapeHTML(
+date
+)}
+
+</div>
+
 
 <div class="modal-details">
-<strong>📄 ঘটনার বিবরণ:</strong>
+
+<strong>
+📄 ঘটনার বিবরণ:
+</strong>
 
 <br><br>
 
-${escapeHTML(report.details||"")}
+${escapeHTML(
+report.details ||
+""
+)}
+
 </div>
+
 
 <div class="warning">
 
-<strong>⚠️ সতর্কতা:</strong>
+<strong>
+⚠️ সতর্কতা:
+</strong>
 
 এই তথ্যটি একটি প্রকাশিত অভিযোগ/রিপোর্ট।
 রিপোর্ট প্রকাশিত হওয়া মানেই অভিযোগটি আইনগতভাবে
@@ -2452,13 +3114,14 @@ ${escapeHTML(report.details||"")}
 `;
 
 
-modal.style.display="block";
+modal.style.display =
+"block";
 
 }
 
 
 /* =====================================================
-   MODAL CLOSE
+   MODAL
 ===================================================== */
 
 document.getElementById(
@@ -2469,7 +3132,8 @@ function(){
 
 document.getElementById(
 "reportModal"
-).style.display="none";
+).style.display =
+"none";
 
 }
 );
@@ -2481,9 +3145,12 @@ document.getElementById(
 "click",
 function(e){
 
-if(e.target===this){
+if(
+e.target === this
+){
 
-this.style.display="none";
+this.style.display =
+"none";
 
 }
 
@@ -2495,7 +3162,7 @@ this.style.display="none";
    UPAZILA FILTER
 ===================================================== */
 
-const reportUpazilaFilter=
+const reportUpazilaFilter =
 document.getElementById(
 "reportUpazilaFilter"
 );
@@ -2503,13 +3170,15 @@ document.getElementById(
 
 function populateReportUpazilaFilter(){
 
-reportUpazilaFilter.innerHTML=
+reportUpazilaFilter.innerHTML =
 '<option value="">সব উপজেলা</option>';
 
-const district=
+
+const district =
 document.getElementById(
 "reportDistrictFilter"
 ).value;
+
 
 if(
 district &&
@@ -2518,14 +3187,19 @@ locationData[district]
 
 Object.keys(
 locationData[district]
-)
-.forEach(function(upazila){
+).forEach(
+function(upazila){
 
-const option=
-document.createElement("option");
+const option =
+document.createElement(
+"option"
+);
 
-option.value=upazila;
-option.textContent=upazila;
+option.value =
+upazila;
+
+option.textContent =
+upazila;
 
 reportUpazilaFilter.appendChild(
 option
@@ -2583,15 +3257,20 @@ document.getElementById(
 "input",
 function(){
 
-const value=this.value;
+const value =
+this.value;
 
-clearTimeout(searchTimer);
+clearTimeout(
+searchTimer
+);
 
-searchTimer=
+searchTimer =
 setTimeout(
 function(){
 
-loadPublicReports(value);
+loadPublicReports(
+value
+);
 
 },
 400
@@ -2612,15 +3291,19 @@ function(){
 
 document.getElementById(
 "searchInput"
-).value="";
+).value =
+"";
 
 document.getElementById(
 "reportDistrictFilter"
-).value="";
+).value =
+"";
 
 populateReportUpazilaFilter();
 
-loadPublicReports("");
+loadPublicReports(
+""
+);
 
 }
 );
@@ -2640,4 +3323,3 @@ loadPublicReports();
 
 </body>
 </html>
-```
