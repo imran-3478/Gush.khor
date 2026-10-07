@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>রিপোর্ট - GushKhor</title>
+<style>body{font-family:sans-serif;padding:15px;max-width:600px;margin:0 auto}.card{border:1px solid #ddd;border-radius:10px;padding:12px;margin:10px 0}.loading{text-align:center;color:#666;padding:20px}</style>
+</head><body>
+<h2>প্রকাশিত রিপোর্ট</h2>
+<div id="list"><div class="loading">লোড হচ্ছে...</div></div>
+<script>
+fetch('https://dzsgcrgcotwxruhqrder.supabase.co/rest/v1/reports?select=id,office,district,upazila,details,incident_date,created_at&status=eq.approved&order=created_at.desc&limit=20',{
+headers:{'apikey':'sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE','Authorization':'Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE'}
+}).then(r=>r.json()).then(data=>{
+const el=document.getElementById('list');
+if(!data||!data.length){el.innerHTML='<div class="loading">কোনো রিপোর্ট নেই</div>';return;}
+el.innerHTML=data.map(x=>'<div class="card"><b>'+(x.office||'অফিস')+'</b> - '+(x.district||'')+'<br><small>'+(x.details||'').substring(0,100)+'</small></div>').join('');
+}).catch(e=>{document.getElementById('list').innerHTML='<div class="loading">Error: '+e.message+'</div>';});
+</script>
+</body></html>
