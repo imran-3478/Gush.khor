@@ -190,6 +190,44 @@
       background: #b91c1c;
     }
 
+    .delete-btn {
+      background: #7f1d1d;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .delete-btn:hover {
+      background: #991b1b;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: 2px solid #e2e8f0;
+      background: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .tab-btn.active {
+      border-color: #059669;
+      background: #ecfdf5;
+      color: #059669;
+    }
+
     .status {
       display: inline-block;
       background: #fef3c7;
@@ -382,9 +420,9 @@
 
         <div>
 
-          <h2>📋 Pending Reports</h2>
+          <h2 id="panelTitle">📋 Pending Reports</h2>
 
-          <p>
+          <p id="panelDesc">
             নতুন রিপোর্ট যাচাই করে Approve অথবা Reject করুন।
           </p>
 
@@ -397,6 +435,11 @@
           🔄 Refresh
         </button>
 
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" id="tabPending" onclick="switchTab('pending')">⏳ Pending</button>
+        <button class="tab-btn" id="tabApproved" onclick="switchTab('approved')">✅ Approved</button>
       </div>
 
       <div id="reportsList"></div>
@@ -579,6 +622,39 @@
   // LOAD PENDING REPORTS
   // ==========================================
 
+  let currentTab = "pending";
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById("tabPending").classList.toggle("active", tab === "pending");
+    document.getElementById("tabApproved").classList.toggle("active", tab === "approved");
+    document.getElementById("panelTitle").textContent = tab === "pending" ? "📋 Pending Reports" : "✅ Approved Reports";
+    document.getElementById("panelDesc").textContent = tab === "pending"
+      ? "নতুন রিপোর্ট যাচাই করে Approve অথবা Reject করুন।"
+      : "অনুমোদিত রিপোর্ট — প্রয়োজনে Delete করুন।";
+    loadReports();
+  }
+
+  async function deleteReport(id) {
+    const c1 = confirm("⚠️ আপনি কি এই রিপোর্টটি স্থায়ীভাবে DELETE করতে চান?");
+    if (!c1) return;
+    const c2 = confirm("⚠️ শেষবার জিজ্ঞেস করছি — রিপোর্টটি মুছে যাবে, ফিরিয়ে আনা যাবে না। নিশ্চিত?");
+    if (!c2) return;
+
+    const { error } = await supabaseClient
+      .from("reports")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      alert("❌ Delete failed:\n" + error.message);
+      return;
+    }
+
+    alert("✅ রিপোর্ট মুছে ফেলা হয়েছে।");
+    loadReports();
+  }
+
   async function loadReports() {
 
     const reportsList =
@@ -595,7 +671,7 @@
         .select(
           "id,district,office,amount,incident_date,details,status,created_at"
         )
-        .eq("status", "pending")
+        .eq("status", currentTab)
         .order(
           "created_at",
           {
@@ -705,6 +781,7 @@
                   👁️ View Details
                 </button>
 
+                ${currentTab === "pending" ? `
                 <button
                   class="approve"
                   onclick="updateReport(
@@ -724,6 +801,14 @@
                 >
                   ❌ Reject
                 </button>
+                ` : `
+                <button
+                  class="delete-btn"
+                  onclick="deleteReport('${report.id}')"
+                >
+                  🗑️ Delete
+                </button>
+                `}
 
               </div>
 
