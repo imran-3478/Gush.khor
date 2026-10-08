@@ -2665,6 +2665,18 @@ return '<div style="border:1px solid #e2e8f0;border-radius:16px;padding:18px;mar
 '</div>';
 }).join("");
 listEl.innerHTML = cards;
+// Live পরিসংখ্যান update করো
+try{
+var sr = document.getElementById("statReports");
+if(sr) sr.textContent = data.length;
+var totalAmt = data.reduce(function(s,x){ return s + (parseFloat(x.amount)||0); }, 0);
+var sa = document.getElementById("statAmount");
+if(sa) sa.textContent = "৳" + totalAmt.toLocaleString("bn-BD");
+var areas = {};
+data.forEach(function(x){ if(x.district) areas[x.district]=1; });
+var sar = document.getElementById("statAreas");
+if(sar) sar.textContent = Object.keys(areas).length;
+}catch(e){}
 }).catch(function(e){
 listEl.innerHTML = '<div class="empty">রিপোর্ট লোড করা যায়নি। পেজ refresh করুন।</div>';
 });
