@@ -2683,6 +2683,55 @@ listEl.innerHTML = '<div class="empty">রিপোর্ট লোড করা
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 })();
 </script>
+<script>
+/* Independent tracking search - plain fetch */
+(function(){
+var btn = document.getElementById("trackingBtn");
+if(!btn) return;
+// পুরনো listeners সরাও
+var newBtn = btn.cloneNode(true);
+btn.parentNode.replaceChild(newBtn, btn);
+newBtn.addEventListener("click", function(){
+var codeEl = document.getElementById("trackingSearch");
+var result = document.getElementById("trackingResultPublic");
+if(!codeEl || !result) return;
+var code = codeEl.value.trim().toUpperCase();
+if(!code){
+result.innerHTML = '<div class="message error" style="display:block">Tracking Code লিখুন।</div>';
+return;
+}
+result.innerHTML = '<div class="loading">খোঁজা হচ্ছে...</div>';
+fetch("https://dzsgcrgcotwxruhqrder.supabase.co/rest/v1/reports?select=id,district,upazila,union_name,village,office,amount,incident_date,details,status,created_at,report_type,tracking_code,evidence_url,me_too&tracking_code=eq."+encodeURIComponent(code)+"&status=eq.approved",{
+headers:{
+"apikey":"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
+"Authorization":"Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE"
+}
+}).then(function(r){ return r.json(); }).then(function(data){
+if(!data || !data.length){
+result.innerHTML = '<div class="message error" style="display:block">এই Tracking Code-এ কোনো অনুমোদিত রিপোর্ট পাওয়া যায়নি।</div>';
+return;
+}
+var x = data[0];
+var dt = "";
+try{ dt = x.incident_date ? new Date(x.incident_date).toLocaleDateString("bn-BD") : ""; }catch(e){}
+var loc1 = [x.district, x.upazila].filter(Boolean).join(" → ");
+result.innerHTML =
+'<div style="border:1px solid #059669;border-radius:12px;padding:16px;margin-top:12px;background:#f0fdf4">'+
+'<div style="margin-bottom:8px"><span style="background:#dcfce7;color:#166534;font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px">✓ অনুমোদিত</span></div>'+
+'<div style="font-size:18px;font-weight:800;margin-bottom:8px">' + esc2(x.office || "রিপোর্ট") + '</div>'+
+(loc1 ? '<div style="font-size:14px;color:#475569;margin-bottom:4px">📍 ' + esc2(loc1) + '</div>' : '')+
+(x.amount ? '<div style="font-size:14px;color:#475569;margin-bottom:4px">💰 ৳' + esc2(x.amount) + '</div>' : '')+
+(dt ? '<div style="font-size:14px;color:#475569;margin-bottom:8px">📅 ' + esc2(dt) + '</div>' : '')+
+(x.details ? '<div style="font-size:14px;line-height:1.6">' + esc2(x.details) + '</div>' : '')+
+'</div>';
+}).catch(function(e){
+result.innerHTML = '<div class="message error" style="display:block">রিপোর্ট খুঁজতে সমস্যা হয়েছে।</div>';
+});
+function esc2(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+});
+})();
+
+</script>
 
 </body>
 </html>
