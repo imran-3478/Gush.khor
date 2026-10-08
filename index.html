@@ -1582,17 +1582,23 @@ const randomPart=Array.from(bytes)
 const path=
 `${trackingCode}/${Date.now()}-${randomPart}-${safeName}`;
 
-const {error}=
-await needClient()
-.storage
-.from(EVIDENCE_BUCKET)
-.upload(path,file,{
-cacheControl:"3600",
-upsert:false,
-contentType:file.type
+/* plain fetch - library ছাড়াই upload */
+const uploadResp = await fetch(
+SUPABASE_URL + "/storage/v1/object/" + EVIDENCE_BUCKET + "/" + path,
+{
+method:"POST",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":file.type||"application/octet-stream"
+},
+body:file
 });
 
-if(error)throw error;
+if(!uploadResp.ok){
+const t = await uploadResp.text().catch(()=> "");
+throw new Error("Evidence upload failed ("+uploadResp.status+") "+t.slice(0,100));
+}
 
 return{
 name:file.name,
@@ -1834,17 +1840,25 @@ status:"pending"
 
 };
 
-const {error}=
-await needClient()
-.from("reports")
-.insert(reportData);
+/* plain fetch - library ছাড়াই insert */
+const insertResp = await fetch(
+SUPABASE_URL + "/rest/v1/reports",
+{
+method:"POST",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json",
+"Prefer":"return=minimal"
+},
+body:JSON.stringify(reportData)
+});
 
-if(error){
-
-if(error.code==="23505")
-throw new Error("Tracking Code সংঘর্ষ হয়েছে। আবার Submit করুন।");
-
-throw error;
+if(!insertResp.ok){
+const t = await insertResp.text().catch(()=> "");
+if(insertResp.status===409)
+throw new Error("Tracking Code সংঘর্ষ হয়েছে। আবার Submit করুন।");
+throw new Error("Submit failed ("+insertResp.status+") "+t.slice(0,120));
 }
 
 trackingCodeText.textContent=trackingCode;
