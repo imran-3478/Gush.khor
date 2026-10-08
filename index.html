@@ -2645,18 +2645,23 @@ listEl.innerHTML = '<div class="empty">কোনো রিপোর্ট পা
 return;
 }
 var cards = data.map(function(x){
-var loc = [x.upazila, x.district].filter(Boolean).join(", ");
-var amt = x.amount ? "৳" + x.amount : "";
 var dt = "";
 try{ dt = x.incident_date ? new Date(x.incident_date).toLocaleDateString("bn-BD") : ""; }catch(e){}
-var det = (x.details || "").substring(0, 150);
-return '<div class="report-card" style="border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin:10px 0;background:#fff">'+
-'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
-'<b style="color:#0f172a">' + esc(x.office || "অফিস") + '</b>'+
-(amt ? '<span style="color:#dc2626;font-weight:700">' + esc(amt) + '</span>' : '')+
+var loc1 = [x.district, x.upazila].filter(Boolean).join(" → ");
+var loc2 = [x.union_name, x.village].filter(Boolean).join(" → ");
+return '<div style="border:1px solid #e2e8f0;border-radius:16px;padding:18px;margin:12px 0;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.05)">'+
+'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+'<span style="background:#dcfce7;color:#166534;font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px">✓ অনুমোদিত</span>'+
+'<span style="font-size:13px;color:#64748b">' + esc(x.report_type || "") + '</span>'+
 '</div>'+
-'<div style="font-size:13px;color:#64748b;margin-bottom:6px">' + esc(loc) + (dt ? " · " + esc(dt) : "") + '</div>'+
-'<div style="font-size:14px;color:#334155">' + esc(det) + (x.details && x.details.length > 150 ? "..." : "") + '</div>'+
+'<div style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:12px">' + esc(x.office || "রিপোর্ট") + '</div>'+
+(loc1 ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">📍 ' + esc(loc1) + '</div>' : '')+
+(loc2 ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">🏠 ' + esc(loc2) + '</div>' : '')+
+(x.amount ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">💰 ঘুষের পরিমাণ: ৳' + esc(x.amount) + '</div>' : '')+
+(dt ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">📅 ঘটনার তারিখ: ' + esc(dt) + '</div>' : '')+
+'<div style="font-size:14px;color:#475569;margin-bottom:12px">🎫 Tracking: ' + esc(x.tracking_code || "N/A") + '</div>'+
+(x.details ? '<div style="font-size:15px;color:#1e293b;line-height:1.6;margin-bottom:14px">' + esc(x.details) + '</div>' : '')+
+(x.me_too ? '<div style="font-size:13px;color:#059669;margin-bottom:10px">👥 ' + esc(x.me_too) + ' জন একই অভিজ্ঞতা</div>' : '')+
 '</div>';
 }).join("");
 listEl.innerHTML = cards;
