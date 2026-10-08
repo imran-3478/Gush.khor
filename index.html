@@ -2676,8 +2676,16 @@ return '<div style="border:1px solid #e2e8f0;border-radius:16px;padding:18px;mar
 '<div style="font-size:14px;color:#475569;margin-bottom:12px">🎫 Tracking: ' + esc(x.tracking_code || "N/A") + '</div>'+
 (x.details ? '<div style="font-size:15px;color:#1e293b;line-height:1.6;margin-bottom:14px">' + esc(x.details) + '</div>' : '')+
 (x.me_too ? '<div style="font-size:13px;color:#059669;margin-bottom:10px">👥 ' + esc(x.me_too) + ' জন একই অভিজ্ঞতা</div>' : '')+
+(function(){
+var evIdx = window._evStore ? window._evStore.length : 0;
+if(!window._evStore) window._evStore = [];
+window._evStore.push(x.evidence_url || null);
+return '<div class="ev-slot" data-evidx="'+evIdx+'" style="margin-top:8px"></div>';
+})()+
 '</div>';
 }).join("");
+// Evidence signed URLs load করো
+loadEvidenceSignedUrls(listEl);
 listEl.innerHTML = cards;
 // Live পরিসংখ্যান update করো
 try{
@@ -2695,6 +2703,55 @@ if(sar) sar.textContent = Object.keys(areas).length;
 listEl.innerHTML = '<div class="empty">রিপোর্ট লোড করা যায়নি। পেজ refresh করুন।</div>';
 });
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function loadEvidenceSignedUrls(root){
+var slots = root.querySelectorAll(".ev-slot");
+slots.forEach(function(slot){
+var idx = parseInt(slot.getAttribute("data-evidx"), 10);
+var raw = (window._evStore && window._evStore[idx]) || null;
+if(!raw) return;
+var items = null;
+try{ items = typeof raw === "string" ? JSON.parse(JSON.parse(raw)) : raw; }catch(e){ try{ items = typeof raw === "string" ? JSON.parse(raw) : raw; }catch(e2){} }
+if(!items) return;
+if(!Array.isArray(items)) items = [items];
+var paths = [];
+items.forEach(function(it){
+if(it && it.path) paths.push(it);
+else if(typeof it === "string"){
+var m = it.indexOf("/storage/v1/object/public/evidence/");
+if(m!==-1) paths.push({path: it.slice(m+36), name:"Evidence"});
+}
+});
+if(!paths.length) return;
+slot.innerHTML = '<div style="font-size:13px;color:#64748b">📎 প্রমাণ লোড হচ্ছে...</div>';
+var done = 0;
+var html2 = '<div style="font-size:14px;font-weight:700;margin:8px 0 6px">📎 প্রমাণ</div><div style="display:flex;gap:8px;flex-wrap:wrap">';
+paths.forEach(function(p){
+fetch("https://dzsgcrgcotwxruhqrder.supabase.co/storage/v1/object/sign/evidence/"+p.path,{
+method:"POST",
+headers:{
+"apikey":"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
+"Authorization":"Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
+"Content-Type":"application/json"
+},
+body:JSON.stringify({expiresIn:3600})
+}).then(function(r){ return r.json(); }).then(function(d){
+done++;
+var url = d && d.signedURL ? "https://dzsgcrgcotwxruhqrder.supabase.co/storage/v1"+d.signedURL : null;
+var nm = (p.name||"Evidence").slice(0,20);
+if(url){
+var isImg = /\.(jpg|jpeg|png|gif|webp)$/i.test(p.path);
+html2 += isImg
+? '<a href="'+url+'" target="_blank"><img src="'+url+'" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0"></a>'
+: '<a href="'+url+'" target="_blank" style="font-size:13px;color:#059669">📄 '+esc(nm)+'</a>';
+}
+if(done>=paths.length){
+html2 += '</div>';
+slot.innerHTML = html2;
+}
+}).catch(function(){ done++; if(done>=paths.length){ slot.innerHTML=""; } });
+});
+});
+}
 })();
 </script>
 <script>
