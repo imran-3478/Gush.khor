@@ -2716,9 +2716,13 @@ if(!Array.isArray(items)) items = [items];
 var paths = [];
 items.forEach(function(it){
 if(it && it.path) paths.push(it);
+else if(it && it.url){
+var m = it.url.indexOf("/evidence/");
+if(m!==-1) paths.push({path: it.url.slice(m+10).split("?")[0], name: it.name||"Evidence"});
+}
 else if(typeof it === "string"){
-var m = it.indexOf("/storage/v1/object/public/evidence/");
-if(m!==-1) paths.push({path: it.slice(m+36), name:"Evidence"});
+var m2 = it.indexOf("/evidence/");
+if(m2!==-1) paths.push({path: it.slice(m2+10).split("?")[0], name:"Evidence"});
 }
 });
 if(!paths.length) return;
