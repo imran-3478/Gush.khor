@@ -2628,5 +2628,44 @@ loadApprovedReports();
 
 <button id="topBtn" class="top-btn" aria-label="উপরে যান">↑</button>
 
-<div style="position:fixed;bottom:5px;right:5px;background:#000;color:#0f0;font-size:10px;padding:2px 6px;z-index:9999;border-radius:3px">v2.1</div></body>
+<div style="position:fixed;bottom:5px;right:5px;background:#000;color:#0f0;font-size:10px;padding:2px 6px;z-index:9999;border-radius:3px">v2.1</div>
+<script>
+/* Independent reports loader v3 - isolated from main script */
+(function(){
+var listEl = document.getElementById("reportList");
+if(!listEl) return;
+fetch("https://dzsgcrgcotwxruhqrder.supabase.co/rest/v1/reports?select=id,district,upazila,union_name,village,office,amount,incident_date,details,status,created_at,report_type,anonymous_report,tracking_code,evidence_url,me_too&status=eq.approved&order=created_at.desc&limit=20",{
+headers:{
+"apikey":"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
+"Authorization":"Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE"
+}
+}).then(function(r){ return r.json(); }).then(function(data){
+if(!data || !data.length){
+listEl.innerHTML = '<div class="empty">কোনো রিপোর্ট পাওয়া যায়নি।</div>';
+return;
+}
+var cards = data.map(function(x){
+var loc = [x.upazila, x.district].filter(Boolean).join(", ");
+var amt = x.amount ? "৳" + x.amount : "";
+var dt = "";
+try{ dt = x.incident_date ? new Date(x.incident_date).toLocaleDateString("bn-BD") : ""; }catch(e){}
+var det = (x.details || "").substring(0, 150);
+return '<div class="report-card" style="border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin:10px 0;background:#fff">'+
+'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
+'<b style="color:#0f172a">' + esc(x.office || "অফিস") + '</b>'+
+(amt ? '<span style="color:#dc2626;font-weight:700">' + esc(amt) + '</span>' : '')+
+'</div>'+
+'<div style="font-size:13px;color:#64748b;margin-bottom:6px">' + esc(loc) + (dt ? " · " + esc(dt) : "") + '</div>'+
+'<div style="font-size:14px;color:#334155">' + esc(det) + (x.details && x.details.length > 150 ? "..." : "") + '</div>'+
+'</div>';
+}).join("");
+listEl.innerHTML = cards;
+}).catch(function(e){
+listEl.innerHTML = '<div class="empty">রিপোর্ট লোড করা যায়নি। পেজ refresh করুন।</div>';
+});
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+})();
+</script>
+
+</body>
 </html>
