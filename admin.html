@@ -622,6 +622,22 @@
   // LOAD PENDING REPORTS
   // ==========================================
 
+  function parseEvidence(evRaw) {
+    if (!evRaw) return [];
+    let items = null;
+    try { items = typeof evRaw === "string" ? JSON.parse(evRaw) : evRaw; }
+    catch(e) { return []; }
+    if (!Array.isArray(items)) items = [items];
+    return items.map(it => {
+      let url = null, name = "Evidence";
+      if (it && it.url) { url = it.url; name = it.name || name; }
+      else if (typeof it === "string") { url = it; }
+      if (!url) return null;
+      const isImg = /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url);
+      return { url, name, isImg };
+    }).filter(Boolean);
+  }
+
   let currentTab = "pending";
 
   function switchTab(tab) {
@@ -669,7 +685,7 @@
       await supabaseClient
         .from("reports")
         .select(
-          "id,district,office,amount,incident_date,details,status,created_at"
+          "id,district,office,amount,incident_date,details,status,created_at,evidence_url"
         )
         .eq("status", currentTab)
         .order(
@@ -772,6 +788,17 @@
                 📝 ${escapeHTML(preview)}
               </div>
 
+              ${report.evidence_url ? `
+              <div class="evidence-thumbs" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                ${parseEvidence(report.evidence_url).map(ev => `
+                  <a href="${ev.url}" target="_blank" style="text-decoration:none">
+                    ${ev.isImg
+                      ? `<img src="${ev.url}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0">`
+                      : `<span style="font-size:13px;color:#059669">📄 ${escapeHTML((ev.name||"File").slice(0,15))}</span>`}
+                  </a>
+                `).join("")}
+              </div>` : ""}
+
               <div class="actions">
 
                 <button
@@ -832,7 +859,7 @@
       await supabaseClient
         .from("reports")
         .select(
-          "id,district,office,amount,incident_date,details,status,created_at"
+          "id,district,office,amount,incident_date,details,status,created_at,evidence_url"
         )
         .eq("id", id)
         .single();
