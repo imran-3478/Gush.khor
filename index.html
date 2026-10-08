@@ -2684,9 +2684,9 @@ return '<div class="ev-slot" data-evidx="'+evIdx+'" style="margin-top:8px"></div
 })()+
 '</div>';
 }).join("");
-// Evidence signed URLs load করো
-loadEvidenceSignedUrls(listEl);
 listEl.innerHTML = cards;
+// Evidence signed URLs load করো (innerHTML-এর পরে!)
+loadEvidenceSignedUrls(listEl);
 // Live পরিসংখ্যান update করো
 try{
 var sr = document.getElementById("statReports");
