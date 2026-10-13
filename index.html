@@ -1,8 +1,18 @@
-<!DOCTYPE html><!-- v2 rebuild -->
-
+<!DOCTYPE html>
 
 <html lang="bn">
 <head>
+<script>
+/* auto cache-buster: প্রথম load-এ unique URL-এ redirect */
+(function(){
+try{
+if(!/[?&]v=\d+/.test(location.search)){
+var s=location.search?location.search+"&":"?";
+location.replace(location.pathname+s+"v="+Date.now()+location.hash);
+}
+}catch(e){}
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GushKhor — ঘুষ ও দুর্নীতির বিরুদ্ধে আপনার কণ্ঠস্বর</title>
@@ -12,7 +22,7 @@
 <meta property="og:description" content="ঘুষ বা দুর্নীতির ঘটনা জানান। প্রমাণসহ রিপোর্ট করুন, যাচাইয়ের পর পাবলিক হবে।">
 <meta property="og:type" content="website">
 
-<script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>:root{
 --bg:#f5f7f9;--card:#ffffff;--card-soft:#fafdfb;--text:#18231f;--text-soft:#34443b;
@@ -1582,23 +1592,17 @@ const randomPart=Array.from(bytes)
 const path=
 `${trackingCode}/${Date.now()}-${randomPart}-${safeName}`;
 
-/* plain fetch - library ছাড়াই upload */
-const uploadResp = await fetch(
-SUPABASE_URL + "/storage/v1/object/" + EVIDENCE_BUCKET + "/" + path,
-{
-method:"POST",
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY,
-"Content-Type":file.type||"application/octet-stream"
-},
-body:file
+const {error}=
+await needClient()
+.storage
+.from(EVIDENCE_BUCKET)
+.upload(path,file,{
+cacheControl:"3600",
+upsert:false,
+contentType:file.type
 });
 
-if(!uploadResp.ok){
-const t = await uploadResp.text().catch(()=> "");
-throw new Error("Evidence upload failed ("+uploadResp.status+") "+t.slice(0,100));
-}
+if(error)throw error;
 
 return{
 name:file.name,
@@ -1840,25 +1844,17 @@ status:"pending"
 
 };
 
-/* plain fetch - library ছাড়াই insert */
-const insertResp = await fetch(
-SUPABASE_URL + "/rest/v1/reports",
-{
-method:"POST",
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY,
-"Content-Type":"application/json",
-"Prefer":"return=minimal"
-},
-body:JSON.stringify(reportData)
-});
+const {error}=
+await needClient()
+.from("reports")
+.insert(reportData);
 
-if(!insertResp.ok){
-const t = await insertResp.text().catch(()=> "");
-if(insertResp.status===409)
-throw new Error("Tracking Code সংঘর্ষ হয়েছে। আবার Submit করুন।");
-throw new Error("Submit failed ("+insertResp.status+") "+t.slice(0,120));
+if(error){
+
+if(error.code==="23505")
+throw new Error("Tracking Code সংঘর্ষ হয়েছে। আবার Submit করুন।");
+
+throw error;
 }
 
 trackingCodeText.textContent=trackingCode;
@@ -2642,170 +2638,56 @@ loadApprovedReports();
 
 <button id="topBtn" class="top-btn" aria-label="উপরে যান">↑</button>
 
-<div style="position:fixed;bottom:5px;right:5px;background:#000;color:#0f0;font-size:10px;padding:2px 6px;z-index:9999;border-radius:3px">v2.1</div>
+<style>
+/* ================= PREMIUM UI PACK (added 2026-10-13) ================= */
+html{scroll-behavior:smooth}
+.px-reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .65s ease,transform .65s cubic-bezier(.22,1,.36,1);transition-delay:var(--px-d,0s)}
+.px-reveal.px-in{opacity:1;transform:none}
+.px-orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0;animation:px-float 9s ease-in-out infinite}
+.hero>*:not(.px-orb){position:relative;z-index:1}
+@keyframes px-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-26px) scale(1.08)}}
+.px-tilt{transform-style:preserve-3d;will-change:transform;transition:transform .25s ease,box-shadow .3s ease}
+.px-shine{position:relative;overflow:hidden}
+.px-shine::after{content:"";position:absolute;top:0;left:-80%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);transform:skewX(-20deg);transition:left .65s ease;pointer-events:none}
+.px-shine:hover::after,.px-shine:active::after{left:135%}
+.px-press{transition:transform .15s ease}
+.px-press:active{transform:scale(.965)}
+.px-scrolled{box-shadow:0 8px 28px rgba(0,0,0,.20)!important}
+@media (prefers-reduced-motion:reduce){
+.px-reveal{opacity:1!important;transform:none!important;transition:none}
+.px-orb{animation:none}
+.px-shine::after{display:none}
+}
+/* =============== /PREMIUM UI PACK =============== */
+</style>
 <script>
-/* Independent reports loader v3 - isolated from main script */
-(function(){
-var listEl = document.getElementById("reportList");
-if(!listEl) return;
-fetch("https://dzsgcrgcotwxruhqrder.supabase.co/rest/v1/reports?select=id,district,upazila,union_name,village,office,amount,incident_date,details,status,created_at,report_type,anonymous_report,tracking_code,evidence_url,me_too&status=eq.approved&order=created_at.desc&limit=20",{
-headers:{
-"apikey":"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
-"Authorization":"Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE"
-}
-}).then(function(r){ return r.json(); }).then(function(data){
-if(!data || !data.length){
-listEl.innerHTML = '<div class="empty">কোনো রিপোর্ট পাওয়া যায়নি।</div>';
-return;
-}
-var cards = data.map(function(x){
-var dt = "";
-try{ dt = x.incident_date ? new Date(x.incident_date).toLocaleDateString("bn-BD") : ""; }catch(e){}
-var loc1 = [x.district, x.upazila].filter(Boolean).join(" → ");
-var loc2 = [x.union_name, x.village].filter(Boolean).join(" → ");
-return '<div style="border:1px solid #e2e8f0;border-radius:16px;padding:18px;margin:12px 0;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.05)">'+
-'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
-'<span style="background:#dcfce7;color:#166534;font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px">✓ অনুমোদিত</span>'+
-'<span style="font-size:13px;color:#64748b">' + esc(x.report_type || "") + '</span>'+
-'</div>'+
-'<div style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:12px">' + esc(x.office || "রিপোর্ট") + '</div>'+
-(loc1 ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">📍 ' + esc(loc1) + '</div>' : '')+
-(loc2 ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">🏠 ' + esc(loc2) + '</div>' : '')+
-(x.amount ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">💰 ঘুষের পরিমাণ: ৳' + esc(x.amount) + '</div>' : '')+
-(dt ? '<div style="font-size:14px;color:#475569;margin-bottom:6px">📅 ঘটনার তারিখ: ' + esc(dt) + '</div>' : '')+
-'<div style="font-size:14px;color:#475569;margin-bottom:12px">🎫 Tracking: ' + esc(x.tracking_code || "N/A") + '</div>'+
-(x.details ? '<div style="font-size:15px;color:#1e293b;line-height:1.6;margin-bottom:14px">' + esc(x.details) + '</div>' : '')+
-(x.me_too ? '<div style="font-size:13px;color:#059669;margin-bottom:10px">👥 ' + esc(x.me_too) + ' জন একই অভিজ্ঞতা</div>' : '')+
-(function(){
-var evIdx = window._evStore ? window._evStore.length : 0;
-if(!window._evStore) window._evStore = [];
-window._evStore.push(x.evidence_url || null);
-return '<div class="ev-slot" data-evidx="'+evIdx+'" style="margin-top:8px"></div>';
-})()+
-'</div>';
-}).join("");
-listEl.innerHTML = cards;
-// Evidence signed URLs load করো (innerHTML-এর পরে!)
-loadEvidenceSignedUrls(listEl);
-// Live পরিসংখ্যান update করো
-try{
-var sr = document.getElementById("statReports");
-if(sr) sr.textContent = data.length;
-var totalAmt = data.reduce(function(s,x){ return s + (parseFloat(x.amount)||0); }, 0);
-var sa = document.getElementById("statAmount");
-if(sa) sa.textContent = "৳" + totalAmt.toLocaleString("bn-BD");
-var areas = {};
-data.forEach(function(x){ if(x.district) areas[x.district]=1; });
-var sar = document.getElementById("statAreas");
-if(sar) sar.textContent = Object.keys(areas).length;
-}catch(e){}
-}).catch(function(e){
-listEl.innerHTML = '<div class="empty">রিপোর্ট লোড করা যায়নি। পেজ refresh করুন।</div>';
-});
-function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function loadEvidenceSignedUrls(root){
-var slots = root.querySelectorAll(".ev-slot");
-slots.forEach(function(slot){
-var idx = parseInt(slot.getAttribute("data-evidx"), 10);
-var raw = (window._evStore && window._evStore[idx]) || null;
-if(!raw) return;
-var items = null;
-try{ items = typeof raw === "string" ? JSON.parse(JSON.parse(raw)) : raw; }catch(e){ try{ items = typeof raw === "string" ? JSON.parse(raw) : raw; }catch(e2){} }
-if(!items) return;
-if(!Array.isArray(items)) items = [items];
-var paths = [];
-items.forEach(function(it){
-if(it && it.path) paths.push(it);
-else if(it && it.url){
-var m = it.url.indexOf("/evidence/");
-if(m!==-1) paths.push({path: it.url.slice(m+10).split("?")[0], name: it.name||"Evidence"});
-}
-else if(typeof it === "string"){
-var m2 = it.indexOf("/evidence/");
-if(m2!==-1) paths.push({path: it.slice(m2+10).split("?")[0], name:"Evidence"});
-}
-});
-if(!paths.length) return;
-slot.innerHTML = '<div style="font-size:13px;color:#64748b">📎 প্রমাণ লোড হচ্ছে...</div>';
-var done = 0;
-var html2 = '<div style="font-size:14px;font-weight:700;margin:8px 0 6px">📎 প্রমাণ</div><div style="display:flex;gap:8px;flex-wrap:wrap">';
-paths.forEach(function(p){
-fetch("https://dzsgcrgcotwxruhqrder.supabase.co/storage/v1/object/sign/evidence/"+p.path,{
-method:"POST",
-headers:{
-"apikey":"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
-"Authorization":"Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
-"Content-Type":"application/json"
-},
-body:JSON.stringify({expiresIn:3600})
-}).then(function(r){ return r.json(); }).then(function(d){
-done++;
-var url = d && d.signedURL ? "https://dzsgcrgcotwxruhqrder.supabase.co/storage/v1"+d.signedURL : null;
-var nm = (p.name||"Evidence").slice(0,20);
-if(url){
-var isImg = /\.(jpg|jpeg|png|gif|webp)$/i.test(p.path);
-html2 += isImg
-? '<a href="'+url+'" target="_blank"><img src="'+url+'" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0"></a>'
-: '<a href="'+url+'" target="_blank" style="font-size:13px;color:#059669">📄 '+esc(nm)+'</a>';
-}
-if(done>=paths.length){
-html2 += '</div>';
-slot.innerHTML = html2;
-}
-}).catch(function(){ done++; if(done>=paths.length){ slot.innerHTML=""; } });
-});
-});
-}
+/* ================= PREMIUM UI PACK JS (added 2026-10-13) ================= */
+(function(){try{
+var REVEAL_SEL="section.hero,section.container,.card,.quick-card,.hero-card,.evidence-item,.tracking-box",TILT_SEL=".card,.quick-card,.hero-card",BTN_SEL=".hero-btn,.me-too-btn",HEADER_SEL=".header",ACCENT="#15945d";
+function revealAll(){document.querySelectorAll('.px-reveal').forEach(function(el){el.classList.add('px-in');});}
+if('IntersectionObserver' in window){
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('px-in');io.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll(REVEAL_SEL).forEach(function(el,i){el.classList.add('px-reveal');el.style.setProperty('--px-d',(Math.min((i%4)*0.07,0.21)).toFixed(2)+'s');io.observe(el);});
+}else{revealAll();}
+document.querySelectorAll('.hero').forEach(function(h){
+if(!h.querySelector('.px-orb')){
+if(getComputedStyle(h).position==='static')h.style.position='relative';
+h.style.overflow='hidden';
+var orbs=[[ACCENT,'0.16','6pct','10pct','230px'],['#ffffff','0.10','72pct','55pct','270px'],[ACCENT,'0.10','40pct','78pct','180px']];
+orbs.forEach(function(o,i){var d=document.createElement('div');d.className='px-orb';
+d.style.background=o[0];d.style.opacity=o[1];d.style.left=o[2].replace('pct','%');d.style.top=o[3].replace('pct','%');d.style.width=o[4];d.style.height=o[4];d.style.animationDelay=(i*2.2)+'s';
+h.insertBefore(d,h.firstChild);});}});
+if(!('ontouchstart' in window)&&window.matchMedia&&matchMedia('(pointer:fine)').matches){
+document.querySelectorAll(TILT_SEL).forEach(function(c){c.classList.add('px-tilt');
+c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;
+c.style.transform='perspective(950px) rotateX('+(-y*6).toFixed(2)+'deg) rotateY('+(x*8).toFixed(2)+'deg) translateY(-3px)';});
+c.addEventListener('mouseleave',function(){c.style.transform='';});});}
+document.querySelectorAll(BTN_SEL).forEach(function(b){b.classList.add('px-shine','px-press');});
+var hd=document.querySelector(HEADER_SEL);
+if(hd){var onS=function(){hd.classList.toggle('px-scrolled',window.scrollY>24);};addEventListener('scroll',onS,{passive:true});onS();}
+}catch(err){try{document.querySelectorAll('.px-reveal').forEach(function(el){el.classList.add('px-in');});}catch(e2){}}
 })();
-</script>
-<script>
-/* Independent tracking search - plain fetch */
-(function(){
-var btn = document.getElementById("trackingBtn");
-if(!btn) return;
-// পুরনো listeners সরাও
-var newBtn = btn.cloneNode(true);
-btn.parentNode.replaceChild(newBtn, btn);
-newBtn.addEventListener("click", function(){
-var codeEl = document.getElementById("trackingSearch");
-var result = document.getElementById("trackingResultPublic");
-if(!codeEl || !result) return;
-var code = codeEl.value.trim().toUpperCase();
-if(!code){
-result.innerHTML = '<div class="message error" style="display:block">Tracking Code লিখুন।</div>';
-return;
-}
-result.innerHTML = '<div class="loading">খোঁজা হচ্ছে...</div>';
-fetch("https://dzsgcrgcotwxruhqrder.supabase.co/rest/v1/reports?select=id,district,upazila,union_name,village,office,amount,incident_date,details,status,created_at,report_type,tracking_code,evidence_url,me_too&tracking_code=eq."+encodeURIComponent(code)+"&status=eq.approved",{
-headers:{
-"apikey":"sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE",
-"Authorization":"Bearer sb_publishable_zGiw90qepHGQKdhaJ5v9pw_pVbUwHcE"
-}
-}).then(function(r){ return r.json(); }).then(function(data){
-if(!data || !data.length){
-result.innerHTML = '<div class="message error" style="display:block">এই Tracking Code-এ কোনো অনুমোদিত রিপোর্ট পাওয়া যায়নি।</div>';
-return;
-}
-var x = data[0];
-var dt = "";
-try{ dt = x.incident_date ? new Date(x.incident_date).toLocaleDateString("bn-BD") : ""; }catch(e){}
-var loc1 = [x.district, x.upazila].filter(Boolean).join(" → ");
-result.innerHTML =
-'<div style="border:1px solid #059669;border-radius:12px;padding:16px;margin-top:12px;background:#f0fdf4">'+
-'<div style="margin-bottom:8px"><span style="background:#dcfce7;color:#166534;font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px">✓ অনুমোদিত</span></div>'+
-'<div style="font-size:18px;font-weight:800;margin-bottom:8px">' + esc2(x.office || "রিপোর্ট") + '</div>'+
-(loc1 ? '<div style="font-size:14px;color:#475569;margin-bottom:4px">📍 ' + esc2(loc1) + '</div>' : '')+
-(x.amount ? '<div style="font-size:14px;color:#475569;margin-bottom:4px">💰 ৳' + esc2(x.amount) + '</div>' : '')+
-(dt ? '<div style="font-size:14px;color:#475569;margin-bottom:8px">📅 ' + esc2(dt) + '</div>' : '')+
-(x.details ? '<div style="font-size:14px;line-height:1.6">' + esc2(x.details) + '</div>' : '')+
-'</div>';
-}).catch(function(e){
-result.innerHTML = '<div class="message error" style="display:block">রিপোর্ট খুঁজতে সমস্যা হয়েছে।</div>';
-});
-function esc2(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-});
-})();
-
+/* =============== /PREMIUM UI PACK JS =============== */
 </script>
 
 </body>
